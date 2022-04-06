@@ -19,6 +19,7 @@ class MyGame extends Phaser.Scene
         var gravity = new b2Vec2(0,-10.0);
         this.myWorld = new b2World(gravity);
 
+
         this.tweens.add({
             targets: logo,
             y: 450,
@@ -31,7 +32,7 @@ class MyGame extends Phaser.Scene
 
     update()
     {
-        this.myWorld;
+       console.log( this.myWorld);
     }
 }
 
