@@ -16,8 +16,8 @@ class MyGame extends Phaser.Scene
     create ()
     {
         const logo = this.add.image(400, 150, 'logo');
-        var gravity = new b2Vec2(0.0,-10.00);
-        var myWorld = new b2World(gravity);
+        var gravity = new b2Vec2(0,-10.0);
+        this.myWorld = new b2World(gravity);
 
         this.tweens.add({
             targets: logo,
@@ -31,7 +31,7 @@ class MyGame extends Phaser.Scene
 
     update()
     {
-        this.physics();
+        this.myWorld;
     }
 }
 
