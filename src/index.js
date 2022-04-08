@@ -5,7 +5,7 @@ import ballImg from './assets/ball.png';
 
 var timeStep = 1.0/60.0;
 var velocityIterations = 8;
-var positionIterations = 3;
+var positionIterations = 10;
 var bd = new b2BodyDef;
 
 class MyGame extends Phaser.Scene
@@ -25,17 +25,20 @@ class MyGame extends Phaser.Scene
     {
         this.myBallSprite = this.add.image(300,100,'ball');
         const logo = this.add.image(400, 150, 'logo');
-        var gravity = new b2Vec2(0,-10.0);  
-        this.myWorld = new b2World(gravity);
-        this.ground = this.myWorld.CreateBody(bd);
-        this.ball = new b2BodyDef();
-        this.circle = new b2CircleShape();
-        this.ball.type = b2_dynamicBody;
+        var gravity = new b2Vec2(0,10.0);  
+        window.world = this.myWorld = new b2World(gravity);
+
     
-        this.testCircle = this.myWorld.CreateBody(this.ball);
-        this.circle.position.Set(0,20);
-        this.circle.radius = 1.75;
-        //this.testCircle.CreateFixtureFromShape(this.circle,0.5);
+
+        this.ballShape = new b2CircleShape();
+        this.ballShape.position.Set(0, 0);
+        this.ballShape.radius = .5;
+
+        var ballBodyDef = new b2BodyDef();
+        ballBodyDef.type = b2_dynamicBody;
+        this.ballBody = this.myWorld.CreateBody(ballBodyDef);
+    
+        this.ballFixture = this.ballBody.CreateFixtureFromShape(this.ballShape, 0.5);
 
 
         this.tweens.add({
@@ -51,6 +54,9 @@ class MyGame extends Phaser.Scene
     update()
     {
         this.myWorld.Step(timeStep,velocityIterations,positionIterations);
+
+        let {x,y} = this.ballBody.GetPosition();
+        this.myBallSprite.setPosition(x,y);
     }
 }
 
