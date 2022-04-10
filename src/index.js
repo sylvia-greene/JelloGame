@@ -26,7 +26,7 @@ class MyGame extends Phaser.Scene
       
     create ()
     {
-<<<<<<< HEAD
+
         this.myBallSprite = this.add.image(300,100,'ball');
         const logo = this.add.image(400, 150, 'logo');
         var gravity = new b2Vec2(0,100.0);  
@@ -56,7 +56,7 @@ class MyGame extends Phaser.Scene
             yoyo: true,
             loop: -1
         });
-=======
+
         this.myBallSprite = this.add.image(300, 100, 'ball');
 
     var gravity = new b2Vec2(0, 1500);
@@ -110,7 +110,31 @@ class MyGame extends Phaser.Scene
 
   circle.radius = 10;
   this.ballBody.CreateFixtureFromShape(circle, 0.5);
->>>>>>> f11f654306ca12355d904e42e6232b058a96ac36
+
+
+  var polygon_shape = new b2PolygonShape;
+  polygon_shape.SetAsBoxXYCenterAngle(10.0, 0.2, new b2Vec2 (-10.0, 0.0), 0.0);
+
+  var paddleDef = new b2BodyDef;
+  paddleDef.position.Set(20.0, 10.0);
+  paddleDef.type = b2_dynamicBody;
+  paddleDef.bullet = true;
+  paddleDef.density = 10000;
+  var paddle = world.CreateBody(paddleDef);
+  paddle.CreateFixtureFromShape(polygon_shape, 2.0);
+
+  let paddleMotorDef = new b2RevoluteJointDef;
+  paddleMotorDef.lowerAngle = -0.25 * Math.PI;
+  paddleMotorDef.upperAngle = 0.0 * Math.PI;
+  paddleMotorDef.enableLimit = true;
+  paddleMotorDef.maxMotorTorque = 20000000.0;
+  paddleMotorDef.enableMotor = true;
+  this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground, paddle, new b2Vec2(20.0, 10.0));
+  console.log(this.paddleMotor);
+  
+  this.flipperSpeed = 20;
+  paddleMotorDef.motorSpeed = this.flipperSpeed;
+
     }
 
     update()
