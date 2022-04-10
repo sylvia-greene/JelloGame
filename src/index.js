@@ -25,7 +25,7 @@ class MyGame extends Phaser.Scene
     {
         this.myBallSprite = this.add.image(300,100,'ball');
         const logo = this.add.image(400, 150, 'logo');
-        var gravity = new b2Vec2(0,10.0);  
+        var gravity = new b2Vec2(0,100.0);  
         window.world = this.myWorld = new b2World(gravity);
 
     
@@ -41,6 +41,9 @@ class MyGame extends Phaser.Scene
         this.ballFixture = this.ballBody.CreateFixtureFromShape(this.ballShape, 0.5);
 
 
+
+
+        
         this.tweens.add({
             targets: logo,
             y: 450,
