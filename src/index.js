@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import logoImg from './assets/logo.png';
+import flipperImg from './assets/flipper.png';
 import ballImg from './assets/ball.png';
 
 
@@ -22,13 +23,14 @@ class MyGame extends Phaser.Scene
     {
         this.load.image('ball', ballImg);
         this.load.image('logo', logoImg);
+        this.load.image('flipper',flipperImg);
     }
       
     create ()
     {
 
         this.myBallSprite = this.add.image(300,100,'ball');
-        const logo = this.add.image(400, 150, 'logo');
+        //const logo = this.add.image(400, 150, 'logo');
         var gravity = new b2Vec2(0,100.0);  
         window.world = this.myWorld = new b2World(gravity);
 
@@ -48,14 +50,14 @@ class MyGame extends Phaser.Scene
 
 
         
-        this.tweens.add({
-            targets: logo,
-            y: 450,
-            duration: 2000,
-            ease: "Power2",
-            yoyo: true,
-            loop: -1
-        });
+        // this.tweens.add({
+        //    // targets: logo,
+        //     y: 450,
+        //     duration: 2000,
+        //     ease: "Power2",
+        //     yoyo: true,
+        //     loop: -1
+        // });
 
         this.myBallSprite = this.add.image(300, 100, 'ball');
 
@@ -111,7 +113,8 @@ class MyGame extends Phaser.Scene
   circle.radius = 10;
   this.ballBody.CreateFixtureFromShape(circle, 0.5);
 
-
+//flipper
+  this.flipperSprite = this.add.image(300,100,'flipper');
   var polygon_shape = new b2PolygonShape;
   polygon_shape.SetAsBoxXYCenterAngle(10.0, 0.2, new b2Vec2 (-10.0, 0.0), 0.0);
 
@@ -120,8 +123,8 @@ class MyGame extends Phaser.Scene
   paddleDef.type = b2_dynamicBody;
   paddleDef.bullet = true;
   paddleDef.density = 10000;
-  var paddle = world.CreateBody(paddleDef);
-  paddle.CreateFixtureFromShape(polygon_shape, 2.0);
+  this.paddle = this.myWorld.CreateBody(paddleDef);
+  this.paddle.CreateFixtureFromShape(polygon_shape, 2.0);
 
   let paddleMotorDef = new b2RevoluteJointDef;
   paddleMotorDef.lowerAngle = -0.25 * Math.PI;
@@ -129,7 +132,7 @@ class MyGame extends Phaser.Scene
   paddleMotorDef.enableLimit = true;
   paddleMotorDef.maxMotorTorque = 20000000.0;
   paddleMotorDef.enableMotor = true;
-  this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground, paddle, new b2Vec2(20.0, 10.0));
+  this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground, this.paddle, new b2Vec2(20.0, 10.0));
   console.log(this.paddleMotor);
   
   this.flipperSpeed = 20;
@@ -142,6 +145,8 @@ class MyGame extends Phaser.Scene
         this.myWorld.Step(timeStep,velocityIterations,positionIterations);
 
         let {x,y} = this.ballBody.GetPosition();
+        let {a,b} = this.paddle.GetPosition();
+        this.flipperSprite.setPosition(a,b);
         this.myBallSprite.setPosition(x,y);
     }
 }
