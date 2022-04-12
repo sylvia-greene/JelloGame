@@ -5,7 +5,6 @@ import flipperImg from './assets/flipper.png';
 import ballImg from './assets/ball.png';
 
 
-var timeStep = 1/60.0;
 var velocityIterations = 8;
 var positionIterations = 10;
 // var bd = new b2BodyDef;
@@ -31,7 +30,7 @@ class MyGame extends Phaser.Scene
         // ball
         this.myBallSprite = this.add.image(300, 100, 'ball');
 
-        var gravity = new b2Vec2(0, 1500);
+        var gravity = new b2Vec2(0, 150);
         window.world = this.myWorld = new b2World(gravity);
 
         var bd = new b2BodyDef();
@@ -51,85 +50,77 @@ class MyGame extends Phaser.Scene
         // circle
         bd = new b2BodyDef();
         var circle = new b2CircleShape();
+        circle.phaserSprite = this.myBallSprite;
         bd.type = b2_dynamicBody;
+        bd.density = 1e-14;  // has no effect??!?
         bd.position.Set(300, 0); 
         this.ballBody = this.myWorld.CreateBody(bd);
         this.ballBody.bullet = true;
         bd.friction = 0;
         circle.radius = this.myBallSprite.width / 2;
-        this.ballBody.CreateFixtureFromShape(circle, 0.5);
+        this.ballBody.CreateFixtureFromShape(circle, 0.0001);
 
         //flipper
         this.flipperSprite = this.add.image(300,100,'flipper');
 
         const paddleShape = new b2PolygonShape;
-        const paddleCentroid = new b2Vec2(100, 0);
+        const paddleCentroid = new b2Vec2(-this.flipperSprite.width/2, 0);
         paddleShape.SetAsBoxXYCenterAngle(
             this.flipperSprite.width / 2,
             this.flipperSprite.height / 2,
             paddleCentroid, 0);
         paddleShape.phaserCentroid = paddleCentroid;
-        paddleShape.phaserUpdate = (shape, transform) => {
-            var transformedPos = new b2Vec2();
-            var centroidPos = new b2Vec2();
-            b2Vec2.Add(centroidPos, shape.position, shape.phaserCentroid)
-            b2Vec2.Mul(transformedPos, transform, centroidPos);
-            this.flipperSprite.setPosition(transformedPos.x, transformedPos.y);
-            this.flipperSprite.setAngle(180 / Math.PI * Math.atan2(transform.q.c, transform.q.s));
-        };
+        paddleShape.phaserSprite = this.flipperSprite;
 
         this.paddleDef = new b2BodyDef;
-        this.paddleDef.position.Set(400, 300);
+        this.paddleDef.position.Set(500, 300);
         this.paddleDef.type = b2_dynamicBody;
         this.paddleDef.bullet = true;
-        this.paddleDef.density = 10000;
         this.paddle = this.myWorld.CreateBody(this.paddleDef);
-console.log("paddle.GetPosition() when created", this.paddle.GetPosition())
-        this.paddleFixture = this.paddle.CreateFixtureFromShape(paddleShape, 2.0);
+        this.paddleFixture = this.paddle.CreateFixtureFromShape(paddleShape, 200.0);
 
-        
         let paddleMotorDef = new b2RevoluteJointDef;
-        paddleMotorDef.lowerAngle = -2* Math.PI;
-        paddleMotorDef.upperAngle = 2* Math.PI;
+        paddleMotorDef.lowerAngle = 0.25 * Math.PI;
+        paddleMotorDef.upperAngle = -0.25 * Math.PI;
         paddleMotorDef.enableLimit = true;
-        paddleMotorDef.maxMotorTorque = 2000000.0;
+        paddleMotorDef.maxMotorTorque = 3e10;
         paddleMotorDef.enableMotor = true;
         this.paddleMotor = paddleMotorDef.InitializeAndCreate(
             ground,
             this.paddle,
             this.paddleDef.position);
         
-        this.flipperSpeed = 100;
-        paddleMotorDef.motorSpeed = this.flipperSpeed;
+        this.input.keyboard.on('keydown-SPACE', (event) => {
+            this.paddleMotor.SetMotorSpeed(10);
+            this.paddleMotor.EnableMotor(true);
+        });
+
+        this.input.keyboard.on('keyup-SPACE', (event) => {
+            this.paddleMotor.SetMotorSpeed(-10);
+        });
     }
 
-    update() {
-        this.myWorld.Step(timeStep,velocityIterations,positionIterations);
+    update(dt) {
+        this.myWorld.Step(dt / 1000, velocityIterations, positionIterations);
 
         // Adopted from liquidfun testbed: https://github.com/google/liquidfun/blob/master/liquidfun/Box2D/lfjs/testbed/renderer.js
         for (var body of world.bodies) {
             var transform = body.GetTransform();
             for (var fixture of body.fixtures) {
-                //console.log(fixture.shape, transform);
-                const phaserUpdate = fixture.shape.phaserUpdate;
-                if (phaserUpdate) {
-                    phaserUpdate(fixture.shape, transform);
+                if (fixture.shape.phaserSprite) {
+                    this.box2DUpdate(fixture.shape, transform);
                 }
             }
         }
-        
-        // let {x,y} = this.ballBody.GetPosition();
-        // this.myBallSprite.setPosition(x,y);
+    }
 
-        // let paddlePos = this.paddle.GetPosition();
-        // this.flipperSprite.setPosition(paddlePos.x, paddlePos.y);
-        // this.flipperSprite.setRotation(this.paddle.GetAngle());
-
-        // if (spaceBar.isDown){
-        //     this.myBallSprite.setPosition(x,y)
-        // }
-        
-        
+    box2DUpdate(shape, transform) {
+        var transformedPos = new b2Vec2();
+        var centroidPos = new b2Vec2();
+        b2Vec2.Add(centroidPos, shape.phaserCentroid || new b2Vec2(0, 0), shape.position)
+        b2Vec2.Mul(transformedPos, transform, centroidPos);
+        shape.phaserSprite.setPosition(transformedPos.x, transformedPos.y);
+        shape.phaserSprite.setAngle(180/ Math.PI * Math.atan2(transform.q.s, transform.q.c));
     }
 }
 
