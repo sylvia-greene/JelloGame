@@ -8,8 +8,8 @@ import ballImg from './assets/ball.png';
 var timeStep = 1/60.0;
 var velocityIterations = 8;
 var positionIterations = 10;
-var bd = new b2BodyDef;
-var ground;
+// var bd = new b2BodyDef;
+// var ground;
 var shape = new b2EdgeShape;
 
 class MyGame extends Phaser.Scene
@@ -28,39 +28,6 @@ class MyGame extends Phaser.Scene
       
     create ()
     {
-
-        // spaceBar = this.input.keyboard.addKey(Phaser.input.Keyboard.KeyCodes.SPACE);
-
-        // this.myBallSprite = this.add.image(300,100,'ball');
-        //const logo = this.add.image(400, 150, 'logo');
-        var gravity = new b2Vec2(0,100.0);  
-        window.world = this.myWorld = new b2World(gravity);
-
-    
-
-        // this.ballShape = new b2CircleShape();
-        // this.ballShape.position.Set(0, 0);
-        // this.ballShape.radius = .5;
-
-        // var ballBodyDef = new b2BodyDef();
-        // ballBodyDef.type = b2_dynamicBody;
-        // this.ballBody = this.myWorld.CreateBody(ballBodyDef);
-    
-        // this.ballFixture = this.ballBody.CreateFixtureFromShape(this.ballShape, 0.5);
-
-
-
-
-                
-                // this.tweens.add({
-                //    // targets: logo,
-                //     y: 450,
-                //     duration: 2000,
-                //     ease: "Power2",
-                //     yoyo: true,
-                //     loop: -1
-                // });
-
         // ball
         this.myBallSprite = this.add.image(300, 100, 'ball');
 
@@ -74,31 +41,6 @@ class MyGame extends Phaser.Scene
         fd.shape = shape;
         fd.density = 0.0;
         fd.friction = 0.75;
-        
-        //   var shape1 = new b2PolygonShape();
-        //   var vertices = shape1.vertices;
-        //   vertices.push(new b2Vec2(-4, -1));
-        //   vertices.push(new b2Vec2(4, -1));
-        //   vertices.push(new b2Vec2(4, 0));
-        //   vertices.push(new b2Vec2(-4, 0));
-        //   ground.CreateFixtureFromShape(shape1, 0);
-
-        var psd = new b2ParticleSystemDef();
-        psd.radius = 0.035;
-        var particleSystem = this.myWorld.CreateParticleSystem(psd);
-
-        // third group
-        var box = new b2PolygonShape();
-        var pgd = new b2ParticleGroupDef();
-        box.SetAsBoxXY(1, 0.5);
-        pgd.flags = b2_elasticParticle;
-        pgd.groupFlags = b2_solidParticleGroup;
-        pgd.position.Set(300, 300);
-        pgd.angle = -0.5;
-        pgd.angularVelocity = 2;
-        pgd.shape = box;
-        particleSystem.CreateParticleGroup(pgd);
-
 
         // jelly testzone floor
         shape = new b2EdgeShape;
@@ -114,50 +56,74 @@ class MyGame extends Phaser.Scene
         this.ballBody = this.myWorld.CreateBody(bd);
         this.ballBody.bullet = true;
         bd.friction = 0;
-        circle.radius = 10;
+        circle.radius = this.myBallSprite.width / 2;
         this.ballBody.CreateFixtureFromShape(circle, 0.5);
 
         //flipper
         this.flipperSprite = this.add.image(300,100,'flipper');
-        this.polygon_shape = new b2PolygonShape;
-        this.polygon_shape.SetAsBoxXYCenterAngle(10.0, .2, new b2Vec2 (-10.0, 0.0), 0);
+
+        const paddleShape = new b2PolygonShape;
+        const paddleCentroid = new b2Vec2(100, 0);
+        paddleShape.SetAsBoxXYCenterAngle(
+            this.flipperSprite.width / 2,
+            this.flipperSprite.height / 2,
+            paddleCentroid, 0);
+        paddleShape.phaserCentroid = paddleCentroid;
+        paddleShape.phaserUpdate = (shape, transform) => {
+            var transformedPos = new b2Vec2();
+            var centroidPos = new b2Vec2();
+            b2Vec2.Add(centroidPos, shape.position, shape.phaserCentroid)
+            b2Vec2.Mul(transformedPos, transform, centroidPos);
+            this.flipperSprite.setPosition(transformedPos.x, transformedPos.y);
+            this.flipperSprite.setAngle(180 / Math.PI * Math.atan2(transform.q.c, transform.q.s));
+        };
 
         this.paddleDef = new b2BodyDef;
-        this.paddleDef.position.Set(20, 100.0);
+        this.paddleDef.position.Set(400, 300);
         this.paddleDef.type = b2_dynamicBody;
         this.paddleDef.bullet = true;
         this.paddleDef.density = 10000;
         this.paddle = this.myWorld.CreateBody(this.paddleDef);
-        this.paddle.CreateFixtureFromShape(this.polygon_shape, 2.0);
+console.log("paddle.GetPosition() when created", this.paddle.GetPosition())
+        this.paddleFixture = this.paddle.CreateFixtureFromShape(paddleShape, 2.0);
 
         
         let paddleMotorDef = new b2RevoluteJointDef;
-        paddleMotorDef.lowerAngle = 2* Math.PI;
-        paddleMotorDef.upperAngle =  2* Math.PI;
+        paddleMotorDef.lowerAngle = -2* Math.PI;
+        paddleMotorDef.upperAngle = 2* Math.PI;
         paddleMotorDef.enableLimit = true;
-        paddleMotorDef.maxMotorTorque = 20000000.0;
+        paddleMotorDef.maxMotorTorque = 2000000.0;
         paddleMotorDef.enableMotor = true;
-        this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground, this.paddle, new b2Vec2(20.0, 10.0));
-        
+        this.paddleMotor = paddleMotorDef.InitializeAndCreate(
+            ground,
+            this.paddle,
+            this.paddleDef.position);
         
         this.flipperSpeed = 100;
         paddleMotorDef.motorSpeed = this.flipperSpeed;
-
     }
 
-    update()
-    {
-
+    update() {
         this.myWorld.Step(timeStep,velocityIterations,positionIterations);
 
-        let {x,y} = this.ballBody.GetPosition();
-        this.myBallSprite.setPosition(x,y);
+        // Adopted from liquidfun testbed: https://github.com/google/liquidfun/blob/master/liquidfun/Box2D/lfjs/testbed/renderer.js
+        for (var body of world.bodies) {
+            var transform = body.GetTransform();
+            for (var fixture of body.fixtures) {
+                //console.log(fixture.shape, transform);
+                const phaserUpdate = fixture.shape.phaserUpdate;
+                if (phaserUpdate) {
+                    phaserUpdate(fixture.shape, transform);
+                }
+            }
+        }
+        
+        // let {x,y} = this.ballBody.GetPosition();
+        // this.myBallSprite.setPosition(x,y);
 
-        let {a,b} = this.paddle.GetPosition();
-        this.flipperSprite.setPosition(a, b);
-        console.log(this.flipperSprite.getCenter());
-        this.flipperSprite.setRotation(this.paddle.GetAngle());
-        console.log("angle", this.paddle.GetAngle());
+        // let paddlePos = this.paddle.GetPosition();
+        // this.flipperSprite.setPosition(paddlePos.x, paddlePos.y);
+        // this.flipperSprite.setRotation(this.paddle.GetAngle());
 
         // if (spaceBar.isDown){
         //     this.myBallSprite.setPosition(x,y)
