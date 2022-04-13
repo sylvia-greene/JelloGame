@@ -4,6 +4,8 @@ import logoImg from './assets/logo.png';
 import flipperImg from './assets/flipper.png';
 import ballImg from './assets/ball.png';
 
+import LiquidFunPhysics from './lf-phaser.js';
+
 
 var velocityIterations = 8;
 var positionIterations = 10;
@@ -32,6 +34,8 @@ class MyGame extends Phaser.Scene
 
         var gravity = new b2Vec2(0, 150);
         window.world = this.myWorld = new b2World(gravity);
+
+        this.physics = new LiquidFunPhysics(this.myWorld, { scale: 1, flip: false });
 
         var bd = new b2BodyDef();
         var ground = this.myWorld.CreateBody(bd);
@@ -101,26 +105,8 @@ class MyGame extends Phaser.Scene
     }
 
     update(dt) {
-        this.myWorld.Step(dt / 1000, velocityIterations, positionIterations);
-
-        // Adopted from liquidfun testbed: https://github.com/google/liquidfun/blob/master/liquidfun/Box2D/lfjs/testbed/renderer.js
-        for (var body of world.bodies) {
-            var transform = body.GetTransform();
-            for (var fixture of body.fixtures) {
-                if (fixture.shape.phaserSprite) {
-                    this.box2DUpdate(fixture.shape, transform);
-                }
-            }
-        }
-    }
-
-    box2DUpdate(shape, transform) {
-        var transformedPos = new b2Vec2();
-        var centroidPos = new b2Vec2();
-        b2Vec2.Add(centroidPos, shape.phaserCentroid || new b2Vec2(0, 0), shape.position)
-        b2Vec2.Mul(transformedPos, transform, centroidPos);
-        shape.phaserSprite.setPosition(transformedPos.x, transformedPos.y);
-        shape.phaserSprite.setAngle(180/ Math.PI * Math.atan2(transform.q.s, transform.q.c));
+        this.physics.update(dt);
+        console.log(this.flipperSprite.x)
     }
 }
 
