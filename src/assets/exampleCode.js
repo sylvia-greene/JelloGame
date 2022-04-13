@@ -7,36 +7,29 @@ import jelloImg from './assets/jello.png';
 
 import LiquidFunPhysics from './lf-phaser.js';
 
-
-// var velocityIterations = 8;
-// var positionIterations = 10;
 var shape = new b2EdgeShape;
 
-class MyGame extends Phaser.Scene
-{
-    constructor ()
-    {
+class MyGame extends Phaser.Scene {
+    constructor() {
         super();
     }
 
-    preload ()
-    {
+    preload() {
         this.load.image('ball', ballImg);
+        this.load.image('jello', jelloImg);
         this.load.image('logo', logoImg);
         this.load.image('flipper',flipperImg);
-        this.load.image('jello', jelloImg);
     }
       
-    create ()
-    {
-        var gravity = new b2Vec2(0,-15);
+    create() {
+        var gravity = new b2Vec2(0, -15);
         window.world = this.myWorld = new b2World(gravity);
 
-        this.physics = new LiquidFunPhysics(this.myWorld, { scale: 120,center: [400,400], flip: true });
+        this.physics = new LiquidFunPhysics(this.myWorld, { scale: 120, center: [400, 400], flip: true });
 
         var bd = new b2BodyDef();
         var ground = world.CreateBody(bd);
-        
+
         var shape1 = new b2PolygonShape();
         var vertices = shape1.vertices;
         vertices.push(new b2Vec2(-4, -1));
@@ -65,9 +58,9 @@ class MyGame extends Phaser.Scene
         psd.radius = 0.035;
         var particleSystem = world.CreateParticleSystem(psd);
 
-        const jello = this.add.particles('jello');        
+        const jello = this.add.particles('jello');
 
-        //first group
+        // first group
         var box = new b2PolygonShape();
         box.SetAsBoxXY(0.5, 0.5);
         var pgd = new b2ParticleGroupDef();
@@ -83,9 +76,29 @@ class MyGame extends Phaser.Scene
                 scale: 0.3,
             })
         ];
-        // this.myBallSprite = this.add.image(300, 100, 'ball');
 
-        //second group 
+        // Alternative appearance: shiny highlights on top
+        // (Code below replaces group1.phaserParticleEmitters above)
+
+        // group1.phaserParticleEmitters = [
+        //     jello.createEmitter({
+        //         tint: 0xFF0000,
+        //         scale: 0.4,
+        //     }),
+        //     jello.createEmitter({
+        //         tint: 0x777777,
+        //         blendMode: Phaser.BlendModes.ADD,
+        //         scale: 0.3,
+        //         y: -3
+        //     }),
+        //     jello.createEmitter({
+        //         tint: 0xFF0000,
+        //         scale: 0.3,
+        //         y: 3
+        //     })
+        // ];
+
+        // second group
         var box = new b2PolygonShape();
         box.SetAsBoxXY(0.4, 0.4);
         pgd = new b2ParticleGroupDef();
@@ -102,7 +115,7 @@ class MyGame extends Phaser.Scene
             })
         ];
 
-     // third group
+        // third group
         var box = new b2PolygonShape();
         box.SetAsBoxXY(1, 0.5);
         var pgd = new b2ParticleGroupDef();
@@ -118,10 +131,10 @@ class MyGame extends Phaser.Scene
                 tint: 0x0000FF,
                 blendMode: Phaser.BlendModes.ADD,
                 scale: 0.3,
-         })
-     ];
+            })
+        ];
 
-        //cicle
+        // circle
         bd = new b2BodyDef();
         var circle = new b2CircleShape();
         circle.phaserSprite = this.add.image(0, 0, 'ball');
@@ -131,50 +144,10 @@ class MyGame extends Phaser.Scene
         circle.position.Set(0, 8);
         circle.radius = 0.5;
         body.CreateFixtureFromShape(circle, 0.5);
-
-        //flipper
-        bd = new b2BodyDef();
-        var paddleShape = new b2PolygonShape();
-        // const paddleCentroid = new b2Vec2(-this.flipperSprite.width/2, 0);
-        // paddleShape.SetAsBoxXYCenterAngle(
-        //     this.flipperSprite.width / 2,
-        //     this.flipperSprite.height / 2,
-        //     paddleCentroid, 0);
-        // paddleShape.phaserCentroid = paddleCentroid;
-        paddleShape.phaserSprite = this.add.image(0,0,'flipper');
-        paddleShape.phaserSprite.setScale(1.1);
-        bd.type = b2_dynamicBody;
-        var body = world.CreateBody(bd);
-        paddleShape.position.Set(0,2);
-        var paddle = body.CreateFixtureFromShape(paddleShape,0.5);
-
-        let paddleMotorDef = new b2RevoluteJointDef;
-        paddleMotorDef.lowerAngle = 0.25 * Math.PI;
-        paddleMotorDef.upperAngle = -0.25 * Math.PI;
-        paddleMotorDef.enableLimit = true;
-        paddleMotorDef.maxMotorTorque = 3e10;
-        paddleMotorDef.enableMotor = true;
-        var coord = new b2Vec2(0,0);
-        this.paddleMotor = paddleMotorDef.InitializeAndCreate(
-            ground,
-            body,
-            coord);
-
-        console.log(paddleShape.position);
-        console.log(this.paddleMotor);    
-        // this.input.keyboard.on('keydown-SPACE', (event) => {
-        //     this.paddleMotor.SetMotorSpeed(10);
-        //     this.paddleMotor.EnableMotor(true);
-        // });
-
-        // this.input.keyboard.on('keyup-SPACE', (event) => {
-        //     this.paddleMotor.SetMotorSpeed(-10);
-        // });
     }
 
-    update(t,dt) {
+    update(t, dt) {
         this.physics.update(dt);
-
     }
 }
 
