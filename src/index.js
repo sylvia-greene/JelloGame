@@ -133,35 +133,43 @@ class MyGame extends Phaser.Scene
         body.CreateFixtureFromShape(circle, 0.5);
 
         //flipper
-        bd = new b2BodyDef();
-        var paddleShape = new b2PolygonShape();
+        
         // const paddleCentroid = new b2Vec2(-this.flipperSprite.width/2, 0);
         // paddleShape.SetAsBoxXYCenterAngle(
         //     this.flipperSprite.width / 2,
         //     this.flipperSprite.height / 2,
         //     paddleCentroid, 0);
         // paddleShape.phaserCentroid = paddleCentroid;
-        paddleShape.phaserSprite = this.add.image(0,0,'flipper');
-        paddleShape.phaserSprite.setScale(1.1);
+      
+        var polygon_shape = new b2PolygonShape();
+       // polygon_shape.SetAsBoxXYCenterAngle(10.0, 0.2, new b2Vec2 (-10, 0.0), 0.0);
+      //using new method
+        polygon_shape.phaserSprite = this.add.image(10,0,'flipper');
+        polygon_shape.phaserSprite.setScale(1.1);
+        bd = new b2BodyDef();
+      //  paddleDef.position.Set(20.0, 10.0);
         bd.type = b2_dynamicBody;
-        var body = world.CreateBody(bd);
-        paddleShape.position.Set(0,2);
-        var paddle = body.CreateFixtureFromShape(paddleShape,0.5);
-
+        bd.bullet = true;
+        bd.density = 10000;
+    //
+        var body = world.CreateBody(bd);   
+        // var paddle = world.CreateBody(paddleDef);
+        polygon_shape.position.Set(30,0);
+        body.CreateFixtureFromShape(polygon_shape, 2.0);
+      
         let paddleMotorDef = new b2RevoluteJointDef;
-        paddleMotorDef.lowerAngle = 0.25 * Math.PI;
-        paddleMotorDef.upperAngle = -0.25 * Math.PI;
+        paddleMotorDef.lowerAngle = -0.25 * Math.PI;
+        paddleMotorDef.upperAngle = 0.0 * Math.PI;
         paddleMotorDef.enableLimit = true;
-        paddleMotorDef.maxMotorTorque = 3e10;
+        paddleMotorDef.maxMotorTorque = 20000000.0;
         paddleMotorDef.enableMotor = true;
-        var coord = new b2Vec2(0,0);
-        this.paddleMotor = paddleMotorDef.InitializeAndCreate(
-            ground,
-            body,
-            coord);
+        this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground, body, bd.position);
+       // console.log(this.paddleMotor);
+        
+        this.flipperSpeed = 20;
+        paddleMotorDef.motorSpeed = this.flipperSpeed;
 
-        console.log(paddleShape.position);
-        console.log(this.paddleMotor);    
+ 
         // this.input.keyboard.on('keydown-SPACE', (event) => {
         //     this.paddleMotor.SetMotorSpeed(10);
         //     this.paddleMotor.EnableMotor(true);
