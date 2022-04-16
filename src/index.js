@@ -136,28 +136,33 @@ class MyGame extends Phaser.Scene
 
         bd = new b2BodyDef();
         var polygon_shape = new b2PolygonShape();
-        polygon_shape.phaserSprite = this.add.image(0,-2,'flipper');
-
+        polygon_shape.phaserSprite = this.add.image(0,0,'flipper');
         polygon_shape.phaserSprite.setScale(.9);
         polygon_shape.phaserCentroid = new b2Vec2 (0.0, 2.0);
-        polygon_shape.SetAsBoxXYCenterAngle(10.0, 0.01, polygon_shape.phaserCentroid, 0.0);
+        polygon_shape.SetAsBoxXYCenterAngle(0.0, 0, polygon_shape.phaserCentroid, 0.0);
+        polygon_shape.phaserSprite.setScale(.9);
+        polygon_shape.position.Set(0,-1);
+  
+
+        
+
         bd.type = b2_dynamicBody;
         bd.bullet = true;
         bd.density = 10000;
-    //
+   
         var body = world.CreateBody(bd);   
-
-        polygon_shape.position.Set(0,-1);
         body.CreateFixtureFromShape(polygon_shape, 0.5);
-      
+  
+
         let paddleMotorDef = new b2RevoluteJointDef();
+        paddleMotorDef.phaserSprite;
         paddleMotorDef.lowerAngle = 0 * Math.PI;
         paddleMotorDef.upperAngle = .25 * Math.PI;
         paddleMotorDef.enableLimit = true;
         paddleMotorDef.maxMotorTorque = 2000000000.0;
         paddleMotorDef.enableMotor = true;
         paddleMotorDef.collideConnected = false;
-        console.log(polygon_shape.position);
+
         var focalPoint = new b2Vec2(-1,polygon_shape.phaserCentroid.y);
        
         this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground,body,focalPoint);
