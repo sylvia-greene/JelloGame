@@ -136,13 +136,14 @@ class MyGame extends Phaser.Scene
 
         bd = new b2BodyDef();
         var polygon_shape = new b2PolygonShape();
-        polygon_shape.phaserSprite = this.add.image(0,0,'flipper');
-        polygon_shape.phaserSprite.setScale(.9);
-        polygon_shape.phaserCentroid = new b2Vec2 (0.0, 2.0);
-        polygon_shape.SetAsBoxXYCenterAngle(0.0, 0, polygon_shape.phaserCentroid, 0.0);
-        polygon_shape.phaserSprite.setScale(.9);
-        polygon_shape.position.Set(0,-1);
+        polygon_shape.position.Set(0,1);
   
+        polygon_shape.phaserSprite = this.add.image(0,1,'flipper');
+        polygon_shape.phaserSprite.setScale(1.1);
+        polygon_shape.phaserCentroid = new b2Vec2 (0.0,-1.0);
+        polygon_shape.SetAsBoxXYCenterAngle(10.0, 0.2, polygon_shape.phaserCentroid, 0.0);
+        polygon_shape.phaserSprite.setScale(.9);
+       
 
         
 
@@ -159,7 +160,7 @@ class MyGame extends Phaser.Scene
         paddleMotorDef.lowerAngle = 0 * Math.PI;
         paddleMotorDef.upperAngle = .25 * Math.PI;
         paddleMotorDef.enableLimit = true;
-        paddleMotorDef.maxMotorTorque = 2000000000.0;
+        paddleMotorDef.maxMotorTorque = 200000.0;
         paddleMotorDef.enableMotor = true;
         paddleMotorDef.collideConnected = false;
 
@@ -172,13 +173,13 @@ class MyGame extends Phaser.Scene
 
  
         this.input.keyboard.on('keydown-SPACE', (event) => {
-            this.paddleMotor.SetMotorSpeed(10);
+            this.paddleMotor.SetMotorSpeed(100);
         
             console.log(this.paddleMotor);
         });
 
         this.input.keyboard.on('keyup-SPACE', (event) => {
-            this.paddleMotor.SetMotorSpeed(-10);
+            this.paddleMotor.SetMotorSpeed(-100);
             
             console.log(this.paddleMotor);
         });
