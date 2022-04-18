@@ -4,6 +4,7 @@ import logoImg from './assets/logo.png';
 import flipperImg from './assets/flipper.png';
 import ballImg from './assets/ball.png';
 import jelloImg from './assets/jello.png';
+import coolwhipImg from './assets/sprites/coolwhip.png';
 
 import LiquidFunPhysics from './lf-phaser.js';
 
@@ -25,6 +26,7 @@ class MyGame extends Phaser.Scene
         this.load.image('logo', logoImg);
         this.load.image('flipper',flipperImg);
         this.load.image('jello', jelloImg);
+        this.load.image('coolwhip', coolwhipImg);
     }
       
     create ()
@@ -68,22 +70,21 @@ class MyGame extends Phaser.Scene
         const jello = this.add.particles('jello');        
 
         //first group
-    //     var box = new b2PolygonShape();
-    //     box.SetAsBoxXY(0.5, 0.5);
-    //     var pgd = new b2ParticleGroupDef();
-    //     pgd.flags = b2_springParticle;
-    //     pgd.groupFlags = b2_solidParticleGroup;
-    //     pgd.shape = box;
-    //     pgd.position.Set(0, 3);
-    //     const group1 = particleSystem.CreateParticleGroup(pgd);
-    //     group1.phaserParticleEmitters = [
-    //         jello.createEmitter({
-    //             tint: 0xFF0000,
-    //             blendMode: Phaser.BlendModes.ADD,
-    //             scale: 0.3,
-    //         })
-    //     ];
-    //     // this.myBallSprite = this.add.image(300, 100, 'ball');
+        // var box = new b2PolygonShape();
+        // box.SetAsBoxXY(0.5, 0.5);
+        // var pgd = new b2ParticleGroupDef();
+        // pgd.flags = b2_springParticle;
+        // pgd.groupFlags = b2_solidParticleGroup;
+        // pgd.shape = box;
+        // pgd.position.Set(0, 3);
+        // const group1 = particleSystem.CreateParticleGroup(pgd);
+        // group1.phaserParticleEmitters = [
+        //     jello.createEmitter({
+        //         tint: 0xFF0000,
+        //         blendMode: Phaser.BlendModes.ADD,
+        //         scale: 0.3,
+        //     })
+        // ];
 
     //     //second group 
     //     var box = new b2PolygonShape();
@@ -131,6 +132,30 @@ class MyGame extends Phaser.Scene
         circle.position.Set(0, 8);
         circle.radius = 0.5;
         body.CreateFixtureFromShape(circle, 0.5);
+
+        // coolwhip test
+
+        // var coolwhip_shape = new b2PolygonShape();
+        // coolwhip_shape.position.Set(0.5, 0.5);
+
+        // coolwhip_shape.phaserSprite = this.add.image(0,0,'coolwhip');
+        // coolwhip_shape.phaserSprite.setScale(0.3);
+
+        // var coolwhip_vertices = coolwhip_shape.vertices;
+        // coolwhip_vertices.push(new b2Vec2(-0.3, -0.4));
+        // coolwhip_vertices.push(new b2Vec2(0.46, -0.4));
+        // coolwhip_vertices.push(new b2Vec2(-0.55, 0.75));
+        // ground.CreateFixtureFromShape(coolwhip_shape, 0);
+
+        // var coolwhip_shape2 = new b2PolygonShape();
+        // coolwhip_shape2.position.Set(0.5, 0.5);
+
+        // var coolwhip_vertices2 = coolwhip_shape2.vertices;
+        // coolwhip_vertices2.push(new b2Vec2(0.46, -0.4));
+        // coolwhip_vertices2.push(new b2Vec2(1.23, -0.4));
+        // coolwhip_vertices2.push(new b2Vec2(1.45, 0.73));
+        // ground.CreateFixtureFromShape(coolwhip_shape2, 0);
+
 
         //flipper
 
@@ -182,6 +207,14 @@ class MyGame extends Phaser.Scene
             this.paddleMotor.SetMotorSpeed(-100);
             
             console.log(this.paddleMotor);
+        });
+
+        this.input.on('pointerdown', () => {
+            var mousex = (game.input.mousePointer.x - 400) / 120;
+            var mousey = (game.input.mousePointer.y - 400) / -120;
+
+            console.log('x = ' + mousex);
+            console.log('y = ' + mousey);
         });
     }
 
