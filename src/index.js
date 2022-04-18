@@ -161,13 +161,15 @@ class MyGame extends Phaser.Scene
 
        
         var polygon_shape = new b2PolygonShape();
-        polygon_shape.phaserCentroid = new b2Vec2 (0.0,0);
-        polygon_shape.phaserSprite = this.add.image(0,0,'flipper'); //i don't actually think this is doing anything
-        polygon_shape.SetAsBoxXYCenterAngle(5, 0.001, polygon_shape.phaserCentroid, 0.0);
+        polygon_shape.phaserCentroid = new b2Vec2 (0.0,0.0);
+        polygon_shape.SetAsBoxXYCenterAngle(20.0, 0.1, polygon_shape.phaserCentroid, 0.0);
+        
+        polygon_shape.phaserSprite = this.add.image(0,-1.2,'flipper'); 
+    
         var bd = new b2BodyDef;
-        bd.position.Set(0,0.0);
-        // polygon_shape.phaserSprite = this.add.image(0,10,'flipper');
-        polygon_shape.phaserSprite.setScale(.9);
+        bd.position.Set(0,0);
+    
+        polygon_shape.phaserSprite.setScale(.7);
         
         bd.type = b2_dynamicBody;
         bd.bullet = true;
@@ -186,8 +188,8 @@ class MyGame extends Phaser.Scene
         paddleMotorDef.enableMotor = true;
         paddleMotorDef.collideConnected = false;
 
-       // var focalPoint = new b2Vec2(-1.2,polygon_shape.phaserCentroid.y);
-       var focalPoint = new b2Vec2(-1.2,1);
+        var focalPoint = new b2Vec2(-1.2,polygon_shape.phaserCentroid.y);
+       
        
         this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground,body,focalPoint);
         
@@ -198,21 +200,21 @@ class MyGame extends Phaser.Scene
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.paddleMotor.SetMotorSpeed(100);
         
-            console.log(this.paddleMotor);
+           
         });
 
         this.input.keyboard.on('keyup-SPACE', (event) => {
             this.paddleMotor.SetMotorSpeed(-100);
             
-            console.log(this.paddleMotor);
+           
         });
 
         this.input.on('pointerdown', () => {
             var mousex = (game.input.mousePointer.x - 400) / 120;
             var mousey = (game.input.mousePointer.y - 400) / -120;
 
-            console.log('x = ' + mousex);
-            console.log('y = ' + mousey);
+            // console.log('x = ' + mousex);
+            // console.log('y = ' + mousey);
         });
     }
 
