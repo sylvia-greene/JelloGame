@@ -36,6 +36,8 @@ export default class LiquidFunPhysics {
         }
     }
 
+    
+
     _updateSprite(shape, transform) {
         if (!shape.phaserSprite) {
             return;
@@ -45,13 +47,26 @@ export default class LiquidFunPhysics {
         var centroidPos = new b2Vec2();
         b2Vec2.Add(centroidPos, shape.phaserCentroid || new b2Vec2(0, 0), shape.position)
         b2Vec2.Mul(transformedPos, transform, centroidPos);
-        shape.phaserSprite.setPosition(
-            this.center[0] + transformedPos.x * this.scale,
-            this.center[1] + transformedPos.y * this.scale * this.flip);
+        const phaserPos = this.toPhaserCoord(transformedPos);
+        shape.phaserSprite.setPosition(phaserPos.x, phaserPos.y);
         shape.phaserSprite.setAngle(this.flip * 180 / Math.PI * Math.atan2(transform.q.s, transform.q.c));
     }
 
-    _updateParticles(system, group) {
+    toPhaserCoord(pos) {
+        return {
+            x: this.center[0] + pos.x * this.scale,
+            y: this.center[1] + pos.y * this.scale * this.flip
+        };
+    }
+
+    fromPhaserCoord(pos) {
+        return new b2Vec2(
+            (pos.x - this.center[0]) / this.scale,
+            (pos.y - this.center[1]) / this.scale / this.flip
+        );
+    }
+
+        _updateParticles(system, group) {
         const emitters = group.phaserParticleEmitters;
         if (!emitters) {
             return;
@@ -73,8 +88,12 @@ export default class LiquidFunPhysics {
 
             for (var i = 0; i < count; i++) {
                 const particle = emitter.alive[i];
-                particle.x = this.center[0] + particles[(i + offset) * 2] * this.scale + xoffset;
-                particle.y = this.center[1] + particles[(i + offset) * 2 + 1] * this.scale * this.flip + yoffset;
+                const newPos = this.toPhaserCoord({
+                    x: particles[(i + offset) * 2],
+                    y: particles[(i + offset) * 2 + 1]
+                });
+                particle.x = newPos.x + xoffset;
+                particle.y = newPos.y + yoffset;
 
                 // To use LiquidFun's colors instead of Phaser's:
                 // particle.tint =
