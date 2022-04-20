@@ -87,51 +87,51 @@ class MyGame extends Phaser.Scene
         ];
 
     // //     //second group 
-    //     var box = new b2PolygonShape();
-    //     box.SetAsBoxXY(0.4, 0.4);
-    //     pgd = new b2ParticleGroupDef();
-    //     pgd.flags = b2_elasticParticle;
-    //     pgd.groupFlags = b2_solidParticleGroup;
-    //     pgd.position.Set(-1, 3);
-    //     pgd.shape = box;
-    //     const group2 = particleSystem.CreateParticleGroup(pgd);
-    //     group2.phaserParticleEmitters = [
-    //         jello.createEmitter({
-    //             tint: 0x00FF00,
-    //             blendMode: Phaser.BlendModes.ADD,
-    //             scale: 0.3,
-    //         })
-    //     ];
+        var box = new b2PolygonShape();
+        box.SetAsBoxXY(0.4, 0.4);
+        pgd = new b2ParticleGroupDef();
+        pgd.flags = b2_elasticParticle;
+        pgd.groupFlags = b2_solidParticleGroup;
+        pgd.position.Set(-1, 3);
+        pgd.shape = box;
+        const group2 = particleSystem.CreateParticleGroup(pgd);
+        group2.phaserParticleEmitters = [
+            jello.createEmitter({
+                tint: 0x00FF00,
+                blendMode: Phaser.BlendModes.ADD,
+                scale: 0.3,
+            })
+        ];
 
     // //  // third group
-    //     var box = new b2PolygonShape();
-    //     box.SetAsBoxXY(1, 0.5);
-    //     var pgd = new b2ParticleGroupDef();
-    //     pgd.flags = b2_elasticParticle;
-    //     pgd.groupFlags = b2_solidParticleGroup;
-    //     pgd.position.Set(1, 4);
-    //     pgd.angle = -0.5;
-    //     pgd.angularVelocity = 2;
-    //     pgd.shape = box;
-    //     const group3 = particleSystem.CreateParticleGroup(pgd)
-    //     group3.phaserParticleEmitters = [
-    //         jello.createEmitter({
-    //             tint: 0x0000FF,
-    //             blendMode: Phaser.BlendModes.ADD,
-    //             scale: 0.3,
-    //      })
-    //  ];
+        var box = new b2PolygonShape();
+        box.SetAsBoxXY(1, 0.5);
+        var pgd = new b2ParticleGroupDef();
+        pgd.flags = b2_elasticParticle;
+        pgd.groupFlags = b2_solidParticleGroup;
+        pgd.position.Set(1, 4);
+        pgd.angle = -0.5;
+        pgd.angularVelocity = 2;
+        pgd.shape = box;
+        const group3 = particleSystem.CreateParticleGroup(pgd)
+        group3.phaserParticleEmitters = [
+            jello.createEmitter({
+                tint: 0x0000FF,
+                blendMode: Phaser.BlendModes.ADD,
+                scale: 0.3,
+         })
+     ];
 
         //cicle
-        // bd = new b2BodyDef();
-        // var circle = new b2CircleShape();
-        // circle.phaserSprite = this.add.image(0, 0, 'ball');
-        // circle.phaserSprite.setScale(1.1);
-        // bd.type = b2_dynamicBody;
-        // var body = world.CreateBody(bd);
-        // circle.position.Set(0, 8);
-        // circle.radius = 0.5;
-        // body.CreateFixtureFromShape(circle, 0.5);
+        bd = new b2BodyDef();
+        var circle = new b2CircleShape();
+        circle.phaserSprite = this.add.image(0, 0, 'ball');
+        circle.phaserSprite.setScale(1.1);
+        bd.type = b2_dynamicBody;
+        var body = world.CreateBody(bd);
+        circle.position.Set(0, 8);
+        circle.radius = 0.5;
+        body.CreateFixtureFromShape(circle, 0.5);
 
         // coolwhip test
 
@@ -154,79 +154,77 @@ class MyGame extends Phaser.Scene
 
 
 
-        var coolwhip_shape = new b2PolygonShape();
-        coolwhip_shape.position.Set(0.5, 0.5);
+        // var coolwhip_shape = new b2PolygonShape();
+        // coolwhip_shape.position.Set(0.5, 0.5);
 
-        coolwhip_shape.phaserSprite = this.add.image(0,0,'coolwhip');
-        coolwhip_shape.phaserSprite.setScale(0.3);
+        // coolwhip_shape.phaserSprite = this.add.image(0,0,'coolwhip');
+        // coolwhip_shape.phaserSprite.setScale(0.3);
 
-        // *0.3 / 120
+        // // *0.3 / 120
 
-        var coolwhip_vertices = coolwhip_shape.vertices;
-        coolwhip_vertices.push(new b2Vec2(-0.3, -0.4));
-        coolwhip_vertices.push(new b2Vec2(0.46, -0.4));
-        coolwhip_vertices.push(new b2Vec2(-0.55, 0.75));
-        ground.CreateFixtureFromShape(coolwhip_shape, 0);
+        // var coolwhip_vertices = coolwhip_shape.vertices;
+        // coolwhip_vertices.push(new b2Vec2(-0.3, -0.4));
+        // coolwhip_vertices.push(new b2Vec2(0.46, -0.4));
+        // coolwhip_vertices.push(new b2Vec2(-0.55, 0.75));
+        // ground.CreateFixtureFromShape(coolwhip_shape, 0);
 
-        var coolwhip_shape2 = new b2PolygonShape();
-        coolwhip_shape2.position.Set(0.5, 0.5);
+        // var coolwhip_shape2 = new b2PolygonShape();
+        // coolwhip_shape2.position.Set(0.5, 0.5);
 
-        var coolwhip_vertices2 = coolwhip_shape2.vertices;
-        coolwhip_vertices2.push(new b2Vec2(0.46, -0.4));
-        coolwhip_vertices2.push(new b2Vec2(1.23, -0.4));
-        coolwhip_vertices2.push(new b2Vec2(1.45, 0.73));
-        ground.CreateFixtureFromShape(coolwhip_shape2, 0);
+        // var coolwhip_vertices2 = coolwhip_shape2.vertices;
+        // coolwhip_vertices2.push(new b2Vec2(0.46, -0.4));
+        // coolwhip_vertices2.push(new b2Vec2(1.23, -0.4));
+        // coolwhip_vertices2.push(new b2Vec2(1.45, 0.73));
+        // ground.CreateFixtureFromShape(coolwhip_shape2, 0);
 
 
         //flipper
 
        
-        // var polygon_shape = new b2PolygonShape();
-        // polygon_shape.phaserCentroid = new b2Vec2 (0.0,0.0);
-        // polygon_shape.SetAsBoxXYCenterAngle(20.0, 0.1, polygon_shape.phaserCentroid, 0.0);
+        var polygon_shape = new b2PolygonShape();
+        polygon_shape.position.Set(0,0);
+        polygon_shape.phaserCentroid = new b2Vec2(-2.4,0.0);
+        polygon_shape.SetAsBoxXYCenterAngle(1.2, 0.1,polygon_shape.phaserCentroid , 0.0);
         
-        // polygon_shape.phaserSprite = this.add.image(0,-1.2,'flipper'); 
-    
-        // var bd = new b2BodyDef;
-        // bd.position.Set(0,0);
-    
-        // polygon_shape.phaserSprite.setScale(.7);
-        
-        // bd.type = b2_dynamicBody;
-        // bd.bullet = true;
-        // bd.density = 10000;
+        polygon_shape.phaserSprite = this.add.image(0,.15,'flipper'); 
+        polygon_shape.phaserSprite.setScale(.7);
+
+        var bd = new b2BodyDef;
+         bd.position.Set(0,0);
+
+        bd.type = b2_dynamicBody;
+        bd.bullet = true;
+        bd.density = 10000;
    
-        // var body = world.CreateBody(bd);   
-        // body.CreateFixtureFromShape(polygon_shape, 2.0);
+        var body = world.CreateBody(bd);   
+        body.CreateFixtureFromShape(polygon_shape, 2);
   
 
-        // let paddleMotorDef = new b2RevoluteJointDef();
-        // paddleMotorDef.phaserSprite;
-        // paddleMotorDef.lowerAngle = 0 * Math.PI;
-        // paddleMotorDef.upperAngle = .25 * Math.PI;
-        // paddleMotorDef.enableLimit = true;
-        // paddleMotorDef.maxMotorTorque = 200000.0;
-        // paddleMotorDef.enableMotor = true;
-        // paddleMotorDef.collideConnected = false;
+        let paddleMotorDef = new b2RevoluteJointDef();
+        paddleMotorDef.phaserSprite;
+        paddleMotorDef.lowerAngle = 0 * Math.PI;
+        paddleMotorDef.upperAngle = .25 * Math.PI;
+        paddleMotorDef.enableLimit = true;
+        paddleMotorDef.maxMotorTorque = 20000000.0;
+        paddleMotorDef.enableMotor = true;
+        paddleMotorDef.collideConnected = false;
 
-        // var focalPoint = new b2Vec2(-1.2,polygon_shape.phaserCentroid.y);
+      //  var focalPoint = new b2Vec2(-2.2,polygon_shape.phaserCentroid.y);
+        var focalPoint = new b2Vec2(-3.6,0);   
        
        
-        // this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground,body,focalPoint);
+        this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground,body,focalPoint);
         
-        // this.flipperSpeed = 20;
-        // paddleMotorDef.motorSpeed = this.flipperSpeed;
-
  
         this.input.keyboard.on('keydown-SPACE', (event) => {
-            this.paddleMotor.SetMotorSpeed(100);
-        
-           
+            this.paddleMotor.SetMotorSpeed(1000);
+            console.log(polygon_shape);
+            
         });
 
         this.input.keyboard.on('keyup-SPACE', (event) => {
-            this.paddleMotor.SetMotorSpeed(-100);
-            
+            this.paddleMotor.SetMotorSpeed(-1000);
+            console.log(polygon_shape);
            
         });
 
