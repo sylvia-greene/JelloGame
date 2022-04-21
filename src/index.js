@@ -66,10 +66,10 @@ class MyGame extends Phaser.Scene
         var psd = new b2ParticleSystemDef();
         psd.radius = 0.035;
         var particleSystem = world.CreateParticleSystem(psd);
-
+        this.jelloSystem = particleSystem;
         const jello = this.add.particles('jello');        
 
-        //first group
+    //     //first group
         var box = new b2PolygonShape();
         box.SetAsBoxXY(0.5, 0.5);
         var pgd = new b2ParticleGroupDef();
@@ -77,52 +77,52 @@ class MyGame extends Phaser.Scene
         pgd.groupFlags = b2_solidParticleGroup;
         pgd.shape = box;
         pgd.position.Set(0, 3);
-        const group1 = particleSystem.CreateParticleGroup(pgd);
-        group1.phaserParticleEmitters = [
+        this.group1 = particleSystem.CreateParticleGroup(pgd);
+        this.group1.phaserParticleEmitters = [
             jello.createEmitter({
                 tint: 0xFF0000,
                 blendMode: Phaser.BlendModes.ADD,
                 scale: 0.3,
             })
         ];
+        
+    // // //     //second group 
+    //     var box = new b2PolygonShape();
+    //     box.SetAsBoxXY(0.4, 0.4);
+    //     pgd = new b2ParticleGroupDef();
+    //     pgd.flags = b2_elasticParticle;
+    //     pgd.groupFlags = b2_solidParticleGroup;
+    //     pgd.position.Set(-1, 3);
+    //     pgd.shape = box;
+    //     const group2 = particleSystem.CreateParticleGroup(pgd);
+    //     group2.phaserParticleEmitters = [
+    //         jello.createEmitter({
+    //             tint: 0x00FF00,
+    //             blendMode: Phaser.BlendModes.ADD,
+    //             scale: 0.3,
+    //         })
+    //     ];
 
-    // //     //second group 
-        var box = new b2PolygonShape();
-        box.SetAsBoxXY(0.4, 0.4);
-        pgd = new b2ParticleGroupDef();
-        pgd.flags = b2_elasticParticle;
-        pgd.groupFlags = b2_solidParticleGroup;
-        pgd.position.Set(-1, 3);
-        pgd.shape = box;
-        const group2 = particleSystem.CreateParticleGroup(pgd);
-        group2.phaserParticleEmitters = [
-            jello.createEmitter({
-                tint: 0x00FF00,
-                blendMode: Phaser.BlendModes.ADD,
-                scale: 0.3,
-            })
-        ];
+    // // //  // third group
+    //     var box = new b2PolygonShape();
+    //     box.SetAsBoxXY(1, 0.5);
+    //     this.pgd = new b2ParticleGroupDef();
+    //    this.pgd.flags = b2_elasticParticle;
+    //     this.pgd.groupFlags = b2_solidParticleGroup;
+    //     this.pgd.position.Set(1, 4);
+    //    this.pgd.angle = -0.5;
+    //     this.pgd.angularVelocity = 2;
+    //     this.pgd.shape = box;
+    //     this.group3 = particleSystem.CreateParticleGroup(pgd)
+    //     this.group3.phaserParticleEmitters = [
+    //         jello.createEmitter({
+    //             tint: 0x0000FF,
+    //             blendMode: Phaser.BlendModes.ADD,
+    //             scale: 0.3,
+    //      })
+    //  ];
 
-    // //  // third group
-        var box = new b2PolygonShape();
-        box.SetAsBoxXY(1, 0.5);
-        var pgd = new b2ParticleGroupDef();
-        pgd.flags = b2_elasticParticle;
-        pgd.groupFlags = b2_solidParticleGroup;
-        pgd.position.Set(1, 4);
-        pgd.angle = -0.5;
-        pgd.angularVelocity = 2;
-        pgd.shape = box;
-        const group3 = particleSystem.CreateParticleGroup(pgd)
-        group3.phaserParticleEmitters = [
-            jello.createEmitter({
-                tint: 0x0000FF,
-                blendMode: Phaser.BlendModes.ADD,
-                scale: 0.3,
-         })
-     ];
-
-        //cicle
+    //     //cicle
         bd = new b2BodyDef();
         var circle = new b2CircleShape();
         circle.phaserSprite = this.add.image(0, 0, 'ball');
@@ -135,20 +135,20 @@ class MyGame extends Phaser.Scene
 
         // coolwhip test
 
-        const level1Json =
-            {
-                "jellostart": {"x" : -2.5, "y" : 3},
+        // const level1Json =
+        //     {
+        //         "jellostart": {"x" : -2.5, "y" : 3},
 
-                "coolwhip": {
-                    "sprite": "coolwhip",
-                    "shapes": [
-                        [{ x: 34, y: 12}, { x: 37, y: 52}],
-                        [{ x: 34, y: 12}, { x: 37, y: 52}],
-                    ]
-                }
+        //         "coolwhip": {
+        //             "sprite": "coolwhip",
+        //             "shapes": [
+        //                 [{ x: 34, y: 12}, { x: 37, y: 52}],
+        //                 [{ x: 34, y: 12}, { x: 37, y: 52}],
+        //             ]
+        //         }
 
 
-            };
+        //     };
 
 
 
@@ -181,17 +181,16 @@ class MyGame extends Phaser.Scene
         //flipper
 
        
-        var polygon_shape = new b2PolygonShape();
-        polygon_shape.position.Set(0,0);
-        polygon_shape.phaserCentroid = new b2Vec2(-2.4,0.0);
-        polygon_shape.SetAsBoxXYCenterAngle(1.2, 0.1,polygon_shape.phaserCentroid , 0.0);
+        var polygon_shape = new b2PolygonShape;
+        //polygon_shape.position.Set(0,0);
+        // polygon_shape.phaserCentroid = new b2Vec2(0.0,0.0);
+        polygon_shape.SetAsBoxXYCenterAngle(3, 0.2,new b2Vec2(0.0,0.0), 0.0);
         
-        polygon_shape.phaserSprite = this.add.image(0,.15,'flipper'); 
+        polygon_shape.phaserSprite = this.add.image(0,0,'flipper'); 
         polygon_shape.phaserSprite.setScale(.7);
 
         var bd = new b2BodyDef;
-         bd.position.Set(0,0);
-
+        bd.position.Set(0,0);
         bd.type = b2_dynamicBody;
         bd.bullet = true;
         bd.density = 10000;
@@ -201,30 +200,27 @@ class MyGame extends Phaser.Scene
   
 
         let paddleMotorDef = new b2RevoluteJointDef();
-        paddleMotorDef.phaserSprite;
         paddleMotorDef.lowerAngle = 0 * Math.PI;
         paddleMotorDef.upperAngle = .25 * Math.PI;
         paddleMotorDef.enableLimit = true;
         paddleMotorDef.maxMotorTorque = 20000000.0;
         paddleMotorDef.enableMotor = true;
-        paddleMotorDef.collideConnected = false;
 
       //  var focalPoint = new b2Vec2(-2.2,polygon_shape.phaserCentroid.y);
-        var focalPoint = new b2Vec2(-3.6,0);   
-       
+        var focalPoint = new b2Vec2(0.0,0);   
        
         this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground,body,focalPoint);
         
  
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.paddleMotor.SetMotorSpeed(1000);
-            console.log(polygon_shape);
+
             
         });
 
         this.input.keyboard.on('keyup-SPACE', (event) => {
             this.paddleMotor.SetMotorSpeed(-1000);
-            console.log(polygon_shape);
+ 
            
         });
 
@@ -235,11 +231,18 @@ class MyGame extends Phaser.Scene
             console.log('x = ' + mousex);
             console.log('y = ' + mousey);
         });
+
+this.centroidTest = this.add.image(0, 0, 'ball');
+this.centroidTest.setScale(0.1);
     }
 
     update(t,dt) {
         this.physics.update(dt);
-        
+
+const jelloPos = this.physics.toPhaserCoord(
+    this.physics.computeParticleCentroid(
+        this.jelloSystem, this.group1));
+this.centroidTest.setPosition(jelloPos.x, jelloPos.y);
     }
 }
 

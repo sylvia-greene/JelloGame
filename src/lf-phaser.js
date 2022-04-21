@@ -16,6 +16,41 @@ export default class LiquidFunPhysics {
         this.flip = flip ? -1 : 1;
     }
 
+    // –––––– Helpers ––––––
+
+    toPhaserCoord(pos) {
+        return {
+            x: this.center[0] + pos.x * this.scale,
+            y: this.center[1] + pos.y * this.scale * this.flip
+        };
+    }
+
+    fromPhaserCoord(pos) {
+        return new b2Vec2(
+            (pos.x - this.center[0]) / this.scale,
+            (pos.y - this.center[1]) / this.scale / this.flip
+        );
+    }
+
+    computeParticleCentroid(system, group) {
+        const particles = system.GetPositionBuffer();
+        const offset = group.GetBufferIndex();
+        const count = group.GetParticleCount();
+
+        let xSum = 0;
+        let ySum = 0;
+        for (var i = 0; i < count; i++) {
+            xSum += particles[(i + offset) * 2];
+            ySum += particles[(i + offset) * 2 + 1];
+        }
+        return {
+            x: xSum/count,
+            y: ySum/count
+        };
+    }
+
+    // –––––– Update Phaser from physics world ––––––
+
     update(dt) {
         this.world.Step(dt / 1000, velocityIterations, positionIterations);
 
@@ -36,8 +71,6 @@ export default class LiquidFunPhysics {
         }
     }
 
-    
-
     _updateSprite(shape, transform) {
         if (!shape.phaserSprite) {
             return;
@@ -52,21 +85,7 @@ export default class LiquidFunPhysics {
         shape.phaserSprite.setAngle(this.flip * 180 / Math.PI * Math.atan2(transform.q.s, transform.q.c));
     }
 
-    toPhaserCoord(pos) {
-        return {
-            x: this.center[0] + pos.x * this.scale,
-            y: this.center[1] + pos.y * this.scale * this.flip
-        };
-    }
-
-    fromPhaserCoord(pos) {
-        return new b2Vec2(
-            (pos.x - this.center[0]) / this.scale,
-            (pos.y - this.center[1]) / this.scale / this.flip
-        );
-    }
-
-        _updateParticles(system, group) {
+    _updateParticles(system, group) {
         const emitters = group.phaserParticleEmitters;
         if (!emitters) {
             return;
