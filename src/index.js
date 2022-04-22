@@ -69,14 +69,19 @@ class MyGame extends Phaser.Scene
         this.jelloSystem = particleSystem;
         const jello = this.add.particles('jello');        
 
-    //     //first group
-        var box = new b2PolygonShape();
-        box.SetAsBoxXY(0.5, 0.5);
+        //first group
+        var trapezoid = new b2PolygonShape();
+        var trapezoid_vertices = trapezoid.vertices;
+        trapezoid_vertices.push(new b2Vec2(-0.5, -0.3));
+        trapezoid_vertices.push(new b2Vec2(0.5, -0.3));
+        trapezoid_vertices.push(new b2Vec2(0.3, 0.4));
+        trapezoid_vertices.push(new b2Vec2(-0.3, 0.4));
+
         var pgd = new b2ParticleGroupDef();
         pgd.flags = b2_springParticle;
         pgd.groupFlags = b2_solidParticleGroup;
-        pgd.shape = box;
-        pgd.position.Set(0, 3);
+        pgd.shape = trapezoid;
+        pgd.position.Set(-2, 3);
         this.group1 = particleSystem.CreateParticleGroup(pgd);
         this.group1.phaserParticleEmitters = [
             jello.createEmitter({
@@ -85,53 +90,17 @@ class MyGame extends Phaser.Scene
                 scale: 0.3,
             })
         ];
-        
-    // // //     //second group 
-    //     var box = new b2PolygonShape();
-    //     box.SetAsBoxXY(0.4, 0.4);
-    //     pgd = new b2ParticleGroupDef();
-    //     pgd.flags = b2_elasticParticle;
-    //     pgd.groupFlags = b2_solidParticleGroup;
-    //     pgd.position.Set(-1, 3);
-    //     pgd.shape = box;
-    //     const group2 = particleSystem.CreateParticleGroup(pgd);
-    //     group2.phaserParticleEmitters = [
-    //         jello.createEmitter({
-    //             tint: 0x00FF00,
-    //             blendMode: Phaser.BlendModes.ADD,
-    //             scale: 0.3,
-    //         })
-    //     ];
 
-    // // //  // third group
-    //     var box = new b2PolygonShape();
-    //     box.SetAsBoxXY(1, 0.5);
-    //     this.pgd = new b2ParticleGroupDef();
-    //    this.pgd.flags = b2_elasticParticle;
-    //     this.pgd.groupFlags = b2_solidParticleGroup;
-    //     this.pgd.position.Set(1, 4);
-    //    this.pgd.angle = -0.5;
-    //     this.pgd.angularVelocity = 2;
-    //     this.pgd.shape = box;
-    //     this.group3 = particleSystem.CreateParticleGroup(pgd)
-    //     this.group3.phaserParticleEmitters = [
-    //         jello.createEmitter({
-    //             tint: 0x0000FF,
-    //             blendMode: Phaser.BlendModes.ADD,
-    //             scale: 0.3,
-    //      })
-    //  ];
-
-    //     //cicle
-        bd = new b2BodyDef();
-        var circle = new b2CircleShape();
-        circle.phaserSprite = this.add.image(0, 0, 'ball');
-        circle.phaserSprite.setScale(1.1);
-        bd.type = b2_dynamicBody;
-        var body = world.CreateBody(bd);
-        circle.position.Set(0, 8);
-        circle.radius = 0.5;
-        body.CreateFixtureFromShape(circle, 0.5);
+        // //cicle
+        // bd = new b2BodyDef();
+        // var circle = new b2CircleShape();
+        // circle.phaserSprite = this.add.image(0, 0, 'ball');
+        // circle.phaserSprite.setScale(1.1);
+        // bd.type = b2_dynamicBody;
+        // var body = world.CreateBody(bd);
+        // circle.position.Set(0, 8);
+        // circle.radius = 0.38;
+        // body.CreateFixtureFromShape(circle, 0.5);
 
         // coolwhip test
 
@@ -151,75 +120,70 @@ class MyGame extends Phaser.Scene
         //     };
 
 
-
-
-
-        // var coolwhip_shape = new b2PolygonShape();
-        // coolwhip_shape.position.Set(0.5, 0.5);
+        var coolwhip_shape = new b2PolygonShape();
+        coolwhip_shape.position.Set(2, 1.5);
 
         // coolwhip_shape.phaserSprite = this.add.image(0,0,'coolwhip');
         // coolwhip_shape.phaserSprite.setScale(0.3);
 
-        // // *0.3 / 120
+        var coolwhip_vertices = coolwhip_shape.vertices;
+        coolwhip_vertices.push(new b2Vec2(1.21, 0.55));
+        coolwhip_vertices.push(new b2Vec2(1.98, 0.55));
+        coolwhip_vertices.push(new b2Vec2(1, 1.71));
+        ground.CreateFixtureFromShape(coolwhip_shape, 0);
 
-        // var coolwhip_vertices = coolwhip_shape.vertices;
-        // coolwhip_vertices.push(new b2Vec2(-0.3, -0.4));
-        // coolwhip_vertices.push(new b2Vec2(0.46, -0.4));
-        // coolwhip_vertices.push(new b2Vec2(-0.55, 0.75));
-        // ground.CreateFixtureFromShape(coolwhip_shape, 0);
+        var coolwhip_shape2 = new b2PolygonShape();
+        coolwhip_shape2.position.Set(0.5, 0.5);
 
-        // var coolwhip_shape2 = new b2PolygonShape();
-        // coolwhip_shape2.position.Set(0.5, 0.5);
-
-        // var coolwhip_vertices2 = coolwhip_shape2.vertices;
-        // coolwhip_vertices2.push(new b2Vec2(0.46, -0.4));
-        // coolwhip_vertices2.push(new b2Vec2(1.23, -0.4));
-        // coolwhip_vertices2.push(new b2Vec2(1.45, 0.73));
-        // ground.CreateFixtureFromShape(coolwhip_shape2, 0);
+        var coolwhip_vertices2 = coolwhip_shape2.vertices;
+        coolwhip_vertices2.push(new b2Vec2(1.98, 0.55));
+        coolwhip_vertices2.push(new b2Vec2(2.71, 0.55));
+        coolwhip_vertices2.push(new b2Vec2(2.9, 1.71));
+        ground.CreateFixtureFromShape(coolwhip_shape2, 0);
 
 
         //flipper
 
-       
-        var polygon_shape = new b2PolygonShape;
-        //polygon_shape.position.Set(0,0);
-        // polygon_shape.phaserCentroid = new b2Vec2(0.0,0.0);
-        polygon_shape.SetAsBoxXYCenterAngle(3, 0.2,new b2Vec2(0.0,0.0), 0.0);
-        
+        var polygon_shape = new b2PolygonShape();
+        polygon_shape.phaserCentroid = new b2Vec2(0,0);
+        polygon_shape.SetAsBoxXYCenterAngle(1.24, 0.1, polygon_shape.phaserCentroid, 0.0);
+
         polygon_shape.phaserSprite = this.add.image(0,0,'flipper'); 
-        polygon_shape.phaserSprite.setScale(.7);
 
         var bd = new b2BodyDef;
-        bd.position.Set(0,0);
+        bd.position.Set(-1.8, -0.8);
+        bd.angle = -0.1;
+
+        polygon_shape.phaserSprite.setScale(.7);
+
         bd.type = b2_dynamicBody;
         bd.bullet = true;
         bd.density = 10000;
-   
+
         var body = world.CreateBody(bd);   
-        body.CreateFixtureFromShape(polygon_shape, 2);
-  
+        body.CreateFixtureFromShape(polygon_shape, 2.0);
+        
 
         let paddleMotorDef = new b2RevoluteJointDef();
-        paddleMotorDef.lowerAngle = 0 * Math.PI;
-        paddleMotorDef.upperAngle = .25 * Math.PI;
+        paddleMotorDef.phaserSprite;
+        paddleMotorDef.lowerAngle = -.01 * Math.PI;
+        paddleMotorDef.upperAngle = .1 * Math.PI;
         paddleMotorDef.enableLimit = true;
-        paddleMotorDef.maxMotorTorque = 20000000.0;
+        paddleMotorDef.maxMotorTorque = 250.0;
         paddleMotorDef.enableMotor = true;
+        paddleMotorDef.collideConnected = false;
 
-      //  var focalPoint = new b2Vec2(-2.2,polygon_shape.phaserCentroid.y);
-        var focalPoint = new b2Vec2(0.0,0);   
-       
+        var focalPoint = new b2Vec2(-3.2, -0.6);
         this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground,body,focalPoint);
-        
- 
-        this.input.keyboard.on('keydown-SPACE', (event) => {
-            this.paddleMotor.SetMotorSpeed(1000);
 
-            
+        
+        this.input.keyboard.on('keydown-SPACE', (event) => {
+            this.paddleMotor.SetMotorSpeed(100);
+            console.log(this.group1.position);
         });
 
         this.input.keyboard.on('keyup-SPACE', (event) => {
-            this.paddleMotor.SetMotorSpeed(-1000);
+            this.paddleMotor.SetMotorSpeed(-100);
  
            
         });
