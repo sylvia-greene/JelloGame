@@ -123,12 +123,13 @@ class MyGame extends Phaser.Scene
         var coolwhip_shape = new b2PolygonShape();
         coolwhip_shape.position.Set(2, 1.5);
 
-        // coolwhip_shape.phaserSprite = this.add.image(0,0,'coolwhip');
-        // coolwhip_shape.phaserSprite.setScale(0.3);
+        coolwhip_shape.phaserSprite = this.add.image(0,0,'coolwhip');
+        coolwhip_shape.phaserSprite.setScale(0.3);
 
         var coolwhip_vertices = coolwhip_shape.vertices;
-        coolwhip_vertices.push(new b2Vec2(1.21, 0.55));
-        coolwhip_vertices.push(new b2Vec2(1.98, 0.55));
+        coolwhip_vertices.push(new b2Vec2(1.2, 0.75));
+        coolwhip_vertices.push(new b2Vec2(1.98, 0.75));
+        coolwhip_vertices.push(new b2Vec2(1.2, 1.71));
         coolwhip_vertices.push(new b2Vec2(1, 1.71));
         ground.CreateFixtureFromShape(coolwhip_shape, 0);
 
@@ -136,8 +137,9 @@ class MyGame extends Phaser.Scene
         coolwhip_shape2.position.Set(0.5, 0.5);
 
         var coolwhip_vertices2 = coolwhip_shape2.vertices;
-        coolwhip_vertices2.push(new b2Vec2(1.98, 0.55));
-        coolwhip_vertices2.push(new b2Vec2(2.71, 0.55));
+        coolwhip_vertices2.push(new b2Vec2(1.98, 0.75));
+        coolwhip_vertices2.push(new b2Vec2(2.71, 0.75));
+        coolwhip_vertices2.push(new b2Vec2(2.71, 1.71));
         coolwhip_vertices2.push(new b2Vec2(2.9, 1.71));
         ground.CreateFixtureFromShape(coolwhip_shape2, 0);
 
@@ -146,7 +148,7 @@ class MyGame extends Phaser.Scene
 
         var polygon_shape = new b2PolygonShape();
         polygon_shape.phaserCentroid = new b2Vec2(0,0);
-        polygon_shape.SetAsBoxXYCenterAngle(1.24, 0.1, polygon_shape.phaserCentroid, 0.0);
+        polygon_shape.SetAsBoxXYCenterAngle(1.24, 0.1, polygon_shape.phaserCentroid, 0.0); //changed this to be half the length of the flippersprite
 
         polygon_shape.phaserSprite = this.add.image(0,0,'flipper'); 
 
@@ -162,7 +164,6 @@ class MyGame extends Phaser.Scene
 
         var body = world.CreateBody(bd);   
         body.CreateFixtureFromShape(polygon_shape, 2.0);
-        
 
         let paddleMotorDef = new b2RevoluteJointDef();
         paddleMotorDef.phaserSprite;
@@ -173,13 +174,12 @@ class MyGame extends Phaser.Scene
         paddleMotorDef.enableMotor = true;
         paddleMotorDef.collideConnected = false;
 
-        var focalPoint = new b2Vec2(-3.2, -0.6);
+        var focalPoint = new b2Vec2(-3.2, -0.6); //got these numbers by clicking on the screen and copying coordinates for where i want the flipper to rotate around
         this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground,body,focalPoint);
 
         
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.paddleMotor.SetMotorSpeed(100);
-            console.log(this.group1.position);
         });
 
         this.input.keyboard.on('keyup-SPACE', (event) => {
@@ -187,6 +187,23 @@ class MyGame extends Phaser.Scene
  
            
         });
+
+        this.input.keyboard.on('keydown-X', (event) => {
+            var pgd = new b2ParticleGroupDef();
+            pgd.flags = b2_springParticle;
+            pgd.groupFlags = b2_solidParticleGroup;
+            pgd.shape = trapezoid;
+            pgd.position.Set(-2, 3);
+            this.group1 = particleSystem.CreateParticleGroup(pgd);
+            this.group1.phaserParticleEmitters = [
+                jello.createEmitter({
+                    tint: 0xFF0000,
+                    blendMode: Phaser.BlendModes.ADD,
+                    scale: 0.3,
+                })
+            ];
+        });
+
 
         this.input.on('pointerdown', () => {
             var mousex = (game.input.mousePointer.x - 400) / 120;
@@ -196,17 +213,16 @@ class MyGame extends Phaser.Scene
             console.log('y = ' + mousey);
         });
 
-this.centroidTest = this.add.image(0, 0, 'ball');
-this.centroidTest.setScale(0.1);
+        this.centroidTest = this.add.image(0, 0, 'ball');
+        this.centroidTest.setScale(0.1);
     }
 
     update(t,dt) {
         this.physics.update(dt);
-
-const jelloPos = this.physics.toPhaserCoord(
-    this.physics.computeParticleCentroid(
-        this.jelloSystem, this.group1));
-this.centroidTest.setPosition(jelloPos.x, jelloPos.y);
+        // const jelloPos = this.physics.toPhaserCoord(
+        // this.physics.computeParticleCentroid(
+        // this.jelloSystem, this.group1));
+        // this.centroidTest.setPosition(jelloPos.x, jelloPos.y);
     }
 }
 
@@ -215,7 +231,7 @@ const config = {
     parent: 'phaser-example',
     width: 800,
     height: 600,
-    backgroundColor: '#002266',
+    backgroundColor: '#606C86',
     scene: MyGame
 };
 
