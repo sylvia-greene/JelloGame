@@ -213,16 +213,18 @@ class MyGame extends Phaser.Scene
             console.log('y = ' + mousey);
         });
 
-        this.centroidTest = this.add.image(0, 0, 'ball');
-        this.centroidTest.setScale(0.1);
+        // this.centroidTest = this.add.image(0, 0, 'ball');
+        // this.centroidTest.setScale(0.1);
     }
 
     update(t,dt) {
         this.physics.update(dt);
-        // const jelloPos = this.physics.toPhaserCoord(
-        // this.physics.computeParticleCentroid(
-        // this.jelloSystem, this.group1));
-        // this.centroidTest.setPosition(jelloPos.x, jelloPos.y);
+        const jelloPos = this.physics.computeParticleCentroid(
+        this.jelloSystem, this.group1);
+        console.log(jelloPos);    
+        if(jelloPos.y <= -2){
+            this.scene.restart();
+        }
     }
 }
 
