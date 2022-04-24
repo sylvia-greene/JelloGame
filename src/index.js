@@ -160,44 +160,46 @@ class MyGame extends Phaser.Scene
 
         // //flipper #2 
 
-        // var polygon_shape2 = new b2PolygonShape();
-        // polygon_shape2.phaserCentroid = new b2Vec2(0,0);
-        // polygon_shape2.SetAsBoxXYCenterAngle(1.24, 0.1, polygon_shape2.phaserCentroid, 0.0); //changed this to be half the length of the flippersprite
+        var polygon_shape2 = new b2PolygonShape();
+        polygon_shape2.phaserCentroid = new b2Vec2(0,0);
+        polygon_shape2.SetAsBoxXYCenterAngle(2.05, 0.1, polygon_shape2.phaserCentroid, 0.0); //changed this to be half the length of the flippersprite
 
-        // polygon_shape2.phaserSprite = this.add.image(0,0,'flipper'); 
+        polygon_shape2.phaserSprite = this.add.image(0,0,'flipper'); 
 
-        // var bd2 = new b2BodyDef;
-        // bd2.position.Set(1.8, -0.8);
-        // bd2.angle = -0.1 * Math.PI;
+        var bd2 = new b2BodyDef;
+        bd2.position.Set(6, -0);
+        bd2.angle = -0.1 * Math.PI;
 
-        // polygon_shape2.phaserSprite.setScale(.7);
+        polygon_shape2.phaserSprite.setScale(.55);
 
-        // bd2.type = b2_dynamicBody;
-        // bd2.bullet = true;
-        // bd2.density = 10000;
+        bd2.type = b2_dynamicBody;
+        bd2.bullet = true;
+        bd2.density = 10000;
 
-        // var body2 = world.CreateBody(bd2);   
-        // body2.CreateFixtureFromShape(polygon_shape2, 2.0);
+        var body2 = world.CreateBody(bd2);   
+        body2.CreateFixtureFromShape(polygon_shape2, 2.0);
 
-        // let paddleMotorDef2 = new b2RevoluteJointDef();
-        // paddleMotorDef2.phaserSprite;
-        // paddleMotorDef2.lowerAngle = -.009 * Math.PI;
-        // paddleMotorDef2.upperAngle = .1 * Math.PI;
-        // paddleMotorDef2.enableLimit = true;
-        // paddleMotorDef2.maxMotorTorque = 250.0;
-        // paddleMotorDef2.enableMotor = true;
-        // paddleMotorDef2.collideConnected = false;
+        let paddleMotorDef2 = new b2RevoluteJointDef();
+        paddleMotorDef2.phaserSprite;
+        paddleMotorDef2.lowerAngle = 0;
+        paddleMotorDef2.upperAngle = .15 * Math.PI;
+        paddleMotorDef2.enableLimit = true;
+        paddleMotorDef2.maxMotorTorque = 250.0;
+        paddleMotorDef2.enableMotor = true;
+        paddleMotorDef2.collideConnected = false;
 
-        // var focalPoint2 = new b2Vec2(3.2, -0.6); //got these numbers by clicking on the screen and copying coordinates for where i want the flipper to rotate around
-        // this.paddleMotor2 = paddleMotorDef2.InitializeAndCreate(ground,body2,focalPoint2);
+        var focalPoint2 = new b2Vec2(7.8, -.5); //got these numbers by clicking on the screen and copying coordinates for where i want the flipper to rotate around
+        this.paddleMotor2 = paddleMotorDef2.InitializeAndCreate(ground,body2,focalPoint2);
 
 
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.paddleMotor.SetMotorSpeed(85);
+            this.paddleMotor2.SetMotorSpeed(85);
         });
 
         this.input.keyboard.on('keyup-SPACE', (event) => {
             this.paddleMotor.SetMotorSpeed(-85);
+            this.paddleMotor2.SetMotorSpeed(-85);
         });
 
         this.input.keyboard.on('keydown-X', (event) => {
