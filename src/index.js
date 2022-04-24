@@ -42,31 +42,7 @@ class MyGame extends Phaser.Scene
         this.physics = new LiquidFunPhysics(this.myWorld, { scale: 60, center: [500,500], flip: true });
 
         var bd = new b2BodyDef();
-        var ground = world.CreateBody(bd);
-        
-        // var shape1 = new b2PolygonShape();
-        // var vertices = shape1.vertices;
-        // vertices.push(new b2Vec2(-4, -1));
-        // vertices.push(new b2Vec2(4, -1));
-        // vertices.push(new b2Vec2(4, 0));
-        // vertices.push(new b2Vec2(-4, 0));
-        // ground.CreateFixtureFromShape(shape1, 0);
-
-        // var shape2 = new b2PolygonShape();
-        // var vertices = shape2.vertices;
-        // vertices.push(new b2Vec2(-4, -0.1));
-        // vertices.push(new b2Vec2(-2, -0.1));
-        // vertices.push(new b2Vec2(-2, 2));
-        // vertices.push(new b2Vec2(-4, 2));
-        // ground.CreateFixtureFromShape(shape2, 0);
-
-        // var shape3 = new b2PolygonShape();
-        // var vertices = shape3.vertices;
-        // vertices.push(new b2Vec2(2, -0.1));
-        // vertices.push(new b2Vec2(4, -0.1));
-        // vertices.push(new b2Vec2(4, 2));
-        // vertices.push(new b2Vec2(2, 2));
-        // ground.CreateFixtureFromShape(shape3, 0);
+        var ground = world.CreateBody(bd);     
 
         var psd = new b2ParticleSystemDef();
         psd.radius = 0.065;
@@ -196,7 +172,7 @@ class MyGame extends Phaser.Scene
 
         var bd2 = new b2BodyDef;
         bd2.position.Set(6, -0);
-        bd2.angle = 0.1 * Math.PI;
+        bd2.angle = -.9 * Math.PI;
 
         polygon_shape2.phaserSprite.setScale(.55);
 
@@ -209,8 +185,8 @@ class MyGame extends Phaser.Scene
 
         let paddleMotorDef2 = new b2RevoluteJointDef();
         paddleMotorDef2.phaserSprite;
-        paddleMotorDef2.lowerAngle = .0 * Math.PI;
-        paddleMotorDef2.upperAngle = .5 * Math.PI;
+        paddleMotorDef2.lowerAngle = -.15 * Math.PI;
+        paddleMotorDef2.upperAngle = 0 ;
         paddleMotorDef2.enableLimit = true;
         paddleMotorDef2.maxMotorTorque = 250.0;
         paddleMotorDef2.enableMotor = true;
@@ -230,11 +206,11 @@ class MyGame extends Phaser.Scene
 
 
         this.input.keyboard.on('keydown-SHIFT', (event) => {
-            this.paddleMotor2.SetMotorSpeed(85);
-        });
+            this.paddleMotor2.SetMotorSpeed(-85);
+        }); 
 
         this.input.keyboard.on('keyup-SHIFT', (event) => {
-            this.paddleMotor2.SetMotorSpeed(-85);
+            this.paddleMotor2.SetMotorSpeed(85);
         });
 
         this.input.keyboard.on('keydown-X', (event) => {
