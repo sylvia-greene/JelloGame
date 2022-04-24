@@ -31,6 +31,13 @@ class MyGame extends Phaser.Scene
       
     create ()
     {
+        
+        var P1scoreText = 0;
+        var P2scoreText = 0;
+        P1scoreText = this.add.text(16, 16, 'P1 Score: 0', { fontSize: '32px', fill: '#000' });
+        P2scoreText = this.add.text(565, 16, 'P2 Score: 0', { fontSize: '32px', fill: '#000' });
+
+
         var gravity = new b2Vec2(0,-15);
         window.world = this.myWorld = new b2World(gravity);
 
@@ -225,6 +232,20 @@ class MyGame extends Phaser.Scene
         if(jelloPos.y <= -2){
             this.scene.restart();
         }
+    }
+
+    updatePlayer1Score(P1score, jello){
+        // When player 1's jello passes through the hoop's center coordinates player 1's score increases by 1
+        // Here call function that recognizes jello passthrough
+        P1score += 1;
+        P1scoreText.setText('Score: ' + P1score);
+    }
+
+    updatePlayer2Score(P2score, jello){
+        // When player 2's jello passes through the hoop's center coordinates player 2's score increases by 1
+        // Here call function that recognizes jello passthrough
+        P2score += 1;
+        P2scoreText.setText('Score: ' + P2score);
     }
 }
 
