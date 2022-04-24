@@ -9,8 +9,6 @@ import coolwhipImg from './assets/sprites/coolwhip.png';
 import LiquidFunPhysics from './lf-phaser.js';
 
 
-// var velocityIterations = 8;
-// var positionIterations = 10;
 var shape = new b2EdgeShape;
 
 class MyGame extends Phaser.Scene
@@ -35,13 +33,13 @@ class MyGame extends Phaser.Scene
         var P1scoreText = 0;
         var P2scoreText = 0;
         P1scoreText = this.add.text(16, 16, 'P1 Score: 0', { fontSize: '32px', fill: '#000' });
-        P2scoreText = this.add.text(565, 16, 'P2 Score: 0', { fontSize: '32px', fill: '#000' });
+        P2scoreText = this.add.text(750, 16, 'P2 Score: 0', { fontSize: '32px', fill: '#000' });
 
 
         var gravity = new b2Vec2(0,-15);
         window.world = this.myWorld = new b2World(gravity);
 
-        this.physics = new LiquidFunPhysics(this.myWorld, { scale: 120, center: [400,400], flip: true });
+        this.physics = new LiquidFunPhysics(this.myWorld, { scale: 60, center: [500,500], flip: true });
 
         var bd = new b2BodyDef();
         var ground = world.CreateBody(bd);
@@ -71,7 +69,7 @@ class MyGame extends Phaser.Scene
         // ground.CreateFixtureFromShape(shape3, 0);
 
         var psd = new b2ParticleSystemDef();
-        psd.radius = 0.035;
+        psd.radius = 0.065;
         var particleSystem = world.CreateParticleSystem(psd);
         this.jelloSystem = particleSystem;
         const jello = this.add.particles('jello');        
@@ -88,7 +86,7 @@ class MyGame extends Phaser.Scene
         pgd.flags = b2_springParticle;
         pgd.groupFlags = b2_solidParticleGroup;
         pgd.shape = trapezoid;
-        pgd.position.Set(-2, 3);
+        pgd.position.Set(-6.65, 6);
         this.group1 = particleSystem.CreateParticleGroup(pgd);
         this.group1.phaserParticleEmitters = [
             jello.createEmitter({
@@ -98,140 +96,108 @@ class MyGame extends Phaser.Scene
             })
         ];
 
-        // //cicle
-        // bd = new b2BodyDef();
-        // var circle = new b2CircleShape();
-        // circle.phaserSprite = this.add.image(0, 0, 'ball');
-        // circle.phaserSprite.setScale(1.1);
-        // bd.type = b2_dynamicBody;
-        // var body = world.CreateBody(bd);
-        // circle.position.Set(0, 8);
-        // circle.radius = 0.38;
-        // body.CreateFixtureFromShape(circle, 0.5);
-
-        // coolwhip test
-
-        // const level1Json =
-        //     {
-        //         "jellostart": {"x" : -2.5, "y" : 3},
-
-        //         "coolwhip": {
-        //             "sprite": "coolwhip",
-        //             "shapes": [
-        //                 [{ x: 34, y: 12}, { x: 37, y: 52}],
-        //                 [{ x: 34, y: 12}, { x: 37, y: 52}],
-        //             ]
-        //         }
-
-
         //     };
 
 
-        var coolwhip_shape = new b2PolygonShape();
-        coolwhip_shape.position.Set(2, 1.5);
+        // var coolwhip_shape = new b2PolygonShape();
+        // coolwhip_shape.position.Set(2, 1.5);
 
-        coolwhip_shape.phaserSprite = this.add.image(0,0,'coolwhip');
-        coolwhip_shape.phaserSprite.setScale(0.3);
+        // coolwhip_shape.phaserSprite = this.add.image(0,0,'coolwhip');
+        // coolwhip_shape.phaserSprite.setScale(0.3);
 
-        var coolwhip_vertices = coolwhip_shape.vertices;
-        coolwhip_vertices.push(new b2Vec2(1.2, 0.75));
-        coolwhip_vertices.push(new b2Vec2(1.98, 0.75));
-        coolwhip_vertices.push(new b2Vec2(1.2, 1.71));
-        coolwhip_vertices.push(new b2Vec2(1, 1.71));
-        ground.CreateFixtureFromShape(coolwhip_shape, 0);
+        // var coolwhip_vertices = coolwhip_shape.vertices;
+        // coolwhip_vertices.push(new b2Vec2(1.2, 0.75));
+        // coolwhip_vertices.push(new b2Vec2(1.98, 0.75));
+        // coolwhip_vertices.push(new b2Vec2(1.2, 1.71));
+        // coolwhip_vertices.push(new b2Vec2(1, 1.71));
+        // ground.CreateFixtureFromShape(coolwhip_shape, 0);
 
-        var coolwhip_shape2 = new b2PolygonShape();
-        coolwhip_shape2.position.Set(0.5, 0.5);
+        // var coolwhip_shape2 = new b2PolygonShape();
+        // coolwhip_shape2.position.Set(0.5, 0.5);
 
-        var coolwhip_vertices2 = coolwhip_shape2.vertices;
-        coolwhip_vertices2.push(new b2Vec2(1.98, 0.75));
-        coolwhip_vertices2.push(new b2Vec2(2.71, 0.75));
-        coolwhip_vertices2.push(new b2Vec2(2.71, 1.71));
-        coolwhip_vertices2.push(new b2Vec2(2.9, 1.71));
-        ground.CreateFixtureFromShape(coolwhip_shape2, 0);
+        // var coolwhip_vertices2 = coolwhip_shape2.vertices;
+        // coolwhip_vertices2.push(new b2Vec2(1.98, 0.75));
+        // coolwhip_vertices2.push(new b2Vec2(2.71, 0.75));
+        // coolwhip_vertices2.push(new b2Vec2(2.71, 1.71));
+        // coolwhip_vertices2.push(new b2Vec2(2.9, 1.71));
+        // ground.CreateFixtureFromShape(coolwhip_shape2, 0);
 
 
         //flipper
 
         var polygon_shape = new b2PolygonShape();
         polygon_shape.phaserCentroid = new b2Vec2(0,0);
-        polygon_shape.SetAsBoxXYCenterAngle(1.24, 0.1, polygon_shape.phaserCentroid, 0.0); //changed this to be half the length of the flippersprite
+        polygon_shape.SetAsBoxXYCenterAngle(2.05, 0.1, polygon_shape.phaserCentroid, 0.0); //changed this to be half the length of the flippersprite
 
         polygon_shape.phaserSprite = this.add.image(0,0,'flipper'); 
 
         var bd = new b2BodyDef;
-        bd.position.Set(-1.8, -0.8);
-        bd.angle = -0.1;
+        bd.position.Set(-6, -0);
+        bd.angle = -0.10 * Math.PI;
 
-        polygon_shape.phaserSprite.setScale(.7);
+        polygon_shape.phaserSprite.setScale(.55);
 
         bd.type = b2_dynamicBody;
         bd.bullet = true;
         bd.density = 10000;
 
         var body = world.CreateBody(bd);   
-        body.CreateFixtureFromShape(polygon_shape, 2.0);
+        body.CreateFixtureFromShape(polygon_shape, 1.0);
 
         let paddleMotorDef = new b2RevoluteJointDef();
         paddleMotorDef.phaserSprite;
-        paddleMotorDef.lowerAngle = -.01 * Math.PI;
-        paddleMotorDef.upperAngle = .1 * Math.PI;
+        paddleMotorDef.lowerAngle = 0;
+        paddleMotorDef.upperAngle = .15 * Math.PI;
         paddleMotorDef.enableLimit = true;
         paddleMotorDef.maxMotorTorque = 250.0;
         paddleMotorDef.enableMotor = true;
         paddleMotorDef.collideConnected = false;
 
-        var focalPoint = new b2Vec2(-3.2, -0.6); //got these numbers by clicking on the screen and copying coordinates for where i want the flipper to rotate around
+        var focalPoint = new b2Vec2(-7.8, 0.6); //got these numbers by clicking on the screen and copying coordinates for where i want the flipper to rotate around
         this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground,body,focalPoint);
 
         
 
-        //flipper #2 
+        // //flipper #2 
 
-        var polygon_shape2 = new b2PolygonShape();
-        polygon_shape2.phaserCentroid = new b2Vec2(0,0);
-        polygon_shape2.SetAsBoxXYCenterAngle(1.24, 0.1, polygon_shape2.phaserCentroid, 0.0); //changed this to be half the length of the flippersprite
+        // var polygon_shape2 = new b2PolygonShape();
+        // polygon_shape2.phaserCentroid = new b2Vec2(0,0);
+        // polygon_shape2.SetAsBoxXYCenterAngle(1.24, 0.1, polygon_shape2.phaserCentroid, 0.0); //changed this to be half the length of the flippersprite
 
-        polygon_shape2.phaserSprite = this.add.image(0,0,'flipper'); 
+        // polygon_shape2.phaserSprite = this.add.image(0,0,'flipper'); 
 
-        var bd2 = new b2BodyDef;
-        bd2.position.Set(1.8, -0.8);
-        bd2.angle = -0.1;
+        // var bd2 = new b2BodyDef;
+        // bd2.position.Set(1.8, -0.8);
+        // bd2.angle = -0.1 * Math.PI;
 
-        polygon_shape2.phaserSprite.setScale(.7);
+        // polygon_shape2.phaserSprite.setScale(.7);
 
-        bd2.type = b2_dynamicBody;
-        bd2.bullet = true;
-        bd2.density = 10000;
+        // bd2.type = b2_dynamicBody;
+        // bd2.bullet = true;
+        // bd2.density = 10000;
 
-        var body2 = world.CreateBody(bd2);   
-        body2.CreateFixtureFromShape(polygon_shape2, 2.0);
+        // var body2 = world.CreateBody(bd2);   
+        // body2.CreateFixtureFromShape(polygon_shape2, 2.0);
 
-        let paddleMotorDef2 = new b2RevoluteJointDef();
-        paddleMotorDef2.phaserSprite;
-        paddleMotorDef2.lowerAngle = -.01 * Math.PI;
-        paddleMotorDef2.upperAngle = .1 * Math.PI;
-        paddleMotorDef2.enableLimit = true;
-        paddleMotorDef2.maxMotorTorque = 250.0;
-        paddleMotorDef2.enableMotor = true;
-        paddleMotorDef2.collideConnected = false;
+        // let paddleMotorDef2 = new b2RevoluteJointDef();
+        // paddleMotorDef2.phaserSprite;
+        // paddleMotorDef2.lowerAngle = -.009 * Math.PI;
+        // paddleMotorDef2.upperAngle = .1 * Math.PI;
+        // paddleMotorDef2.enableLimit = true;
+        // paddleMotorDef2.maxMotorTorque = 250.0;
+        // paddleMotorDef2.enableMotor = true;
+        // paddleMotorDef2.collideConnected = false;
 
-        var focalPoint2 = new b2Vec2(3.2, -0.6); //got these numbers by clicking on the screen and copying coordinates for where i want the flipper to rotate around
-        this.paddleMotor2 = paddleMotorDef2.InitializeAndCreate(ground,body2,focalPoint2);
-
-
-
+        // var focalPoint2 = new b2Vec2(3.2, -0.6); //got these numbers by clicking on the screen and copying coordinates for where i want the flipper to rotate around
+        // this.paddleMotor2 = paddleMotorDef2.InitializeAndCreate(ground,body2,focalPoint2);
 
 
         this.input.keyboard.on('keydown-SPACE', (event) => {
-            this.paddleMotor.SetMotorSpeed(100);
-            this.paddleMotor2.SetMotorSpeed(100);
+            this.paddleMotor.SetMotorSpeed(85);
         });
 
         this.input.keyboard.on('keyup-SPACE', (event) => {
-            this.paddleMotor.SetMotorSpeed(-100);
-            this.paddleMotor2.SetMotorSpeed(-100);
-           
+            this.paddleMotor.SetMotorSpeed(-85);
         });
 
         this.input.keyboard.on('keydown-X', (event) => {
@@ -252,8 +218,8 @@ class MyGame extends Phaser.Scene
 
 
         this.input.on('pointerdown', () => {
-            var mousex = (game.input.mousePointer.x - 400) / 120;
-            var mousey = (game.input.mousePointer.y - 400) / -120;
+            var mousex = (game.input.mousePointer.x - 500) / 60;
+            var mousey = (game.input.mousePointer.y - 500) / -60;
 
             console.log('x = ' + mousex);
             console.log('y = ' + mousey);
@@ -291,7 +257,7 @@ class MyGame extends Phaser.Scene
 const config = {
     type: Phaser.AUTO,
     parent: 'phaser-example',
-    width: 800,
+    width: 1000,
     height: 600,
     backgroundColor: '#606C86',
     scene: MyGame
