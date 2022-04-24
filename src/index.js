@@ -185,13 +185,52 @@ class MyGame extends Phaser.Scene
         this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground,body,focalPoint);
 
         
+
+        //flipper #2 
+
+        var polygon_shape2 = new b2PolygonShape();
+        polygon_shape2.phaserCentroid = new b2Vec2(0,0);
+        polygon_shape2.SetAsBoxXYCenterAngle(1.24, 0.1, polygon_shape2.phaserCentroid, 0.0); //changed this to be half the length of the flippersprite
+
+        polygon_shape2.phaserSprite = this.add.image(0,0,'flipper'); 
+
+        var bd2 = new b2BodyDef;
+        bd2.position.Set(1.8, -0.8);
+        bd2.angle = -0.1;
+
+        polygon_shape2.phaserSprite.setScale(.7);
+
+        bd2.type = b2_dynamicBody;
+        bd2.bullet = true;
+        bd2.density = 10000;
+
+        var body2 = world.CreateBody(bd2);   
+        body2.CreateFixtureFromShape(polygon_shape2, 2.0);
+
+        let paddleMotorDef2 = new b2RevoluteJointDef();
+        paddleMotorDef2.phaserSprite;
+        paddleMotorDef2.lowerAngle = -.01 * Math.PI;
+        paddleMotorDef2.upperAngle = .1 * Math.PI;
+        paddleMotorDef2.enableLimit = true;
+        paddleMotorDef2.maxMotorTorque = 250.0;
+        paddleMotorDef2.enableMotor = true;
+        paddleMotorDef2.collideConnected = false;
+
+        var focalPoint2 = new b2Vec2(3.2, -0.6); //got these numbers by clicking on the screen and copying coordinates for where i want the flipper to rotate around
+        this.paddleMotor2 = paddleMotorDef2.InitializeAndCreate(ground,body2,focalPoint2);
+
+
+
+
+
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.paddleMotor.SetMotorSpeed(100);
+            this.paddleMotor2.SetMotorSpeed(100);
         });
 
         this.input.keyboard.on('keyup-SPACE', (event) => {
             this.paddleMotor.SetMotorSpeed(-100);
- 
+            this.paddleMotor2.SetMotorSpeed(-100);
            
         });
 
@@ -228,7 +267,7 @@ class MyGame extends Phaser.Scene
         this.physics.update(dt);
         const jelloPos = this.physics.computeParticleCentroid(
         this.jelloSystem, this.group1);
-        console.log(jelloPos);    
+     
         if(jelloPos.y <= -2){
             this.scene.restart();
         }
