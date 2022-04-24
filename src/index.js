@@ -168,7 +168,7 @@ class MyGame extends Phaser.Scene
 
         var bd2 = new b2BodyDef;
         bd2.position.Set(6, -0);
-        bd2.angle = -0.1 * Math.PI;
+        bd2.angle = 0.1 * Math.PI;
 
         polygon_shape2.phaserSprite.setScale(.55);
 
@@ -181,24 +181,31 @@ class MyGame extends Phaser.Scene
 
         let paddleMotorDef2 = new b2RevoluteJointDef();
         paddleMotorDef2.phaserSprite;
-        paddleMotorDef2.lowerAngle = 0;
-        paddleMotorDef2.upperAngle = .15 * Math.PI;
+        paddleMotorDef2.lowerAngle = .0 * Math.PI;
+        paddleMotorDef2.upperAngle = .5 * Math.PI;
         paddleMotorDef2.enableLimit = true;
         paddleMotorDef2.maxMotorTorque = 250.0;
         paddleMotorDef2.enableMotor = true;
         paddleMotorDef2.collideConnected = false;
 
-        var focalPoint2 = new b2Vec2(7.8, -.5); //got these numbers by clicking on the screen and copying coordinates for where i want the flipper to rotate around
+        var focalPoint2 = new b2Vec2(7.8, .6); //got these numbers by clicking on the screen and copying coordinates for where i want the flipper to rotate around
         this.paddleMotor2 = paddleMotorDef2.InitializeAndCreate(ground,body2,focalPoint2);
 
 
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.paddleMotor.SetMotorSpeed(85);
-            this.paddleMotor2.SetMotorSpeed(85);
         });
 
         this.input.keyboard.on('keyup-SPACE', (event) => {
             this.paddleMotor.SetMotorSpeed(-85);
+        });
+
+
+        this.input.keyboard.on('keydown-SHIFT', (event) => {
+            this.paddleMotor2.SetMotorSpeed(85);
+        });
+
+        this.input.keyboard.on('keyup-SHIFT', (event) => {
             this.paddleMotor2.SetMotorSpeed(-85);
         });
 
