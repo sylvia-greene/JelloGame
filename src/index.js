@@ -96,6 +96,34 @@ class MyGame extends Phaser.Scene
             })
         ];
 
+        var psd2 = new b2ParticleSystemDef();
+        psd2.radius = 0.065;
+        var particleSystem2 = world.CreateParticleSystem(psd2);
+        this.jelloSystem2 = particleSystem2;
+        const jello2 = this.add.particles('jello');        
+
+        //second group
+        var trapezoid2 = new b2PolygonShape();
+        var trapezoid_vertices2 = trapezoid2.vertices;
+        trapezoid_vertices2.push(new b2Vec2(-0.5, -0.3));
+        trapezoid_vertices2.push(new b2Vec2(0.5, -0.3));
+        trapezoid_vertices2.push(new b2Vec2(0.3, 0.4));
+        trapezoid_vertices2.push(new b2Vec2(-0.3, 0.4));
+
+        var pgd2 = new b2ParticleGroupDef();
+        pgd2.flags = b2_springParticle;
+        pgd2.groupFlags = b2_solidParticleGroup;
+        pgd2.shape = trapezoid;
+        pgd2.position.Set(6.65, 6);
+        this.group2 = particleSystem2.CreateParticleGroup(pgd2);
+        this.group2.phaserParticleEmitters = [
+            jello.createEmitter({
+                tint: 0xFF0010,
+                blendMode: Phaser.BlendModes.ADD,
+                scale: 0.3,
+            })
+        ];
+
         //     };
 
 
@@ -246,6 +274,13 @@ class MyGame extends Phaser.Scene
         if(jelloPos.y <= -2){
             this.scene.restart();
         }
+
+        const jelloPos2 = this.physics.computeParticleCentroid(
+            this.jelloSystem2, this.group2);
+         
+            if(jelloPos2.y <= -2){
+                this.scene.restart();
+            }
     }
 
     updatePlayer1Score(P1score, jello){
