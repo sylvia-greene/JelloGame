@@ -1,8 +1,6 @@
 import Phaser, { Create } from 'phaser';
 
-import logoImg from './assets/logo.png';
 import flipperImg from './assets/flipper.png';
-import ballImg from './assets/ball.png';
 import jelloImg from './assets/jello.png';
 import coolwhipImg from './assets/sprites/coolwhip.png';
 
@@ -20,8 +18,6 @@ class MyGame extends Phaser.Scene
 
     preload ()
     {
-        this.load.image('ball', ballImg);
-        this.load.image('logo', logoImg);
         this.load.image('flipper',flipperImg);
         this.load.image('jello', jelloImg);
         this.load.image('coolwhip', coolwhipImg);
