@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import Phaser, { Create } from 'phaser';
 
 import logoImg from './assets/logo.png';
 import flipperImg from './assets/flipper.png';
@@ -71,6 +71,8 @@ class MyGame extends Phaser.Scene
                 scale: 0.3,
             })
         ];
+        
+      
 
         var psd2 = new b2ParticleSystemDef();
         psd2.radius = 0.065;
@@ -89,9 +91,9 @@ class MyGame extends Phaser.Scene
         var pgd2 = new b2ParticleGroupDef();
         pgd2.flags = b2_springParticle;
         pgd2.groupFlags = b2_solidParticleGroup;
-        pgd2.shape = trapezoid;
+        pgd2.shape = trapezoid2;
         pgd2.position.Set(6.65, 6);
-        this.group2 = particleSystem2.CreateParticleGroup(pgd2);
+        this.group2 = particleSystem.CreateParticleGroup(pgd2);
         this.group2.phaserParticleEmitters = [
             jello.createEmitter({
                 tint: 0xFF0010,
@@ -100,7 +102,6 @@ class MyGame extends Phaser.Scene
             })
         ];
 
-        //     };
 
 
         // var coolwhip_shape = new b2PolygonShape();
@@ -248,14 +249,14 @@ class MyGame extends Phaser.Scene
         this.jelloSystem, this.group1);
      
         if(jelloPos.y <= -2){
-            this.scene.restart();
+            
         }
 
         const jelloPos2 = this.physics.computeParticleCentroid(
             this.jelloSystem2, this.group2);
          
             if(jelloPos2.y <= -2){
-                this.scene.restart();
+                //this.createNewJello2();
             }
     }
 
