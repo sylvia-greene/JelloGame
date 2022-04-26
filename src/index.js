@@ -1,6 +1,7 @@
 import Phaser, { Create } from 'phaser';
 
-import flipperImg from './assets/flipper.png';
+import player1Img from './assets/sprites/player1.png';
+import player2Img from './assets/sprites/player2.png';
 import jelloImg from './assets/jello.png';
 import coolwhipImg from './assets/sprites/coolwhip.png';
 
@@ -18,9 +19,11 @@ class MyGame extends Phaser.Scene
 
     preload ()
     {
-        this.load.image('flipper',flipperImg);
+        this.load.image('player1', player1Img);
+        this.load.image('player2', player2Img);
         this.load.image('jello', jelloImg);
         this.load.image('coolwhip', coolwhipImg);
+
     }
       
     create ()
@@ -62,14 +65,12 @@ class MyGame extends Phaser.Scene
         this.group1 = particleSystem.CreateParticleGroup(pgd);
         this.group1.phaserParticleEmitters = [
             jello.createEmitter({
-                tint: 0xFF0000,
-                blendMode: Phaser.BlendModes.ADD,
+                tint: 0xEA4540,
+                blendMode: Phaser.BlendModes.COLOR,
                 scale: 0.3,
             })
         ];
-        
-      
-
+    
         var psd2 = new b2ParticleSystemDef();
         psd2.radius = 0.065;
         var particleSystem2 = world.CreateParticleSystem(psd2);
@@ -92,37 +93,11 @@ class MyGame extends Phaser.Scene
         this.group2 = particleSystem.CreateParticleGroup(pgd2);
         this.group2.phaserParticleEmitters = [
             jello.createEmitter({
-                tint: 0xFF0010,
-                blendMode: Phaser.BlendModes.ADD,
+                tint: 0x405AEA,
+                blendMode: Phaser.BlendModes.COLOR,
                 scale: 0.3,
             })
         ];
-
-
-
-        // var coolwhip_shape = new b2PolygonShape();
-        // coolwhip_shape.position.Set(2, 1.5);
-
-        // coolwhip_shape.phaserSprite = this.add.image(0,0,'coolwhip');
-        // coolwhip_shape.phaserSprite.setScale(0.3);
-
-        // var coolwhip_vertices = coolwhip_shape.vertices;
-        // coolwhip_vertices.push(new b2Vec2(1.2, 0.75));
-        // coolwhip_vertices.push(new b2Vec2(1.98, 0.75));
-        // coolwhip_vertices.push(new b2Vec2(1.2, 1.71));
-        // coolwhip_vertices.push(new b2Vec2(1, 1.71));
-        // ground.CreateFixtureFromShape(coolwhip_shape, 0);
-
-        // var coolwhip_shape2 = new b2PolygonShape();
-        // coolwhip_shape2.position.Set(0.5, 0.5);
-
-        // var coolwhip_vertices2 = coolwhip_shape2.vertices;
-        // coolwhip_vertices2.push(new b2Vec2(1.98, 0.75));
-        // coolwhip_vertices2.push(new b2Vec2(2.71, 0.75));
-        // coolwhip_vertices2.push(new b2Vec2(2.71, 1.71));
-        // coolwhip_vertices2.push(new b2Vec2(2.9, 1.71));
-        // ground.CreateFixtureFromShape(coolwhip_shape2, 0);
-
 
         //flipper
 
@@ -130,10 +105,10 @@ class MyGame extends Phaser.Scene
         polygon_shape.phaserCentroid = new b2Vec2(0,0);
         polygon_shape.SetAsBoxXYCenterAngle(2.05, 0.1, polygon_shape.phaserCentroid, 0.0); //changed this to be half the length of the flippersprite
 
-        polygon_shape.phaserSprite = this.add.image(0,0,'flipper'); 
+        polygon_shape.phaserSprite = this.add.image(0,0,'player1'); 
 
         var bd = new b2BodyDef;
-        bd.position.Set(-6, -0);
+        bd.position.Set(-6, 0);
         bd.angle = -0.10 * Math.PI;
 
         polygon_shape.phaserSprite.setScale(.55);
@@ -159,16 +134,16 @@ class MyGame extends Phaser.Scene
 
         
 
-        // //flipper #2 
+        //flipper #2 
 
         var polygon_shape2 = new b2PolygonShape();
         polygon_shape2.phaserCentroid = new b2Vec2(0,0);
         polygon_shape2.SetAsBoxXYCenterAngle(2.05, 0.1, polygon_shape2.phaserCentroid, 0.0); //changed this to be half the length of the flippersprite
 
-        polygon_shape2.phaserSprite = this.add.image(0,0,'flipper'); 
+        polygon_shape2.phaserSprite = this.add.image(0,0,'player2'); 
 
         var bd2 = new b2BodyDef;
-        bd2.position.Set(6, -0);
+        bd2.position.Set(6, 0);
         bd2.angle = -.9 * Math.PI;
 
         polygon_shape2.phaserSprite.setScale(.55);
@@ -193,20 +168,20 @@ class MyGame extends Phaser.Scene
         this.paddleMotor2 = paddleMotorDef2.InitializeAndCreate(ground,body2,focalPoint2);
 
 
-        this.input.keyboard.on('keydown-SPACE', (event) => {
+        this.input.keyboard.on('keydown-Q', (event) => {
             this.paddleMotor.SetMotorSpeed(85);
         });
 
-        this.input.keyboard.on('keyup-SPACE', (event) => {
+        this.input.keyboard.on('keyup-Q', (event) => {
             this.paddleMotor.SetMotorSpeed(-85);
         });
 
 
-        this.input.keyboard.on('keydown-SHIFT', (event) => {
+        this.input.keyboard.on('keydown-P', (event) => {
             this.paddleMotor2.SetMotorSpeed(-85);
         }); 
 
-        this.input.keyboard.on('keyup-SHIFT', (event) => {
+        this.input.keyboard.on('keyup-P', (event) => {
             this.paddleMotor2.SetMotorSpeed(85);
         });
 
@@ -245,7 +220,7 @@ class MyGame extends Phaser.Scene
         this.jelloSystem, this.group1);
      
         if(jelloPos.y <= -2){
-            
+            this.scene.restart();
         }
 
         const jelloPos2 = this.physics.computeParticleCentroid(
