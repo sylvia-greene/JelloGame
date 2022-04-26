@@ -4,23 +4,24 @@ import Phaser, { Create } from 'phaser';
 
 export default class Jello
 {
-
-    preload()
+    static preload()
     {
         this.load.image('jello', jelloImg);
     }
 
-    createJello(position,world)
+    static addParticleSystemToScene(scene)
     {
-        this.position = position;
-        this.world = world;
-
-        this.physics = new LiquidFunPhysics(this.myWorld, { scale: 60, center: [500,500], flip: true });
         var psd = new b2ParticleSystemDef();
         psd.radius = 0.065;
-        var particleSystem = world.CreateParticleSystem(psd);
-        this.jelloSystem = particleSystem;       
-       // const jello = this.add.particles('jello'); 
+        scene.lfJelloParticles = scene.myWorld.CreateParticleSystem(psd);
+
+        scene.phaserJelloParticles = this.scene.add.particles('jello'); 
+    }
+
+    constructor(position, scene)
+    {
+        this.position = position;
+        this.scene = scene;
 
         var trapezoid = new b2PolygonShape();
         var trapezoid_vertices = trapezoid.vertices;
@@ -34,13 +35,13 @@ export default class Jello
         pgd.groupFlags = b2_solidParticleGroup;
         pgd.shape = trapezoid;
         pgd.position.Set(position.x,position.y);
-        this.group1 = particleSystem.CreateParticleGroup(pgd);
-        // this.group1.phaserParticleEmitters = [
-        //     jello.createEmitter({
-        //         tint: 0xEA4540,
-        //         blendMode: Phaser.BlendModes.COLOR,
-        //         scale: 0.3,
-        //      })
-        //  ];
+        this.group1 = scene.lfJelloParticles.CreateParticleGroup(pgd);
+        this.group1.phaserParticleEmitters = [
+            scene.phaserJelloParticles.createEmitter({
+                tint: 0xEA4540,
+                blendMode: Phaser.BlendModes.COLOR,
+                scale: 0.3,
+             })
+         ];
     }   
 }
