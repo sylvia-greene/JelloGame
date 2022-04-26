@@ -9,8 +9,9 @@ import hoopImg from './assets/sprites/hoop.png';
 
 import LiquidFunPhysics from './lf-phaser.js';
 
+import Jello from './jello.js';
 
-var shape = new b2EdgeShape;
+// var shape = new b2EdgeShape;
 
 class MyGame extends Phaser.Scene
 {
@@ -46,62 +47,64 @@ class MyGame extends Phaser.Scene
 
         var bd = new b2BodyDef();
         var ground = world.CreateBody(bd);     
+        var jello1 = new Jello();
+        jello1.createJello((-6.65,6),world);
+        
+        // var psd = new b2ParticleSystemDef();
+        // psd.radius = 0.065;
+        // var particleSystem = world.CreateParticleSystem(psd);
+        // this.jelloSystem = particleSystem;
+        // const jello = this.add.particles('jello');        
 
-        var psd = new b2ParticleSystemDef();
-        psd.radius = 0.065;
-        var particleSystem = world.CreateParticleSystem(psd);
-        this.jelloSystem = particleSystem;
-        const jello = this.add.particles('jello');        
+        // //first group
+        // var trapezoid = new b2PolygonShape();
+        // var trapezoid_vertices = trapezoid.vertices;
+        // trapezoid_vertices.push(new b2Vec2(-0.5, -0.3));
+        // trapezoid_vertices.push(new b2Vec2(0.5, -0.3));
+        // trapezoid_vertices.push(new b2Vec2(0.3, 0.4));
+        // trapezoid_vertices.push(new b2Vec2(-0.3, 0.4));
 
-        //first group
-        var trapezoid = new b2PolygonShape();
-        var trapezoid_vertices = trapezoid.vertices;
-        trapezoid_vertices.push(new b2Vec2(-0.5, -0.3));
-        trapezoid_vertices.push(new b2Vec2(0.5, -0.3));
-        trapezoid_vertices.push(new b2Vec2(0.3, 0.4));
-        trapezoid_vertices.push(new b2Vec2(-0.3, 0.4));
-
-        var pgd = new b2ParticleGroupDef();
-        pgd.flags = b2_springParticle;
-        pgd.groupFlags = b2_solidParticleGroup;
-        pgd.shape = trapezoid;
-        pgd.position.Set(-6.65, 6);
-        this.group1 = particleSystem.CreateParticleGroup(pgd);
-        this.group1.phaserParticleEmitters = [
-            jello.createEmitter({
-                tint: 0xEA4540,
-                blendMode: Phaser.BlendModes.COLOR,
-                scale: 0.3,
-            })
-        ];
+        // var pgd = new b2ParticleGroupDef();
+        // pgd.flags = b2_springParticle;
+        // pgd.groupFlags = b2_solidParticleGroup;
+        // pgd.shape = trapezoid;
+        // pgd.position.Set(-6.65, 6);
+        // this.group1 = particleSystem.CreateParticleGroup(pgd);
+        // this.group1.phaserParticleEmitters = [
+        //     jello.createEmitter({
+        //         tint: 0xEA4540,
+        //         blendMode: Phaser.BlendModes.COLOR,
+        //         scale: 0.3,
+        //     })
+        // ];
     
-        var psd2 = new b2ParticleSystemDef();
-        psd2.radius = 0.065;
-        var particleSystem2 = world.CreateParticleSystem(psd2);
-        this.jelloSystem2 = particleSystem2;
-        const jello2 = this.add.particles('jello');        
+        // //Second Jello 
+        // var psd2 = new b2ParticleSystemDef();
+        // psd2.radius = 0.065;
+        // var particleSystem2 = world.CreateParticleSystem(psd2);
+        // this.jelloSystem2 = particleSystem2;
+        // const jello2 = this.add.particles('jello');        
 
-        //second group
-        var trapezoid2 = new b2PolygonShape();
-        var trapezoid_vertices2 = trapezoid2.vertices;
-        trapezoid_vertices2.push(new b2Vec2(-0.5, -0.3));
-        trapezoid_vertices2.push(new b2Vec2(0.5, -0.3));
-        trapezoid_vertices2.push(new b2Vec2(0.3, 0.4));
-        trapezoid_vertices2.push(new b2Vec2(-0.3, 0.4));
+        // var trapezoid2 = new b2PolygonShape();
+        // var trapezoid_vertices2 = trapezoid2.vertices;
+        // trapezoid_vertices2.push(new b2Vec2(-0.5, -0.3));
+        // trapezoid_vertices2.push(new b2Vec2(0.5, -0.3));
+        // trapezoid_vertices2.push(new b2Vec2(0.3, 0.4));
+        // trapezoid_vertices2.push(new b2Vec2(-0.3, 0.4));
 
-        var pgd2 = new b2ParticleGroupDef();
-        pgd2.flags = b2_springParticle;
-        pgd2.groupFlags = b2_solidParticleGroup;
-        pgd2.shape = trapezoid2;
-        pgd2.position.Set(6.65, 6);
-        this.group2 = particleSystem.CreateParticleGroup(pgd2);
-        this.group2.phaserParticleEmitters = [
-            jello.createEmitter({
-                tint: 0x405AEA,
-                blendMode: Phaser.BlendModes.COLOR,
-                scale: 0.3,
-            })
-        ];
+        // var pgd2 = new b2ParticleGroupDef();
+        // pgd2.flags = b2_springParticle;
+        // pgd2.groupFlags = b2_solidParticleGroup;
+        // pgd2.shape = trapezoid2;
+        // pgd2.position.Set(6.65, 6);
+        // this.group2 = particleSystem.CreateParticleGroup(pgd2);
+        // this.group2.phaserParticleEmitters = [
+        //     jello.createEmitter({
+        //         tint: 0x405AEA,
+        //         blendMode: Phaser.BlendModes.COLOR,
+        //         scale: 0.3,
+        //     })
+        // ];
 
         //hoop
 
@@ -262,19 +265,19 @@ class MyGame extends Phaser.Scene
 
     update(t,dt) {
         this.physics.update(dt);
-        const jelloPos = this.physics.computeParticleCentroid(
-        this.jelloSystem, this.group1);
+      //  const jelloPos = this.physics.computeParticleCentroid(
+       // this.jelloSystem, this.group1);
      
-        if(jelloPos.y <= -2){
-            this.scene.restart();
-        }
+        // if(jelloPos.y <= -2){
+        //     this.scene.restart();
+        // }
 
-        const jelloPos2 = this.physics.computeParticleCentroid(
-            this.jelloSystem2, this.group2);
+        // const jelloPos2 = this.physics.computeParticleCentroid(
+        //     this.jelloSystem2, this.group2);
          
-            if(jelloPos2.y <= -2){
-                //this.createNewJello2();
-            }
+        //     if(jelloPos2.y <= -2){
+        //         //this.createNewJello2();
+        //     }
     }
 
     updatePlayer1Score(P1score, jello){
