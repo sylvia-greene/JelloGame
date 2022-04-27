@@ -30,15 +30,15 @@ export default class Jello
         trapezoid_vertices.push(new b2Vec2(0.3, 0.4));
         trapezoid_vertices.push(new b2Vec2(-0.3, 0.4));
 
-        var pgd = new b2ParticleGroupDef();
-        pgd.flags = b2_springParticle;
-        pgd.groupFlags = b2_solidParticleGroup;
-        pgd.shape = trapezoid;
-        pgd.position.Set(this.position.x,this.position.y);
-        this.group1 = scene.lfJelloParticles.CreateParticleGroup(pgd);
+        this.pdg = new b2ParticleGroupDef();
+        this.pdg.flags = b2_springParticle;
+        this.pdg.groupFlags = b2_solidParticleGroup;
+        this.pdg.shape = trapezoid;
+        this.pdg.position.Set(this.position.x,this.position.y);
+        this.group1 = scene.lfJelloParticles.CreateParticleGroup(this.pdg);
         this.group1.phaserParticleEmitters = [
             scene.phaserJelloParticles.createEmitter({
-                tint: 0xEA4540,
+                tint: 0xE41C17,
                 blendMode: Phaser.BlendModes.COLOR,
                 scale: 0.3,
              })
@@ -48,7 +48,8 @@ export default class Jello
     getPosition()
     {
         return new b2Vec2(
-            this.group1.position);
+          0,
+          0);
     }
 
     // isInside(targetArea)

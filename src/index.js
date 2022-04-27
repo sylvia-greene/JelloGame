@@ -27,7 +27,7 @@ class MyGame extends Phaser.Scene
         this.load.image('coolwhip', coolwhipImg);
         this.load.image('backboard', backboardImg);
         this.load.image('hoop', hoopImg);
-        // Jello.preload(this);
+        Jello.preload(this);
     }
       
     create ()
@@ -49,7 +49,7 @@ class MyGame extends Phaser.Scene
         Jello.addParticleSystemToScene(this);     
         var jello1 = new Jello({ x: -6.65, y: 6 }, this);
         var jello2 = new Jello({x: 6, y: 6 }, this);
-console.log(jello1.getPosition());       
+//console.log(this.physics.computeParticleCentroid(jello1.pgd, jello1.group1));       
        
         //hoop
 
