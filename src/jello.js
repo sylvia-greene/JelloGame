@@ -1,12 +1,12 @@
-import LiquidFunPhysics from './lf-phaser.js';
-import jelloImg from './assets/jello.png';
 import Phaser, { Create } from 'phaser';
+import jelloImg from './assets/jello.png';
+
 
 export default class Jello
 {
-    static preload()
+    static preload(scene)
     {
-        this.load.image('jello', jelloImg);
+        scene.load.image('jello', jelloImg);
     }
 
     static addParticleSystemToScene(scene)
@@ -15,13 +15,12 @@ export default class Jello
         psd.radius = 0.065;
         scene.lfJelloParticles = scene.myWorld.CreateParticleSystem(psd);
 
-        scene.phaserJelloParticles = this.scene.add.particles('jello'); 
+        scene.phaserJelloParticles = scene.add.particles('jello'); 
     }
 
-    constructor(position, scene)
+    constructor(pos, scene)
     {
-        this.position = position;
-        console.log(this.position);
+        this.position = pos;
         this.scene = scene;
 
         var trapezoid = new b2PolygonShape();
@@ -44,5 +43,17 @@ export default class Jello
                 scale: 0.3,
              })
          ];
-    }   
+    }
+    
+    getPosition()
+    {
+        return new b2Vec2(
+            this.group1.position);
+    }
+
+    // isInside(targetArea)
+    // {
+        
+    //     return true;
+    // }
 }

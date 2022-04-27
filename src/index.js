@@ -48,7 +48,9 @@ class MyGame extends Phaser.Scene
         
         Jello.addParticleSystemToScene(this);     
         var jello1 = new Jello({ x: -6.65, y: 6 }, this);
-  
+        var jello2 = new Jello({x: 6, y: 6 }, this);
+console.log(jello1.getPosition());       
+       
         //hoop
 
         var hoop_shape = new b2PolygonShape();
