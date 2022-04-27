@@ -21,6 +21,7 @@ export default class Jello
     constructor(position, scene)
     {
         this.position = position;
+        console.log(this.position);
         this.scene = scene;
 
         var trapezoid = new b2PolygonShape();
@@ -34,7 +35,7 @@ export default class Jello
         pgd.flags = b2_springParticle;
         pgd.groupFlags = b2_solidParticleGroup;
         pgd.shape = trapezoid;
-        pgd.position.Set(position.x,position.y);
+        pgd.position.Set(this.position.x,this.position.y);
         this.group1 = scene.lfJelloParticles.CreateParticleGroup(pgd);
         this.group1.phaserParticleEmitters = [
             scene.phaserJelloParticles.createEmitter({

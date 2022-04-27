@@ -2,7 +2,7 @@ import Phaser, { Create } from 'phaser';
 
 import player1Img from './assets/sprites/player1.png';
 import player2Img from './assets/sprites/player2.png';
-import jelloImg from './assets/jello.png';
+
 import coolwhipImg from './assets/sprites/coolwhip.png';
 import backboardImg from './assets/sprites/backboard.png';
 import hoopImg from './assets/sprites/hoop.png';
@@ -24,10 +24,10 @@ class MyGame extends Phaser.Scene
     {
         this.load.image('player1', player1Img);
         this.load.image('player2', player2Img);
-        this.load.image('jello', jelloImg);
         this.load.image('coolwhip', coolwhipImg);
         this.load.image('backboard', backboardImg);
         this.load.image('hoop', hoopImg);
+        Jello.preload(this);
     }
       
     create ()
@@ -42,70 +42,13 @@ class MyGame extends Phaser.Scene
 
         var gravity = new b2Vec2(0,-15);
         window.world = this.myWorld = new b2World(gravity);
+        var ground = world.CreateBody(new b2BodyDef());
 
         this.physics = new LiquidFunPhysics(this.myWorld, { scale: 60, center: [500,500], flip: true });
-
-        var bd = new b2BodyDef();
-        var ground = world.CreateBody(bd);     
-        var jello1 = new Jello();
-        jello1.createJello((-6.65,6),world);
         
-        // var psd = new b2ParticleSystemDef();
-        // psd.radius = 0.065;
-        // var particleSystem = world.CreateParticleSystem(psd);
-        // this.jelloSystem = particleSystem;
-        // const jello = this.add.particles('jello');        
-
-        // //first group
-        // var trapezoid = new b2PolygonShape();
-        // var trapezoid_vertices = trapezoid.vertices;
-        // trapezoid_vertices.push(new b2Vec2(-0.5, -0.3));
-        // trapezoid_vertices.push(new b2Vec2(0.5, -0.3));
-        // trapezoid_vertices.push(new b2Vec2(0.3, 0.4));
-        // trapezoid_vertices.push(new b2Vec2(-0.3, 0.4));
-
-        // var pgd = new b2ParticleGroupDef();
-        // pgd.flags = b2_springParticle;
-        // pgd.groupFlags = b2_solidParticleGroup;
-        // pgd.shape = trapezoid;
-        // pgd.position.Set(-6.65, 6);
-        // this.group1 = particleSystem.CreateParticleGroup(pgd);
-        // this.group1.phaserParticleEmitters = [
-        //     jello.createEmitter({
-        //         tint: 0xEA4540,
-        //         blendMode: Phaser.BlendModes.COLOR,
-        //         scale: 0.3,
-        //     })
-        // ];
-    
-        // //Second Jello 
-        // var psd2 = new b2ParticleSystemDef();
-        // psd2.radius = 0.065;
-        // var particleSystem2 = world.CreateParticleSystem(psd2);
-        // this.jelloSystem2 = particleSystem2;
-        // const jello2 = this.add.particles('jello');        
-
-        // var trapezoid2 = new b2PolygonShape();
-        // var trapezoid_vertices2 = trapezoid2.vertices;
-        // trapezoid_vertices2.push(new b2Vec2(-0.5, -0.3));
-        // trapezoid_vertices2.push(new b2Vec2(0.5, -0.3));
-        // trapezoid_vertices2.push(new b2Vec2(0.3, 0.4));
-        // trapezoid_vertices2.push(new b2Vec2(-0.3, 0.4));
-
-        // var pgd2 = new b2ParticleGroupDef();
-        // pgd2.flags = b2_springParticle;
-        // pgd2.groupFlags = b2_solidParticleGroup;
-        // pgd2.shape = trapezoid2;
-        // pgd2.position.Set(6.65, 6);
-        // this.group2 = particleSystem.CreateParticleGroup(pgd2);
-        // this.group2.phaserParticleEmitters = [
-        //     jello.createEmitter({
-        //         tint: 0x405AEA,
-        //         blendMode: Phaser.BlendModes.COLOR,
-        //         scale: 0.3,
-        //     })
-        // ];
-
+        Jello.addParticleSystemToScene(this);     
+        var jello1 = new Jello({ x: -6.65, y: 6 }, this);
+  
         //hoop
 
         var hoop_shape = new b2PolygonShape();
@@ -265,8 +208,20 @@ class MyGame extends Phaser.Scene
 
     update(t,dt) {
         this.physics.update(dt);
-      //  const jelloPos = this.physics.computeParticleCentroid(
-       // this.jelloSystem, this.group1);
+
+        // something like this:
+        /*
+        for each jello in this.jellos
+            if jello.isInside(targetArea)
+                jello.destroy()
+        
+        at regular time interval:
+            jello = new Jello(...)
+            add it to this.jellos
+        */
+
+        // const jelloPos = this.physics.computeParticleCentroid(
+        //    this.jelloSystem, this.group1);
      
         // if(jelloPos.y <= -2){
         //     this.scene.restart();
