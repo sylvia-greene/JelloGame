@@ -27,7 +27,7 @@ class MyGame extends Phaser.Scene
         this.load.image('coolwhip', coolwhipImg);
         this.load.image('backboard', backboardImg);
         this.load.image('hoop', hoopImg);
-        Jello.preload(this);
+        // Jello.preload(this);
     }
       
     create ()
