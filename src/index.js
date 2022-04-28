@@ -47,10 +47,10 @@ class MyGame extends Phaser.Scene
         this.physics = new LiquidFunPhysics(this.myWorld, { scale: 60, center: [500,500], flip: true });
         
         Jello.addParticleSystemToScene(this);     
-        var jello1 = new Jello({ x: -6.65, y: 6 }, this);
+        this.jello1 = new Jello({ x: -6.65, y: 6 }, this);
         var jello2 = new Jello({x: 6, y: 6 }, this);
-//console.log(this.physics.computeParticleCentroid(jello1.pgd, jello1.group1));       
-       
+
+
         //hoop
 
         var hoop_shape = new b2PolygonShape();
@@ -210,7 +210,7 @@ class MyGame extends Phaser.Scene
 
     update(t,dt) {
         this.physics.update(dt);
-
+        console.log(this.jello1.getPosition());
         // something like this:
         /*
         for each jello in this.jellos
@@ -222,19 +222,6 @@ class MyGame extends Phaser.Scene
             add it to this.jellos
         */
 
-        // const jelloPos = this.physics.computeParticleCentroid(
-        //    this.jelloSystem, this.group1);
-     
-        // if(jelloPos.y <= -2){
-        //     this.scene.restart();
-        // }
-
-        // const jelloPos2 = this.physics.computeParticleCentroid(
-        //     this.jelloSystem2, this.group2);
-         
-        //     if(jelloPos2.y <= -2){
-        //         //this.createNewJello2();
-        //     }
     }
 
     updatePlayer1Score(P1score, jello){
