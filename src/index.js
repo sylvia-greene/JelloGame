@@ -23,7 +23,7 @@ class MyGame extends Phaser.Scene
         this.load.image('player1', player1Img);
         this.load.image('player2', player2Img);
         this.load.image('backboard', backboardImg);
-        this.load.image('hoop', hoopImg);
+    
         Jello.preload(this);
         Hoop.preload(this);
     }
@@ -32,6 +32,9 @@ class MyGame extends Phaser.Scene
     {
         var P1scoreText = 0;
         var P2scoreText = 0;
+  
+        this.timer = this.time.addEvent({ delay: 1000, callback: false, callbackScope: this, loop: true });
+
         P1scoreText = this.add.text(16, 16, 'P1 Score: 0', { fontSize: '32px', fill: '#000' });
         P2scoreText = this.add.text(750, 16, 'P2 Score: 0', { fontSize: '32px', fill: '#000' });
 
@@ -45,56 +48,17 @@ class MyGame extends Phaser.Scene
         this.physics = new LiquidFunPhysics(this.myWorld, { scale: 60, center: [500,500], flip: true });
         
         Jello.addParticleSystemToScene(this);     
-        new Jello({ x: -6.65, y: 6 }, this);
-        new Jello({x: 6.65, y: 6 }, this);
-        new Jello({x: -1.43, y: 6 }, this);
+        var jello1 = new Jello({ x: -6.65, y: 6 }, this);
+        var jello2 = new Jello({x: 6.65, y: 6 }, this);
+        //new Jello({x: -1.43, y: 6 }, this);
         
+        var jellos  = [];
+        jellos.push(jello1);
+        jellos.push(jello2);
+        console.log(jellos);
 
         //hoop
         var hoop1 = new Hoop({x: 0, y: 5}, this, ground);
-
-
-        // var hoop_shape = new b2PolygonShape();
-        // hoop_shape.position.Set(0, 5);
-
-        // hoop_shape.phaserSprite = this.add.image(0,0,'hoop');
-        // hoop_shape.phaserSprite.setScale(0.3);
-
-        // var hoop_vertices = hoop_shape.vertices;
-        // hoop_vertices.push(new b2Vec2(-1.41, 3.9));
-        // hoop_vertices.push(new b2Vec2(-1.13, 3.38));
-        // hoop_vertices.push(new b2Vec2(-1.13, 4.48));
-        // hoop_vertices.push(new b2Vec2(-1.41, 4.48));
-        // ground.CreateFixtureFromShape(hoop_shape, 0);
-
-        // var hoop_shape2 = new b2PolygonShape();
-        // hoop_shape2.position.Set(0, 5);
-
-        // var hoop_vertices2 = hoop_shape2.vertices;
-        // hoop_vertices2.push(new b2Vec2(-1.13, 3.38));
-        // hoop_vertices2.push(new b2Vec2(-0.45, 2.58));
-        // hoop_vertices2.push(new b2Vec2(-1.13, 4.48));
-        // ground.CreateFixtureFromShape(hoop_shape2, 0);
-
-        // var hoop_shape3 = new b2PolygonShape();
-        // hoop_shape3.position.Set(0, 5);
-
-        // var hoop_vertices3 = hoop_shape3.vertices;
-        // hoop_vertices3.push(new b2Vec2(1.13, 3.38));
-        // hoop_vertices3.push(new b2Vec2(1.13, 4.48));
-        // hoop_vertices3.push(new b2Vec2(0.45, 2.58));
-        // ground.CreateFixtureFromShape(hoop_shape3, 0);
-
-        // var hoop_shape4 = new b2PolygonShape();
-        // hoop_shape4.position.Set(0, 5);
-
-        // var hoop_vertices4 = hoop_shape4.vertices;
-        // hoop_vertices4.push(new b2Vec2(1.41, 3.9));
-        // hoop_vertices4.push(new b2Vec2(1.41, 4.48));
-        // hoop_vertices4.push(new b2Vec2(1.13, 4.48));
-        // hoop_vertices4.push(new b2Vec2(1.13, 3.38));
-        
-        // ground.CreateFixtureFromShape(hoop_shape4, 0);
 
         //flipper
 
@@ -203,13 +167,11 @@ class MyGame extends Phaser.Scene
             console.log('y = ' + mousey);
         });
 
-        // this.centroidTest = this.add.image(0, 0, 'ball');
-        // this.centroidTest.setScale(0.1);
     }
 
     update(t,dt) {
         this.physics.update(dt);
-        // console.log(this.jello1.getPosition());
+        this.timer.start();
         // something like this:
         /*
         for each jello in this.jellos
