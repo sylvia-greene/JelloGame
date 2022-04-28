@@ -46,8 +46,9 @@ export default class Jello
     
     getPosition()
     {
-        return this.scene.physics.computeParticleCentroid(this.scene.lfJelloParticles, this.particleGroup);  
-          
+        return this.scene.physics.computeParticleCentroid(
+            this.scene.lfJelloParticles,
+            this.particleGroup);  
     }
 
     // isInside(targetArea)
