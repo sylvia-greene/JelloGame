@@ -56,4 +56,15 @@ export default class Jello
         
     //     return true;
     // }
+
+    destroy()
+    {   
+
+        this.particleGroup.DestroyParticles(true);
+        for(let emitter of this.particleGroup.phaserParticleEmitters)
+        {
+            
+        }
+        this.isDestroyed = true;
+    }
 }

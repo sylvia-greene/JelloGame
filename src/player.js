@@ -21,7 +21,7 @@ export default class player {
         this.scoreText = this.player.add.text(locationX, locationY, playerName, 'Score: ', score, { fontSize: '32px', fill: '#000' })
     }
 
-    updatePlayerScore(player, jello, basketLocationX, basketLocationY){
+    updatePlayerScore(player, jello){
         // When player's jello passes through the hoop (jello.isInside) increase player's score by 1
         // Here call function that recognizes jello passthrough
         if (jello.isInside ){

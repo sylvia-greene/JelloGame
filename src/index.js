@@ -30,6 +30,7 @@ class MyGame extends Phaser.Scene
       
     create ()
     {
+        this.timeUntilNextJello = 0;
         var P1scoreText = 0;
         var P2scoreText = 0;
   
@@ -48,14 +49,9 @@ class MyGame extends Phaser.Scene
         this.physics = new LiquidFunPhysics(this.myWorld, { scale: 60, center: [500,500], flip: true });
         
         Jello.addParticleSystemToScene(this);     
-        var jello1 = new Jello({ x: -6.65, y: 6 }, this);
-        var jello2 = new Jello({x: 6.65, y: 6 }, this);
-        //new Jello({x: -1.43, y: 6 }, this);
-        
-        var jellos  = [];
-        jellos.push(jello1);
-        jellos.push(jello2);
-        console.log(jellos);
+
+        this.jellos = [];
+
 
         //hoop
         var hoop1 = new Hoop({x: 0, y: 5}, this, ground);
@@ -170,18 +166,37 @@ class MyGame extends Phaser.Scene
     }
 
     update(t,dt) {
+        this.timeUntilNextJello -= dt;
+        if(this.timeUntilNextJello < 0 ){
+            var jello1 = new Jello({ x: -6.65, y: 6 }, this);
+            var jello2 = new Jello({x: 6.65, y: 6 }, this);
+            this.jellos.push(jello1);
+            this.jellos.push(jello2);
+            this.timeUntilNextJello = 1000;
+        }
         this.physics.update(dt);
-        this.timer.start();
+       
         // something like this:
-        /*
-        for each jello in this.jellos
-            if jello.isInside(targetArea)
-                jello.destroy()
-        
-        at regular time interval:
-            jello = new Jello(...)
-            add it to this.jellos
-        */
+
+        for (let jello of this.jellos){
+            if(this.physics.toPhaserCoord(jello.getPosition()).y > this.sys.game.canvas.height/2){
+                jello.destroy();
+                console.log("Removing Jello");
+             
+            }
+            // if jello.isInside(targetArea)
+            //     jello.destroy()
+        }
+
+        this.jellos = this.jellos.filter((jello) => !jello.isDestroyed);
+        // at regular time interval:
+        //     for(jello element of jellos)
+        //     {
+        //         console.log(jello);
+        //     }
+        //     jello = new Jello(...)
+        //     add it to this.jellos
+        // */
 
     }
 
