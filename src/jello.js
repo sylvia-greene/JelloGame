@@ -18,9 +18,10 @@ export default class Jello
         scene.phaserJelloParticles = scene.add.particles('jello'); 
     }
 
-    constructor(pos, scene)
+    constructor(pos, scene, player)
     {
         this.scene = scene;
+        this.player = player;
 
         var trapezoid = new b2PolygonShape();
         var trapezoid_vertices = trapezoid.vertices;
@@ -28,6 +29,14 @@ export default class Jello
         trapezoid_vertices.push(new b2Vec2(0.5, -0.3));
         trapezoid_vertices.push(new b2Vec2(0.3, 0.4));
         trapezoid_vertices.push(new b2Vec2(-0.3, 0.4));
+
+        var jelloColor;
+        if(this.player == 1){
+            jelloColor = 0xE41C17;
+        }
+        if(this.player == 2){
+            jelloColor = 0x336DF;
+        }
 
         var pdg = new b2ParticleGroupDef();
         pdg.flags = b2_springParticle;
@@ -37,7 +46,7 @@ export default class Jello
         this.particleGroup = scene.lfJelloParticles.CreateParticleGroup(pdg);
         this.particleGroup.phaserParticleEmitters = [
             scene.phaserJelloParticles.createEmitter({
-                tint: 0xE41C17,
+                tint: jelloColor,
                 blendMode: Phaser.BlendModes.COLOR,
                 scale: 0.3,
              })
@@ -56,6 +65,11 @@ export default class Jello
         
     //     return true;
     // }
+
+    getPlayer()
+    {
+        return this.player;
+    }
 
     destroy()
     {   

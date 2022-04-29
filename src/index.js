@@ -168,21 +168,19 @@ class MyGame extends Phaser.Scene
     update(t,dt) {
         this.timeUntilNextJello -= dt;
         if(this.timeUntilNextJello < 0 ){
-            var jello1 = new Jello({ x: -6.65, y: 6 }, this);
-            var jello2 = new Jello({x: 6.65, y: 6 }, this);
+            var jello1 = new Jello({ x: -6.65, y: 8 }, this, 1);
+            var jello2 = new Jello({x: 6.65, y: 8 }, this, 2);
             this.jellos.push(jello1);
             this.jellos.push(jello2);
-            this.timeUntilNextJello = 1000;
+            this.timeUntilNextJello = 2000;
         }
         this.physics.update(dt);
        
         // something like this:
 
         for (let jello of this.jellos){
-            if(this.physics.toPhaserCoord(jello.getPosition()).y > this.sys.game.canvas.height/2){
+            if(this.physics.toPhaserCoord(jello.getPosition()).y > this.sys.game.canvas.height){
                 jello.destroy();
-                console.log("Removing Jello");
-             
             }
             // if jello.isInside(targetArea)
             //     jello.destroy()
