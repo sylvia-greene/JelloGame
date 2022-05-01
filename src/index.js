@@ -187,15 +187,6 @@ class MyGame extends Phaser.Scene
         }
 
         this.jellos = this.jellos.filter((jello) => !jello.isDestroyed);
-        // at regular time interval:
-        //     for(jello element of jellos)
-        //     {
-        //         console.log(jello);
-        //     }
-        //     jello = new Jello(...)
-        //     add it to this.jellos
-        // */
-
     }
 
     updatePlayer1Score(P1score, jello){
