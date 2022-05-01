@@ -25,12 +25,7 @@ export default class player {
         this.scoreText = this.scene.add.text(locationX, locationY,'Player'+ this.playerName + '  Score:' + this.score, { fontSize: '32px', fill: '#000' })
     }
 
-    updatePlayerScore(player, jello){
-        // When player's jello passes through the hoop (jello.isInside) increase player's score by 1
-        // Here call function that recognizes jello passthrough
-        if (Jello.getPosition() == Hoop.getPosition()){
-            this.player.score += 1;
-            this.scoreText.setText('Score: ' + score);
-        }
+    updatePlayerScore(player){
+      this.score += 1;
     }
 }
