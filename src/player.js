@@ -19,10 +19,10 @@ export default class player {
             var locationY = 16;
         }
         if(this.playerName == 2){
-            locationX = 750;
+            locationX = 680;
             locationY = 16;
         }
-        this.scoreText = this.scene.add.text(locationX, locationY,'player1', 'Score: ', this.score, { fontSize: '32px', fill: '#000' })
+        this.scoreText = this.scene.add.text(locationX, locationY,'Player'+ this.playerName + '  Score:' + this.score, { fontSize: '32px', fill: '#000' })
     }
 
     updatePlayerScore(player, jello){

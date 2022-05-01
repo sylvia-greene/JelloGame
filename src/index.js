@@ -49,6 +49,8 @@ class MyGame extends Phaser.Scene
         this.player1 = new player(1, 0, 0, this);
         this.player1.displayScore();
 
+        this.player2 = new player(2,0,0,this);
+        this.player2.displayScore();
         this.physics = new LiquidFunPhysics(this.myWorld, { scale: 60, center: [500,500], flip: true });
         
         Jello.addParticleSystemToScene(this);     
