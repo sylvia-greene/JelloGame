@@ -7,6 +7,7 @@ import backboardImg from './assets/sprites/backboard.png';
 import hoopImg from './assets/sprites/hoop.png';
 
 import LiquidFunPhysics from './lf-phaser.js';
+import Title from './scenes/Title.js';
 
 import Jello from './jello.js';
 import Hoop from './hoop.js';
@@ -212,6 +213,7 @@ class MyGame extends Phaser.Scene
         P2scoreText.setText('Score: ' + P2score);
     }
 }
+let titleScene = new Title();
 
 const config = {
     type: Phaser.AUTO,
@@ -226,3 +228,5 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
+// game.scene.add('TitleScene', titleScene);
+// game.scene.start('TitleScene');
