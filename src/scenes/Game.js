@@ -9,6 +9,7 @@ import Title from '../scenes/Title.js';
 
 import Jello from '../jello.js';
 import Hoop from '../hoop.js';
+import player from '../player';
 
 class MyGame extends Phaser.Scene
 {
@@ -30,13 +31,11 @@ class MyGame extends Phaser.Scene
     create ()
     {
         this.timeUntilNextJello = 0;
-        var P1scoreText = 0;
-        var P2scoreText = 0;
-  
-        this.timer = this.time.addEvent({ delay: 1000, callback: false, callbackScope: this, loop: true });
 
-        P1scoreText = this.add.text(16, 16, 'P1 Score: 0', { fontSize: '32px', fill: '#000' });
-        P2scoreText = this.add.text(750, 16, 'P2 Score: 0', { fontSize: '32px', fill: '#000' });
+        this.player1 = new player(1,0,0,this);
+        this.player2 = new player(2,0,0,this);
+        this.player1.displayScore();
+        this.player2.displayScore();
 
         var backboard = this.add.image(500, 200, 'backboard');
         backboard.setScale(0.3);
@@ -178,7 +177,7 @@ class MyGame extends Phaser.Scene
         // something like this:
 
         for (let jello of this.jellos){
-            if(this.physics.toPhaserCoord(jello.getPosition()).y > this.sys.game.canvas.height){
+            if(this.physics.toPhaserCoord(jello.getPosition()).y > this.sys.game.canvas.height + 100 ){
                 jello.destroy();
             }
             // if jello.isInside(targetArea)
@@ -188,19 +187,6 @@ class MyGame extends Phaser.Scene
         this.jellos = this.jellos.filter((jello) => !jello.isDestroyed);
     }
 
-    updatePlayer1Score(P1score, jello){
-        // When player 1's jello passes through the hoop's center coordinates player 1's score increases by 1
-        // Here call function that recognizes jello passthrough
-        P1score += 1;
-        P1scoreText.setText('Score: ' + P1score);
-    }
-
-    updatePlayer2Score(P2score, jello){
-        // When player 2's jello passes through the hoop's center coordinates player 2's score increases by 1
-        // Here call function that recognizes jello passthrough
-        P2score += 1;
-        P2scoreText.setText('Score: ' + P2score);
-    }
 }
 
 
