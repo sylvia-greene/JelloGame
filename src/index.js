@@ -4,7 +4,7 @@ import player1Img from './assets/sprites/player1.png';
 import player2Img from './assets/sprites/player2.png';
 
 import backboardImg from './assets/sprites/backboard.png';
-import hoopImg from './assets/sprites/hoop.png';
+
 
 import LiquidFunPhysics from './lf-phaser.js';
 import Title from './scenes/Title.js';
