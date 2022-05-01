@@ -54,13 +54,20 @@ export default class Hoop
         
         ground.CreateFixtureFromShape(hoop_shape4, 0);
 
-
+        this.pos = pos;
         // x values: 1.41, 1.13, 0.45
         // y values: 3.9, 3.38, 4.48, 2.58, 
 
     }
     
-    getPosition(){
-        return this.pos;  
+    getPos(){
+        return this.pos;
+    }
+    getMinPosition(){
+        return new b2Vec2(this.pos.x - 1.4, this.pos.y - .6);  
+    }
+
+    getMaxPos(){
+        return new b2Vec2(this.pos.x + 1.4, this.pos.y - .6);
     }
 }

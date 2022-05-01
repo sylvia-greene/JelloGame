@@ -78,7 +78,6 @@ export default class Jello
         for(let emitter of this.particleGroup.phaserParticleEmitters)
         {
             emitter.remove();
-            console.log(emitter);
         }
         this.isDestroyed = true;
     }

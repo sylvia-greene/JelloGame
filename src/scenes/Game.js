@@ -154,12 +154,15 @@ class MyGame extends Phaser.Scene
 
 
         this.input.on('pointerdown', () => {
-            var mousex = (game.input.mousePointer.x - 500) / 60;
-            var mousey = (game.input.mousePointer.y - 500) / -60;
+            var mousex = (this.input.mousePointer.x - 500) / 60;
+            var mousey = (this.input.mousePointer.y - 500) / -60;
 
             console.log('x = ' + mousex);
             console.log('y = ' + mousey);
         });
+
+console.log(hoop1.getMinPosition());
+console.log(hoop1.getMaxPos());
 
     }
 
