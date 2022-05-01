@@ -7,6 +7,7 @@ import backboardImg from './assets/sprites/backboard.png';
 import hoopImg from './assets/sprites/hoop.png';
 
 import LiquidFunPhysics from './lf-phaser.js';
+import Title from './scenes/Title.js';
 
 import Jello from './jello.js';
 import Hoop from './hoop.js';
@@ -16,7 +17,7 @@ class MyGame extends Phaser.Scene
 {
     constructor ()
     {
-        super();
+        super('MyGame');
     }
 
     preload ()
@@ -192,6 +193,8 @@ class MyGame extends Phaser.Scene
     }
 
 }
+// let titleScene = new Title();
+
 
 const config = {
     type: Phaser.AUTO,
@@ -199,7 +202,18 @@ const config = {
     width: 1000,
     height: 600,
     backgroundColor: '#606C86',
-    scene: MyGame
+    scene: [
+        Title,
+        MyGame
+    ]
 };
 
 const game = new Phaser.Game(config);
+// let myGame = new MyGame();
+// game.scene.add('TitleScene', titleScene);
+// game.scene.add('MyGame', myGame);
+// game.scene.start('TitleScene');
+
+
+
+export default MyGame;
