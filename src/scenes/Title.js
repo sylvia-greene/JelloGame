@@ -18,12 +18,12 @@ class Title extends Phaser.Scene {
         var text = this.add.text(500, 425, 'Press any button to begin', 16);
         text.setOrigin(0.5);
         text.setFontSize(20);
-    
+
         this.input.keyboard.on('keydown', (event) => {
-            this.scene.start(MyGame)
-            console.log("key press")
+            this.scene.pause();
+            this.scene.start('MyGame');
+            console.log('key press');
         }, this);
-       
        
         
     }

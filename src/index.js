@@ -16,7 +16,7 @@ class MyGame extends Phaser.Scene
 {
     constructor ()
     {
-        super();
+        super('MyGame');
     }
 
     preload ()
@@ -213,7 +213,8 @@ class MyGame extends Phaser.Scene
         P2scoreText.setText('Score: ' + P2score);
     }
 }
-let titleScene = new Title();
+// let titleScene = new Title();
+
 
 const config = {
     type: Phaser.AUTO,
@@ -228,7 +229,11 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
-game.scene.add('TitleScene', titleScene);
-game.scene.start('TitleScene');
+// let myGame = new MyGame();
+// game.scene.add('TitleScene', titleScene);
+// game.scene.add('MyGame', myGame);
+// game.scene.start('TitleScene');
+
+
 
 export default MyGame;
