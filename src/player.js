@@ -22,10 +22,11 @@ export default class player {
             locationX = 680;
             locationY = 16;
         }
-        this.scoreText = this.scene.add.text(locationX, locationY,'Player'+ this.playerName + '  Score:' + this.score, { fontSize: '32px', fill: '#000' })
+        this.scoreText = this.scene.add.text(locationX, locationY,'  Score:' + this.score, { fontSize: '32px', fill: '#000' })
     }
 
-    updatePlayerScore(player){
+  updatePlayerScore(){
       this.score += 1;
+      this.scoreText.setText("Score:" + this.score);
     }
 }

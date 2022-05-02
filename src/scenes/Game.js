@@ -160,9 +160,7 @@ class MyGame extends Phaser.Scene
             console.log('x = ' + mousex);
             console.log('y = ' + mousey);
         });
-console.log(this.hoop1.getMaxPos().x);
-console.log(this.hoop1.getMinPos().x);
-console.log(this.hoop1.getPos().y);
+
     }
 
     update(t,dt) {
@@ -188,9 +186,19 @@ console.log(this.hoop1.getPos().y);
         for(let jello of this.jellos){
          if(jello.getPosition().x >= this.hoop1.getMinPos().x
             && jello.getPosition().x <= this.hoop1.getMaxPos().x
-            && jello.getPosition().y >= this.hoop1.getMaxPos().y && jello.getPosition().y <= this.hoop1.getMaxPos().y + .5
+            && jello.getPosition().y <= this.hoop1.getMaxPos().y && jello.getPosition().y >= this.hoop1.getMaxPos().y - .5
            ){
-                jello.destroy();
+                var player = jello.getPlayer();
+                if(player == 1){
+                    this.player1.updatePlayerScore();
+                    this.time.now + 2000
+
+                }
+                if(player == 2){
+                    this.player2.updatePlayerScore();
+                    this.time.now + 2000
+
+                }
             } 
         }
 
