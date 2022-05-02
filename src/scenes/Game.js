@@ -180,7 +180,7 @@ console.log(hoop1.getMaxPos());
         // something like this:
 
         for (let jello of this.jellos){
-            if(this.physics.toPhaserCoord(jello.getPosition()).y > this.sys.game.canvas.height /2 ){
+            if(this.physics.toPhaserCoord(jello.getPosition()).y > this.sys.game.canvas.height + 100 ){
                 jello.destroy();
             }
             // if jello.isInside(targetArea)
