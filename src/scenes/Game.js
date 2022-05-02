@@ -52,7 +52,7 @@ class MyGame extends Phaser.Scene
 
 
         //hoop
-        var hoop1 = new Hoop({x: 0, y: 5}, this, ground);
+        this.hoop1 = new Hoop({x: 0, y: 5}, this, ground);
 
         //flipper
 
@@ -160,10 +160,9 @@ class MyGame extends Phaser.Scene
             console.log('x = ' + mousex);
             console.log('y = ' + mousey);
         });
-
-console.log(hoop1.getMinPosition());
-console.log(hoop1.getMaxPos());
-
+console.log(this.hoop1.getMaxPos().x);
+console.log(this.hoop1.getMinPos().x);
+console.log(this.hoop1.getPos().y);
     }
 
     update(t,dt) {
@@ -183,8 +182,16 @@ console.log(hoop1.getMaxPos());
             if(this.physics.toPhaserCoord(jello.getPosition()).y > this.sys.game.canvas.height + 100 ){
                 jello.destroy();
             }
-            // if jello.isInside(targetArea)
-            //     jello.destroy()
+         
+        }
+
+        for(let jello of this.jellos){
+         if(jello.getPosition().x >= this.hoop1.getMinPos().x
+            && jello.getPosition().x <= this.hoop1.getMaxPos().x
+            && jello.getPosition().y >= this.hoop1.getMaxPos().y && jello.getPosition().y <= this.hoop1.getMaxPos().y + .5
+           ){
+                jello.destroy();
+            } 
         }
 
         this.jellos = this.jellos.filter((jello) => !jello.isDestroyed);

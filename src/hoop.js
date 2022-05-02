@@ -63,7 +63,7 @@ export default class Hoop
     getPos(){
         return this.pos;
     }
-    getMinPosition(){
+    getMinPos(){
         return new b2Vec2(this.pos.x - 1.4, this.pos.y - .6);  
     }
 
