@@ -14,6 +14,11 @@ class MyGame extends Phaser.Scene
         super('MyGame');
     }
 
+    init(data){
+        this.colorArray = data.color;
+        console.log(this.colorArray);
+    }
+
     preload ()
     {
         this.load.image('backboard', backboardImg);
