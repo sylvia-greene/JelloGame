@@ -2,14 +2,13 @@ import player1Img from '../assets/sprites/player1.png';
 import player2Img from '../assets/sprites/player2.png';
 
 import backboardImg from '../assets/sprites/backboard.png';
-import hoopImg from '../assets/sprites/hoop.png';
 
 import LiquidFunPhysics from '../lf-phaser.js';
-import Title from '../scenes/Title.js';
 
 import Jello from '../jello.js';
 import Hoop from '../hoop.js';
 import player from '../player';
+import Flipper from '../flipper.js';
 
 class MyGame extends Phaser.Scene
 {
@@ -26,6 +25,7 @@ class MyGame extends Phaser.Scene
     
         Jello.preload(this);
         Hoop.preload(this);
+        Flipper.preload(this);
     }
       
     create ()
@@ -50,90 +50,31 @@ class MyGame extends Phaser.Scene
 
         this.jellos = [];
 
-
         //hoop
         this.hoop1 = new Hoop({x: 0, y: 5}, this, ground);
 
-        //flipper
+        this.leftFlipper = new Flipper({x: -6, y: 0}, this, ground);
+        this.rightFlipper = new Flipper({x: 6, y: 0}, this, ground);
 
-        var polygon_shape = new b2PolygonShape();
-        polygon_shape.phaserCentroid = new b2Vec2(0,0);
-        polygon_shape.SetAsBoxXYCenterAngle(2.05, 0.1, polygon_shape.phaserCentroid, 0.0); //changed this to be half the length of the flippersprite
 
-        polygon_shape.phaserSprite = this.add.image(0,0,'player1'); 
-
-        var bd = new b2BodyDef;
-        bd.position.Set(-6, 0);
-        bd.angle = -0.10 * Math.PI;
-
-        polygon_shape.phaserSprite.setScale(.55);
-
-        bd.type = b2_dynamicBody;
-        bd.bullet = true;
-        bd.density = 10000;
-
-        var body = world.CreateBody(bd);   
-        body.CreateFixtureFromShape(polygon_shape, 1.0);
-
-        let paddleMotorDef = new b2RevoluteJointDef();
-        paddleMotorDef.lowerAngle = 0;
-        paddleMotorDef.upperAngle = .15 * Math.PI;
-        paddleMotorDef.enableLimit = true;
-        paddleMotorDef.maxMotorTorque = 250.0;
-        paddleMotorDef.enableMotor = true;
-        paddleMotorDef.collideConnected = false;
-
-        var focalPoint = new b2Vec2(-7.8, 0.6); //got these numbers by clicking on the screen and copying coordinates for where i want the flipper to rotate around
-        this.paddleMotor = paddleMotorDef.InitializeAndCreate(ground,body,focalPoint);
-
-        //flipper #2 
-
-        var polygon_shape2 = new b2PolygonShape();
-        polygon_shape2.phaserCentroid = new b2Vec2(0,0);
-        polygon_shape2.SetAsBoxXYCenterAngle(2.05, 0.1, polygon_shape2.phaserCentroid, 0.0); //changed this to be half the length of the flippersprite
-
-        polygon_shape2.phaserSprite = this.add.image(0,0,'player2'); 
-
-        var bd2 = new b2BodyDef;
-        bd2.position.Set(6, 0);
-        bd2.angle = -.9 * Math.PI;
-
-        polygon_shape2.phaserSprite.setScale(.55);
-
-        bd2.type = b2_dynamicBody;
-        bd2.bullet = true;
-        bd2.density = 10000;
-
-        var body2 = world.CreateBody(bd2);   
-        body2.CreateFixtureFromShape(polygon_shape2, 1.0);
-
-        let paddleMotorDef2 = new b2RevoluteJointDef();
-        paddleMotorDef2.lowerAngle = -.15 * Math.PI;
-        paddleMotorDef2.upperAngle = 0 ;
-        paddleMotorDef2.enableLimit = true;
-        paddleMotorDef2.maxMotorTorque = 250.0;
-        paddleMotorDef2.enableMotor = true;
-        paddleMotorDef2.collideConnected = false;
-
-        var focalPoint2 = new b2Vec2(7.8, .6); //got these numbers by clicking on the screen and copying coordinates for where i want the flipper to rotate around
-        this.paddleMotor2 = paddleMotorDef2.InitializeAndCreate(ground,body2,focalPoint2);
+        console.log(this.rightFlipper.getPos());
 
 
         this.input.keyboard.on('keydown-Q', (event) => {
-            this.paddleMotor.SetMotorSpeed(85);
+            this.leftFlipper.moveFlipper();
         });
 
         this.input.keyboard.on('keyup-Q', (event) => {
-            this.paddleMotor.SetMotorSpeed(-85);
+            this.leftFlipper.moveFlipperBack();
         });
 
 
         this.input.keyboard.on('keydown-P', (event) => {
-            this.paddleMotor2.SetMotorSpeed(-85);
+            this.rightFlipper.moveFlipper();
         }); 
 
         this.input.keyboard.on('keyup-P', (event) => {
-            this.paddleMotor2.SetMotorSpeed(85);
+            this.rightFlipper.moveFlipperBack();
         });
 
         this.input.keyboard.on('keydown-X', (event) => {
