@@ -23,7 +23,7 @@ class Title extends Phaser.Scene {
 
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.scene.pause();
-            this.scene.start('Tutorial');
+            this.scene.start('Select');
             console.log('key press');
         }, this);
        
