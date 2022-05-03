@@ -26,7 +26,8 @@ class MyGame extends Phaser.Scene
     create ()
     {
         this.timeUntilNextJello = 0;
-        this.countdown = 60;
+        this.playTime = 60000;
+        this.timerText = this.add.text(475, 16, '', {fontSize: '32px', fill:'#000'});
 
 //create players array
         this.players = [];
@@ -108,11 +109,16 @@ class MyGame extends Phaser.Scene
     }
 
     update(t,dt) {
-        // var timer = countdown - t;
-        // var timerText = this.add.text(500, 100, timer);
+        this.playTime -=  dt;
+        var timer = Math.round((this.playTime)/1000);
+        this.timerText.setText(timer);
 
+        if (timer <= 0){
+            this.scene.pause();
+            // add win scene
+        }
 
-        // this.timeUntilNextJello -= dt;
+        this.timeUntilNextJello -= dt;
 
         if(this.timeUntilNextJello < 0 ){
             var jello1 = new Jello({ x: -6.65, y: 8 }, this, 1);
