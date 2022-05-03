@@ -12,8 +12,8 @@ const config = {
     backgroundColor: '#606C86',
     scene: [
         Title,
-        Select,
         Tutorial,
+        Select,
         MyGame
     ]
 };

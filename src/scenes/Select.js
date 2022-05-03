@@ -47,7 +47,7 @@ class Select extends Phaser.Scene {
         this.input.keyboard.on('keydown-SPACE', (event) => {
             if(player1Selected && player2Selected) {
                 this.scene.pause();
-                this.scene.start('Tutorial');
+                this.scene.start('MyGame');
                 console.log('key press tut');
     
                 }
