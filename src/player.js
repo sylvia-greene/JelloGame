@@ -10,6 +10,7 @@ export default class player {
         this.playerName = playerName;
         this.score = score;
         this.scoreText = scoreText;
+
     }
 
     // takes in the user's int as its location
@@ -29,4 +30,6 @@ export default class player {
       this.score += 1;
       this.scoreText.setText("Score:" + this.score);
     }
+
+
 }
