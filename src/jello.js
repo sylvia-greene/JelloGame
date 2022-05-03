@@ -23,7 +23,7 @@ export default class Jello
         this.scene = scene;
         this.player = player;
         this.isScored = false;
-        
+
         var trapezoid = new b2PolygonShape();
         var trapezoid_vertices = trapezoid.vertices;
         trapezoid_vertices.push(new b2Vec2(-0.5, -0.3));
@@ -32,10 +32,10 @@ export default class Jello
         trapezoid_vertices.push(new b2Vec2(-0.3, 0.4));
 
         var jelloColor;
-        if(this.player == 1){
+        if(this.player == scene.player1){
             jelloColor = 0xE41C17;
         }
-        if(this.player == 2){
+        if(this.player == scene.player2){
             jelloColor = 0x336DF;
         }
 
