@@ -15,13 +15,15 @@ class Title extends Phaser.Scene {
         startImage.setOrigin(0,0);
         startImage.setScale(0.5);
 
-        var text = this.add.text(500, 425, 'Press any button to begin', 16);
+        var text = this.add.text(500, 425, 'Press SPACE to begin', 16);
         text.setOrigin(0.5);
         text.setFontSize(20);
 
-        this.input.keyboard.on('keydown', (event) => {
+        //var spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        this.input.keyboard.on('keydown-SPACE', (event) => {
             this.scene.pause();
-            this.scene.start('MyGame');
+            this.scene.start('Tutorial');
             console.log('key press');
         }, this);
        
