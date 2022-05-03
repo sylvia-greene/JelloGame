@@ -31,7 +31,8 @@ class MyGame extends Phaser.Scene
     create ()
     {
         this.timeUntilNextJello = 0;
-
+        
+//create players array
         this.player1 = new player(1,0,0,this);
         this.player2 = new player(2,0,0,this);
         this.player1.displayScore();
@@ -106,6 +107,7 @@ class MyGame extends Phaser.Scene
 
     update(t,dt) {
         this.timeUntilNextJello -= dt;
+
         if(this.timeUntilNextJello < 0 ){
             var jello1 = new Jello({ x: -6.65, y: 8 }, this, 1);
             var jello2 = new Jello({x: 6.65, y: 8 }, this, 2);
@@ -121,25 +123,23 @@ class MyGame extends Phaser.Scene
             if(this.physics.toPhaserCoord(jello.getPosition()).y > this.sys.game.canvas.height + 100 ){
                 jello.destroy();
             }
-         
         }
 
         for(let jello of this.jellos){
-         if(jello.getPosition().x >= this.hoop1.getMinPos().x
+         if(!jello.isScored  
+            && jello.getPosition().x >= this.hoop1.getMinPos().x
             && jello.getPosition().x <= this.hoop1.getMaxPos().x
-            && jello.getPosition().y <= this.hoop1.getMaxPos().y && jello.getPosition().y >= this.hoop1.getMaxPos().y - .05
+            && jello.getPosition().y <= this.hoop1.getMaxPos().y && jello.getPosition().y  >= this.hoop1.getMaxPos().y - 1
            ){
-                var player = jello.getPlayer();
-                if(player == 1){
-                    this.player1.updatePlayerScore();
-                    
+               var player = jello.getPlayer();
+               if(player == 1 ){
+                   this.player1.updatePlayerScore();
+               }
+               if(player == 2){
+                   this.player2.updatePlayerScore();
+               }
 
-                }
-                if(player == 2){
-                    this.player2.updatePlayerScore();
-                    
-
-                }
+               jello.isScored = true;
             } 
         }
 

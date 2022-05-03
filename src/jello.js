@@ -22,7 +22,8 @@ export default class Jello
     {
         this.scene = scene;
         this.player = player;
-
+        this.isScored = false;
+        
         var trapezoid = new b2PolygonShape();
         var trapezoid_vertices = trapezoid.vertices;
         trapezoid_vertices.push(new b2Vec2(-0.5, -0.3));
