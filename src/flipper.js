@@ -1,14 +1,14 @@
-import Phaser, { Create } from 'phaser';
-import player1Img from './assets/sprites/player1.png';
-import player2Img from './assets/sprites/player2.png';
-import LiquidFunPhysics from './lf-phaser.js';
+import redImg from './assets/sprites/red.png';
+import blueImg from './assets/sprites/blue.png';
+import grnImg from './assets/sprites/seaformgrn.png'
 
 export default class Flipper
 {
     static preload(scene)
     {
-        scene.load.image('player1', player1Img);
-        scene.load.image('player2', player2Img);
+        scene.load.image('red', redImg);
+        scene.load.image('blue', blueImg);
+        scene.load.image('green', grnImg)
     }
 
     constructor(pos, scene, ground)
@@ -36,10 +36,10 @@ export default class Flipper
         polygon_shape.SetAsBoxXYCenterAngle(2.05, 0.1, polygon_shape.phaserCentroid, 0.0);
 
         if(this.pos.x < 0) {
-            polygon_shape.phaserSprite = this.scene.add.image(0,0,'player1');
+            polygon_shape.phaserSprite = this.scene.add.image(0,0,'red');
         }
         else {
-            polygon_shape.phaserSprite = this.scene.add.image(0,0,'player1');
+            polygon_shape.phaserSprite = this.scene.add.image(0,0,'blue');
             polygon_shape.phaserSprite.flipY = true;
         }
 
@@ -55,6 +55,7 @@ export default class Flipper
 
         var body = world.CreateBody(bd);   
         body.CreateFixtureFromShape(polygon_shape, 1.0);
+        
 
         let paddleMotorDef = new b2RevoluteJointDef();
         paddleMotorDef.upperAngle = 0;

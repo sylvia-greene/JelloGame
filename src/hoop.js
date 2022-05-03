@@ -1,7 +1,4 @@
-import Phaser, { Create } from 'phaser';
 import hoopImg from './assets/sprites/hoop.png';
-import LiquidFunPhysics from './lf-phaser.js';
-
 
 export default class Hoop
 {

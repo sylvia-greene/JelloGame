@@ -1,6 +1,3 @@
-import player1Img from '../assets/sprites/player1.png';
-import player2Img from '../assets/sprites/player2.png';
-
 import backboardImg from '../assets/sprites/backboard.png';
 
 import LiquidFunPhysics from '../lf-phaser.js';
@@ -19,8 +16,6 @@ class MyGame extends Phaser.Scene
 
     preload ()
     {
-        this.load.image('player1', player1Img);
-        this.load.image('player2', player2Img);
         this.load.image('backboard', backboardImg);
     
         Jello.preload(this);
