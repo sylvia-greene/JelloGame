@@ -1,6 +1,7 @@
 import redImg from './assets/sprites/red.png';
 import blueImg from './assets/sprites/blue.png';
 import grnImg from './assets/sprites/seaformgrn.png'
+import purpImg from './assets/sprites/purple.png'
 
 export default class Flipper
 {
@@ -8,7 +9,8 @@ export default class Flipper
     {
         scene.load.image('red', redImg);
         scene.load.image('blue', blueImg);
-        scene.load.image('green', grnImg)
+        scene.load.image('green', grnImg);
+        scene.load.image('purple', purpImg);
     }
 
     constructor(pos, scene, ground)
