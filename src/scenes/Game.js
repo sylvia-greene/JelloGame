@@ -28,10 +28,16 @@ class MyGame extends Phaser.Scene
         this.timeUntilNextJello = 0;
         
 //create players array
+        this.players = [];
         this.player1 = new player(1,0,0,this);
         this.player2 = new player(2,0,0,this);
-        this.player1.displayScore();
-        this.player2.displayScore();
+        this.players.push(this.player1);
+        this.players.push(this.player2);
+
+        for(let person of this.players){
+            person.displayScore();
+        }
+
 
         var backboard = this.add.image(500, 200, 'backboard');
         backboard.setScale(0.3);
