@@ -4,8 +4,9 @@ import yellowImg from './assets/sprites/yellow.png';
 import greenImg from './assets/sprites/green.png';
 import seafoamImg from './assets/sprites/seafoam.png'
 import blueImg from './assets/sprites/blue.png';
-import purpleImg from './assets/sprites/purple.png'
-import blackImg from './assets/sprites/black.png'
+import purpleImg from './assets/sprites/purple.png';
+import blackImg from './assets/sprites/black.png';
+import paulImg from './assets/sprites/paul.png';
 
 export default class Flipper
 {
@@ -19,6 +20,7 @@ export default class Flipper
         scene.load.image('blue', blueImg);
         scene.load.image('purple', purpleImg);
         scene.load.image('black', blackImg);
+        scene.load.image('paul', paulImg);
     }
 
     constructor(pos, scene, ground, colorIndex)
