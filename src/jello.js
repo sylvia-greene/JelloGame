@@ -26,7 +26,7 @@ export default class Jello
         this.isScored = false;
         this.colorIndex = colorIndex;
 
-        this.colorArray = [0xE41C17, 0xef603d, 0xeed307, 0x0db50d, 0x32E1B4, 0x1734E4, 0xA532E1, 0x000000]
+        this.colorArray = [0xE41C17, 0xef603d, 0xeed307, 0x0db50d, 0x32E1B4, 0x1734E4, 0xA532E1, 0x000000, 0xeb9dd3, 0xeb9dd3]
 
         var trapezoid = new b2PolygonShape();
         var trapezoid_vertices = trapezoid.vertices;
@@ -35,16 +35,15 @@ export default class Jello
         trapezoid_vertices.push(new b2Vec2(0.3, 0.4));
         trapezoid_vertices.push(new b2Vec2(-0.3, 0.4));
 
-        if (colorIndex < 8) {
+
+        if (colorIndex == 8){
+            //this.scene.phaserJelloParticles = scene.add.particles('paulticle'); 
+            this.scene.phaserJelloParticles = scene.add.particles('jello');
+        } else {
             var jelloColor = this.colorArray[colorIndex];
             this.scene.phaserJelloParticles = scene.add.particles('jello'); 
         }
-        else{
-            //this.scene.phaserJelloParticles = scene.add.particles('paulticle'); 
-            this.scene.phaserJelloParticles = scene.add.particles('jello');
-        }
-        
-
+ 
         var pdg = new b2ParticleGroupDef();
         pdg.flags = b2_springParticle;
         pdg.groupFlags = b2_solidParticleGroup;
@@ -58,10 +57,6 @@ export default class Jello
                 scale: 0.3,
              })
          ];
-
-
-        
-
     }
     
     getPosition()

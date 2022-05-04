@@ -1,6 +1,8 @@
 import background from '../assets/sprites/tut_screen.png';
 import Jello from '../jello.js';
 
+import LiquidFunPhysics from '../lf-phaser.js';
+
 class GameOver extends Phaser.Scene {
     constructor(){
         super('GameOver')
@@ -8,7 +10,7 @@ class GameOver extends Phaser.Scene {
 
     init(data){
         this.winningPlayer = data.winningPlayer;
-        // console.log(this.winningPlayer);
+        this.winningColor = data.winningColor;
     }
     preload(){
         this.load.image('background', background);
@@ -16,6 +18,16 @@ class GameOver extends Phaser.Scene {
     }
 
     create(){
+        recreateLiquidFun();
+
+        var gravity = new b2Vec2(0,-15);
+        window.world = this.myWorld = new b2World(gravity);
+        var ground = world.CreateBody(new b2BodyDef());
+
+        this.physics = new LiquidFunPhysics(this.myWorld, { scale: 60, center: [500,500], flip: true });
+
+        Jello.addParticleSystemToScene(this);
+
         var background = this.add.sprite(0, 0, 'background');
         background.setOrigin(0,0);
         background.setScale(0.5);
@@ -33,18 +45,32 @@ class GameOver extends Phaser.Scene {
         text3.setOrigin(0.5);
         text3.setFontSize(20);
 
+        console.log(this.winningColor);
+
         this.input.keyboard.on('keydown-SPACE', (event) => {
-            this.scene.pause();
             this.scene.start('Title');
-            console.log('key press');
         }, this);
        
-        this.jellos = []
-        for (let i = 0; i<1000; i++){
-            var jello = new Jello({ x: 0, y: 0 }, this, 1, this.colorArray[0]);
-            this.jello.push(jello);
+        this.jellos = [];
+        if (this.winningColor < 9){
+            for (var i=0; i < 50; i++) {
+                var jello = new Jello({ x: 0, y: 5}, this, 1, this.winningColor);
+                this.jellos.push(jello);
+            }
         }
-        Jello.addParticleSystemToScene(this)
+
+
+    }
+
+    update(t, dt){
+        this.physics.update(dt);
+
+        for (let jello of this.jellos){
+            if(this.physics.toPhaserCoord(jello.getPosition()).y > this.sys.game.canvas.height + 100 ){
+                jello.destroy();
+                this.jellos=[];
+            }
+        }
     }
 
 }

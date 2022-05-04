@@ -29,6 +29,8 @@ class MyGame extends Phaser.Scene
       
     create ()
     {
+        recreateLiquidFun();
+
         this.timeUntilNextJello = 0;
         this.playTime = 5000;
         this.timerText = this.add.text(475, 16, '', {fontSize: '32px', fill:'#000'});
@@ -93,14 +95,17 @@ class MyGame extends Phaser.Scene
         if (timer <= 0){
             this.scene.pause();
             var winner;
+            var winningColorIndex = 9;
             if (this.player2.score > this.player1.score){
                 winner = 'Player ' + this.player2.playerName + ' wins!!';
+                winningColorIndex = this.colorArray[1];
             } else if (this.player1.score > this.player2.score){
                 winner = 'Player '+ this.player1.playerName + ' wins!!';
+                winningColorIndex = this.colorArray[0];
             } else {
                 winner = "it's a tie!";
             }
-            this.scene.start('GameOver', {winningPlayer: winner});
+            this.scene.start('GameOver', {winningPlayer: winner, winningColor: winningColorIndex});
         }
 
         this.timeUntilNextJello -= dt;
