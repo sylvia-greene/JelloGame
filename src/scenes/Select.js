@@ -1,6 +1,7 @@
 import tutScreen from '../assets/sprites/tut_screen.png';
 import Qkey from '../assets/sprites/Qkey.png';
 import Pkey from '../assets/sprites/Pkey.png';
+import arrowImg from '../assets/sprites/arrowsprite.png';
 
 import redImg from '../assets/sprites/red.png';
 import orangeImg from '../assets/sprites/orange.png';
@@ -22,6 +23,7 @@ class Select extends Phaser.Scene {
         this.load.image('tutScreen', tutScreen);
         this.load.image('Qkey', Qkey);
         this.load.image('Pkey', Pkey);
+        this.load.image('arrow', arrowImg);
 
         this.load.image('red', redImg);
         this.load.image('orange', orangeImg);
@@ -37,10 +39,7 @@ class Select extends Phaser.Scene {
         var selected = 0;
         this.player1Choice = 0;
         this.player2Choice = 0;
-
         var player1Selected = false;
-        var player2Selected = false;
-
     
         var screen = this.add.sprite(0, 0, 'tutScreen');
         screen.setOrigin(0,0);
@@ -50,24 +49,44 @@ class Select extends Phaser.Scene {
         q.setOrigin(0,0);
         q.setScale(0.15);
 
+        this.arrow = this.add.sprite(5, 275, 'arrow');
+        this.arrow.setOrigin(0,0);
+        this.arrow.setScale(0.10);
+
         this.createColorSelect();
 
         var select1Text = this.add.text(500, 500, 'Press SPACE to confirm player 1 color...', 16);
         select1Text.setOrigin(0.5);
         select1Text.setFontSize(20);
 
-        this.input.keyboard.on('keyup-Q', (event) => {
-            this.leftFlipper.moveFlipperBack();
+        this.input.keyboard.on('keydown-Q', (event) => {
+            if (player1Selected == false){
+                if (this.arrow.x + 110 > 950){
+                    this.arrow.setPosition(5, 275);
+                    selected = 0;
+                }
+                else {
+                    this.arrow.setPosition(this.arrow.x + 110, 275);
+                    selected++;
+                }
+            }
         });
 
-        this.input.keyboard.on('keyup-P', (event) => {
-            this.rightFlipper.moveFlipperBack();
+        this.input.keyboard.on('keydown-P', (event) => {
+            if (player1Selected){
+                if (this.arrow.x + 110 > 950){
+                    this.arrow.setPosition(5, 275);
+                    selected = 0;
+                }
+                else {
+                    this.arrow.setPosition(this.arrow.x + 110, 275);
+                    selected ++;
+                }
+            }
         });
 
         this.input.keyboard.on('keydown-SPACE', (event) => {
             if (player1Selected) {
-                player2Selected = true;
-
                 this.scene.pause();
                 this.scene.start('MyGame', {color: [this.player1Choice, this.player2Choice]});
                 console.log('key press tut');
@@ -94,16 +113,41 @@ class Select extends Phaser.Scene {
     }
 
     createColorSelect(){
-        var red = this.add.sprite(40, 375, 'red');
+        var red = this.add.sprite(5, 375, 'red');
         red.setOrigin(0,0);
-        red.setScale(0.30); 
+        red.setScale(0.25); 
 
-        var orange = this.add.sprite(40, 375, 'orange');
+        var orange = this.add.sprite(115, 375, 'orange');
         orange.setOrigin(0,0);
-        orange.setScale(0.15); 
+        orange.setScale(0.25); 
 
+        var yellow = this.add.sprite(225, 375, 'yellow');
+        yellow.setOrigin(0,0);
+        yellow.setScale(0.25); 
 
+        var green = this.add.sprite(335, 375, 'green');
+        green.setOrigin(0,0);
+        green.setScale(0.25);
+        
+        var seafoam = this.add.sprite(445, 375, 'seafoam');
+        seafoam.setOrigin(0,0);
+        seafoam.setScale(0.25);
 
+        var blue = this.add.sprite(555, 375, 'blue');
+        blue.setOrigin(0,0);
+        blue.setScale(0.25);
+
+        var purple = this.add.sprite(665, 375, 'purple');
+        purple.setOrigin(0,0);
+        purple.setScale(0.25);
+
+        var black = this.add.sprite(775, 375, 'black');
+        black.setOrigin(0,0);
+        black.setScale(0.25);
+
+        var paul = this.add.sprite(885, 375, 'red');
+        paul.setOrigin(0,0);
+        paul.setScale(0.25);
     }
 
 
