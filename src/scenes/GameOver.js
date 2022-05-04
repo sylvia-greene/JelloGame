@@ -6,7 +6,8 @@ class GameOver extends Phaser.Scene {
     }
 
     init(data){
-        this.winner = this.data
+        this.winningPlayer = this.data;
+        console.log(this.winningPlayer);
     }
     preload(){
         this.load.image('background', background);
@@ -22,7 +23,7 @@ class GameOver extends Phaser.Scene {
         text.setOrigin(0.5);
         text.setFontSize(20);
 
-        var text = this.add.text(500, 200, winner + ' wins!');
+        var text = this.add.text(500, 200, this.winningPlayer + ' wins!');
 
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.scene.pause();

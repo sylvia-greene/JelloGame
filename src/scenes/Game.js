@@ -16,7 +16,6 @@ class MyGame extends Phaser.Scene
 
     init(data){
         this.colorArray = data.color;
-        console.log(this.colorArray);
     }
 
     preload ()
@@ -60,7 +59,6 @@ class MyGame extends Phaser.Scene
 
         this.jellos = [];
 
-        //hoop
         this.hoop1 = new Hoop({x: 0, y: 5}, this, ground);
 
         this.leftFlipper = new Flipper({x: -6, y: 0}, this, ground, this.colorArray[0]);
@@ -84,19 +82,7 @@ class MyGame extends Phaser.Scene
         });
 
         this.input.keyboard.on('keydown-X', (event) => {
-            var pgd = new b2ParticleGroupDef();
-            pgd.flags = b2_springParticle;
-            pgd.groupFlags = b2_solidParticleGroup;
-            pgd.shape = trapezoid;
-            pgd.position.Set(-2, 3);
-            this.group1 = particleSystem.CreateParticleGroup(pgd);
-            this.group1.phaserParticleEmitters = [
-                jello.createEmitter({
-                    tint: 0xFF0000,
-                    blendMode: Phaser.BlendModes.ADD,
-                    scale: 0.3,
-                })
-            ];
+            console.log(this.player1.score);
         });
     }
 
@@ -109,16 +95,15 @@ class MyGame extends Phaser.Scene
             this.scene.pause();
             // add win scene
             if (this.player2.score > this.player1.score){
-                this.winner = player2.playerName;
+                this.winner = this.player2.playerName;
             }
             if (this.player1.score > this.player2.score){
-                this.winner = player1.playerName;
+                this.winner = this.player1.playerName;
             }
             if (this.player1.score = this.player2.score){
                 this.winner = "it's a tie!";
             }
-            this.scene.start('GameOver', winner);
-
+            this.scene.start('GameOver', {winningPlayer: this.winner});
         }
 
         this.timeUntilNextJello -= dt;
