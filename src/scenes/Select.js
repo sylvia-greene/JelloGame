@@ -51,6 +51,7 @@ class Select extends Phaser.Scene {
         var q = this.add.sprite(10, 10, 'Qkey');
         q.setOrigin(0,0);
         q.setScale(0.25);
+        q.setTint(0x8a898c);
 
         this.arrow = this.add.sprite(5, 275, 'arrow');
         this.arrow.setOrigin(0,0);
@@ -63,7 +64,7 @@ class Select extends Phaser.Scene {
         select1Text.setFontSize(20);
 
         this.input.keyboard.on('keydown-Q', (event) => {
-            q.setTint(0x0db50d);
+            q.setTint();
             if (player1Selected == false){
                 if (this.arrow.x + 110 > 950){
                     this.arrow.setPosition(5, 275);
@@ -77,12 +78,12 @@ class Select extends Phaser.Scene {
         });
 
         this.input.keyboard.on('keyup-Q', (event) => {
-            q.setTint();
+            q.setTint(0x8a898c);
         });
 
         this.input.keyboard.on('keydown-P', (event) => {
             if (player1Selected){
-                this.p.setTint(0x0db50d);
+                this.p.setTint();
                 if (this.arrow.x + 110 > 950){
                     this.arrow.setPosition(5, 275);
                     selected = 0;
@@ -96,7 +97,7 @@ class Select extends Phaser.Scene {
 
         this.input.keyboard.on('keyup-P', (event) => {
             if (player1Selected){
-                this.p.setTint();
+                this.p.setTint(0x8a898c);
             }
         });
 
@@ -139,6 +140,7 @@ class Select extends Phaser.Scene {
                 this.p = this.add.sprite(734, 10, 'Pkey');
                 this.p.setOrigin(0,0);
                 this.p.setScale(0.25);
+                this.p.setTint(0x8a898c);
 
                 var select2Text = this.add.text(500, 500, 'Press SPACE to confirm player 2 color and start game...', 16);
                 select2Text.setOrigin(0.5);
@@ -182,8 +184,8 @@ class Select extends Phaser.Scene {
         black.setOrigin(0,0);
         black.setScale(0.25);
 
-        var paul = this.add.sprite(885, 375, 'paul');
-        //var paul = this.add.sprite(885, 375, 'red');
+        //var paul = this.add.sprite(885, 375, 'paul');
+        var paul = this.add.sprite(885, 375, 'red');
         paul.setOrigin(0,0);
         paul.setScale(0.25);
     }

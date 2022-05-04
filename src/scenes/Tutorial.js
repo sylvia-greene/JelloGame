@@ -22,10 +22,12 @@ class Tutorial extends Phaser.Scene {
         var q = this.add.sprite(175, 100, 'Qkey');
         q.setOrigin(0,0);
         q.setScale(0.25);
+        q.setTint(0x8a898c);
 
         var p = this.add.sprite(575, 100, 'Pkey');
         p.setOrigin(0,0);
         p.setScale(0.25);
+        p.setTint(0x8a898c);
 
         var text1 = this.add.text(300, 425, 'Player 1', 16);
         text1.setOrigin(0.5);
@@ -43,20 +45,20 @@ class Tutorial extends Phaser.Scene {
 
 
         this.input.keyboard.on('keydown-Q', (event) => {
-            q.setTint(0x0db50d);
+            q.setTint();
         });
 
         this.input.keyboard.on('keyup-Q', (event) => {
-            q.setTint();
+            q.setTint(0x8a898c);
         });
 
 
         this.input.keyboard.on('keydown-P', (event) => {
-            p.setTint(0x0db50d);
+            p.setTint();
         }); 
 
         this.input.keyboard.on('keyup-P', (event) => {
-            p.setTint();
+            p.setTint(0x8a898c);
         });
         
         

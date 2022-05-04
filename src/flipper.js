@@ -73,8 +73,8 @@ export default class Flipper
             polygon_shape.phaserSprite = this.scene.add.image(0,0,'black');
         }
         if(this.colorIndex == 8) {
-            polygon_shape.phaserSprite = this.scene.add.image(0,0,'paul');
-            //polygon_shape.phaserSprite = this.scene.add.image(0,0,'red');
+            //polygon_shape.phaserSprite = this.scene.add.image(0,0,'paul');
+            polygon_shape.phaserSprite = this.scene.add.image(0,0,'red');
         }
 
 
