@@ -27,10 +27,9 @@ export default class player {
         this.scoreNumber = this.scene.add.text(locationX + 120, locationY + 3, this.score , { fontSize: '32px', fill: '#000' });
     }
 
-  updatePlayerScore(){
-      this.score += 1;
-      this.scoreNumber.setText(this.score);
+    updatePlayerScore(){
+        this.score += 1;
+        this.scoreNumber.setText(this.score);
     }
-
 
 }

@@ -30,7 +30,7 @@ class MyGame extends Phaser.Scene
     create ()
     {
         this.timeUntilNextJello = 0;
-        this.playTime = 500000;
+        this.playTime = 60000;
         this.timerText = this.add.text(475, 16, '', {fontSize: '32px', fill:'#000'});
 
 //create players array
@@ -39,7 +39,6 @@ class MyGame extends Phaser.Scene
         this.player2 = new player(2,0,0,this);
         this.players.push(this.player1);
         this.players.push(this.player2);
-        this.winner = '';
 
         for(let person of this.players){
             person.displayScore();
@@ -90,20 +89,18 @@ class MyGame extends Phaser.Scene
         this.playTime -=  dt;
         var timer = Math.round((this.playTime)/1000);
         this.timerText.setText(timer);
-
+        
         if (timer <= 0){
             this.scene.pause();
-            // add win scene
+            var winner;
             if (this.player2.score > this.player1.score){
-                this.winner = this.player2.playerName;
+                winner = this.player2.playerName + 'wins!!';
+            } else if (this.player1.score > this.player2.score){
+                winner = this.player1.playerName + 'wins!!';
+            } else {
+                winner = "it's a tie!";
             }
-            if (this.player1.score > this.player2.score){
-                this.winner = this.player1.playerName;
-            }
-            if (this.player1.score = this.player2.score){
-                this.winner = "it's a tie!";
-            }
-            this.scene.start('GameOver', {winningPlayer: this.winner});
+            this.scene.start('GameOver', {winningPlayer: winner});
         }
 
         this.timeUntilNextJello -= dt;
