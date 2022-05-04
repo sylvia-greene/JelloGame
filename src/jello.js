@@ -71,12 +71,6 @@ export default class Jello
             this.particleGroup);  
     }
 
-    // isInside(targetArea)
-    // {
-        
-    //     return true;
-    // }
-
     getPlayer()
     {
         return this.player;

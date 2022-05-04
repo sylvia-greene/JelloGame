@@ -1,12 +1,4 @@
-# Phaser 3 Webpack Project Template
-
-A Phaser 3 project template with ES6 support via [Babel 7](https://babeljs.io/) and [Webpack 4](https://webpack.js.org/) that includes hot-reloading for development and production-ready builds.
-
-This has been updated for Phaser 3.50.0 version and above.
-
-Loading images via JavaScript module `import` is also supported, although not recommended.
-
-## Requirements
+## Download Requirements
 
 [Node.js](https://nodejs.org) is required to install dependencies and run scripts via `npm`.
 
@@ -18,29 +10,26 @@ Loading images via JavaScript module `import` is also supported, although not re
 | `npm start` | Build project and open web server running project |
 | `npm run build` | Builds code bundle with production settings (minification, uglification, etc..) |
 
-## Writing Code
+## Installing NPM
 
-After cloning the repo, run `npm install` from your project directory. Then, you can start the local development server by running `npm start`.
+After cloning the repo, run `npm install` from your IDE's terminal.
+
+## Running Code using NPM
+
+You can now start the local development server by running `npm start` at any time.
 
 After starting the development server with `npm start`, you can edit any files in the `src` folder and webpack will automatically recompile and reload your server (available at `http://localhost:8080` by default).
 
-## Customizing the Template
+## Packages and Resources used in our Comp-225 Phaser Project
+- Phaser's Project template by Richard Davey from Photon Storm: `https://github.com/photonstorm/phaser3-project-template`
+- Box2D Physics Engine by Erin Catto: `https://box2d.org/`
+- LiquidFun Fluid Engine by Google: `https://google.github.io/liquidfun/`
+- Paul Cantrell's LiquidFun to Phaser Engine Conversion Code
 
-### Babel
+## How is our code organized?
+For our game's code, we have divided each of the game's mechanics into their own indivdual file classes for ease of access. For example, the `jello.js` file creates the jello object using LiquidFun and the methods associated with the jello object.
 
-You can write modern ES6+ JavaScript and Babel will transpile it to a version of JavaScript that you want your project to support. The targeted browsers are set in the `.babelrc` file and the default currently targets all browsers with total usage over "0.25%" but excludes IE11 and Opera Mini.
-
- ```
-"browsers": [
-  ">0.25%",
-  "not ie 11",
-  "not op_mini all"
-]
- ```
-
-### Webpack
-
-If you want to customize your build, such as adding a new webpack loader or plugin (i.e. for loading CSS or fonts), you can modify the `webpack/base.js` file for cross-project changes, or you can modify and/or create new configuration files and target them in specific npm tasks inside of `package.json'.
+In terms of how the acutal game operates, the `scenes` folder contains our code for implemting our game's objects into each of our scenes. For example, the `Game.js` file uses Phaser's scene library in order to create our game's objects and update the game continously.
 
 ## Deploying Code
 
