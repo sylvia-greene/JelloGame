@@ -1,5 +1,6 @@
 import Phaser, { Create } from 'phaser';
 import jelloImg from './assets/jello.png';
+import paulticleImg from './assets/paulticle.png'
 
 
 export default class Jello
@@ -7,6 +8,8 @@ export default class Jello
     static preload(scene)
     {
         scene.load.image('jello', jelloImg);
+        scene.load.image('paulticle', paulticleImg);
+
     }
 
     static addParticleSystemToScene(scene)
