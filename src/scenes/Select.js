@@ -126,8 +126,16 @@ class Select extends Phaser.Scene {
 
                 select1Text.destroy();
                 q.destroy();
+
+                if (this.arrow.x + 110 > 950){
+                    this.arrow.setPosition(5, 275);
+                    selected = 0;
+                }
+                else {
+                    this.arrow.setPosition(this.arrow.x + 110, 275);
+                    selected ++;
+                }
                 
-            
                 this.p = this.add.sprite(734, 10, 'Pkey');
                 this.p.setOrigin(0,0);
                 this.p.setScale(0.25);
@@ -174,8 +182,8 @@ class Select extends Phaser.Scene {
         black.setOrigin(0,0);
         black.setScale(0.25);
 
-        //var paul = this.add.sprite(885, 375, 'paul');
-        var paul = this.add.sprite(885, 375, 'red');
+        var paul = this.add.sprite(885, 375, 'paul');
+        //var paul = this.add.sprite(885, 375, 'red');
         paul.setOrigin(0,0);
         paul.setScale(0.25);
     }

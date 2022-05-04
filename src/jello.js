@@ -40,8 +40,8 @@ export default class Jello
             this.scene.phaserJelloParticles = scene.add.particles('jello'); 
         }
         else{
-            //this.scene.phaserJelloParticles = scene.add.particles('paulticle'); 
-            this.scene.phaserJelloParticles = scene.add.particles('jello');
+            this.scene.phaserJelloParticles = scene.add.particles('paulticle'); 
+            //this.scene.phaserJelloParticles = scene.add.particles('jello');
         }
         
 
