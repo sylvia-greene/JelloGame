@@ -7,10 +7,11 @@ import redImg from '../assets/sprites/red.png';
 import orangeImg from '../assets/sprites/orange.png';
 import yellowImg from '../assets/sprites/yellow.png';
 import greenImg from '../assets/sprites/green.png';
-import seafoamImg from '../assets/sprites/seafoam.png'
+import seafoamImg from '../assets/sprites/seafoam.png';
 import blueImg from '../assets/sprites/blue.png';
-import purpleImg from '../assets/sprites/purple.png'
-import blackImg from '../assets/sprites/black.png'
+import purpleImg from '../assets/sprites/purple.png';
+import blackImg from '../assets/sprites/black.png';
+import paulImg from '../assets/sprites/paul.png';
 
 
 import MyGame from '../index.js';
@@ -33,6 +34,7 @@ class Select extends Phaser.Scene {
         this.load.image('blue', blueImg);
         this.load.image('purple', purpleImg);
         this.load.image('black', blackImg);
+        this.load.image('paul', paulImg);
     }
 
     create(){
@@ -160,6 +162,7 @@ class Select extends Phaser.Scene {
         black.setOrigin(0,0);
         black.setScale(0.25);
 
+        // var paul = this.add.sprite(885, 375, 'paul');
         var paul = this.add.sprite(885, 375, 'red');
         paul.setOrigin(0,0);
         paul.setScale(0.25);

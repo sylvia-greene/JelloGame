@@ -14,6 +14,7 @@ export default class Hoop
         
         hoop_shape.phaserSprite = scene.add.image(0, 0,'hoop');
         hoop_shape.phaserSprite.setScale(0.3);
+        hoop_shape.phaserSprite.setDepth(1);
 
         var hoop_vertices = hoop_shape.vertices;
         hoop_vertices.push(new b2Vec2(pos.x - 1.41, pos.y - 1.1));
