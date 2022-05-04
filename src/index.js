@@ -10,6 +10,7 @@ const config = {
     width: 1000,
     height: 600,
     backgroundColor: '#606C86',
+    autoCenter: true,
     scene: [
         Title,
         Tutorial,
