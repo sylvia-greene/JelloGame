@@ -114,9 +114,9 @@ class Select extends Phaser.Scene {
                 q.destroy();
                 
             
-                var p = this.add.sprite(746.4, 100, 'Pkey');
+                var p = this.add.sprite(734, 10, 'Pkey');
                 p.setOrigin(0,0);
-                p.setScale(0.15);
+                p.setScale(0.25);
 
                 var select2Text = this.add.text(500, 500, 'Press SPACE to confirm player 2 color and start game...', 16);
                 select2Text.setOrigin(0.5);
