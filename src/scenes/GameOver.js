@@ -1,4 +1,5 @@
 import background from '../assets/sprites/tut_screen.png';
+import Jello from '../jello.js';
 
 class GameOver extends Phaser.Scene {
     constructor(){
@@ -11,7 +12,7 @@ class GameOver extends Phaser.Scene {
     }
     preload(){
         this.load.image('background', background);
-     
+        Jello.preload(this);
     }
 
     create(){
@@ -38,7 +39,12 @@ class GameOver extends Phaser.Scene {
             console.log('key press');
         }, this);
        
-        
+        this.jellos = []
+        for (let i = 0; i<1000; i++){
+            var jello = new Jello({ x: 0, y: 0 }, this, 1, this.colorArray[0]);
+            this.jello.push(jello);
+        }
+        Jello.addParticleSystemToScene(this)
     }
 
 }

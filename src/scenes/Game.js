@@ -94,9 +94,9 @@ class MyGame extends Phaser.Scene
             this.scene.pause();
             var winner;
             if (this.player2.score > this.player1.score){
-                winner = this.player2.playerName + 'wins!!';
+                winner = 'Player ' + this.player2.playerName + ' wins!!';
             } else if (this.player1.score > this.player2.score){
-                winner = this.player1.playerName + 'wins!!';
+                winner = 'Player '+ this.player1.playerName + ' wins!!';
             } else {
                 winner = "it's a tie!";
             }
