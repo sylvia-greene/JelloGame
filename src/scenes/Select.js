@@ -37,17 +37,18 @@ class Select extends Phaser.Scene {
 
     create(){
         var selected = 0;
-        this.player1Choice = 0;
-        this.player2Choice = 0;
+        var player1Choice = 0;
+        var player2Choice = 0;
+        var unadded = true;
         var player1Selected = false;
     
         var screen = this.add.sprite(0, 0, 'tutScreen');
         screen.setOrigin(0,0);
         screen.setScale(0.5);
 
-        var q = this.add.sprite(100, 100, 'Qkey');
+        var q = this.add.sprite(10, 10, 'Qkey');
         q.setOrigin(0,0);
-        q.setScale(0.15);
+        q.setScale(0.25);
 
         this.arrow = this.add.sprite(5, 275, 'arrow');
         this.arrow.setOrigin(0,0);
@@ -87,13 +88,27 @@ class Select extends Phaser.Scene {
 
         this.input.keyboard.on('keydown-SPACE', (event) => {
             if (player1Selected) {
-                this.scene.pause();
-                this.scene.start('MyGame', {color: [this.player1Choice, this.player2Choice]});
-                console.log('key press tut');
+                player2Choice = selected;
+
+                if (player1Choice == player2Choice){
+                    if(unadded){
+                        var changeColorText = this.add.text(500, 200, 'Please choose a different color...', 16);
+                        changeColorText.setOrigin(0.5);
+                        changeColorText.setFontSize(20);
+                        unadded = false;
+                    }
+                }
+
+                else{
+                    this.scene.pause();
+                    this.scene.start('MyGame', {color: [player1Choice, player2Choice]});
+                    console.log('key press tut');
+                }
             }
 
             if (player1Selected == false){
                 player1Selected = true;
+                player1Choice = selected;
 
                 select1Text.destroy();
                 q.destroy();

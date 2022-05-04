@@ -12,16 +12,21 @@ export default class Flipper
     static preload(scene)
     {
         scene.load.image('red', redImg);
-        scene.load.image('blue', blueImg);
+        scene.load.image('orange', orangeImg);
+        scene.load.image('yellow', yellowImg);
+        scene.load.image('green', greenImg);
         scene.load.image('seafoam', seafoamImg);
+        scene.load.image('blue', blueImg);
         scene.load.image('purple', purpleImg);
+        scene.load.image('black', blackImg);
     }
 
-    constructor(pos, scene, ground)
+    constructor(pos, scene, ground, colorIndex)
     {
         this.pos = pos;
         this.scene = scene;
         this.ground = ground;
+        this.colorIndex = colorIndex;
         this.motorAngle = .15 * Math.PI;
 
         if (pos.x < 0) {
@@ -41,13 +46,39 @@ export default class Flipper
         polygon_shape.phaserCentroid = new b2Vec2(0,0);
         polygon_shape.SetAsBoxXYCenterAngle(2.05, 0.1, polygon_shape.phaserCentroid, 0.0);
 
-        if(this.pos.x < 0) {
+        if(this.colorIndex == 0) {
             polygon_shape.phaserSprite = this.scene.add.image(0,0,'red');
         }
-        else {
+        if(this.colorIndex == 1) {
+            polygon_shape.phaserSprite = this.scene.add.image(0,0,'orange');
+        }
+        if(this.colorIndex == 2) {
+            polygon_shape.phaserSprite = this.scene.add.image(0,0,'yellow');
+        }
+        if(this.colorIndex == 3) {
+            polygon_shape.phaserSprite = this.scene.add.image(0,0,'green');
+        }
+        if(this.colorIndex == 4) {
+            polygon_shape.phaserSprite = this.scene.add.image(0,0,'seafoam');
+        }
+        if(this.colorIndex == 5) {
             polygon_shape.phaserSprite = this.scene.add.image(0,0,'blue');
+        }
+        if(this.colorIndex == 6) {
+            polygon_shape.phaserSprite = this.scene.add.image(0,0,'purple');
+        }
+        if(this.colorIndex == 7) {
+            polygon_shape.phaserSprite = this.scene.add.image(0,0,'black');
+        }
+        if(this.colorIndex == 8) {
+            polygon_shape.phaserSprite = this.scene.add.image(0,0,'red');
+        }
+
+
+        if(this.pos.x > 0) {
             polygon_shape.phaserSprite.flipY = true;
         }
+
 
         var bd = new b2BodyDef;
         bd.position.Set(this.pos.x, this.pos.y);

@@ -63,12 +63,8 @@ class MyGame extends Phaser.Scene
         //hoop
         this.hoop1 = new Hoop({x: 0, y: 5}, this, ground);
 
-        this.leftFlipper = new Flipper({x: -6, y: 0}, this, ground);
-        this.rightFlipper = new Flipper({x: 6, y: 0}, this, ground);
-
-
-        console.log(this.rightFlipper.getPos());
-
+        this.leftFlipper = new Flipper({x: -6, y: 0}, this, ground, this.colorArray[0]);
+        this.rightFlipper = new Flipper({x: 6, y: 0}, this, ground, this.colorArray[1]);
 
         this.input.keyboard.on('keydown-Q', (event) => {
             this.leftFlipper.moveFlipper();
@@ -102,16 +98,6 @@ class MyGame extends Phaser.Scene
                 })
             ];
         });
-
-
-        this.input.on('pointerdown', () => {
-            var mousex = (this.input.mousePointer.x - 500) / 60;
-            var mousey = (this.input.mousePointer.y - 500) / -60;
-
-            console.log('x = ' + mousex);
-            console.log('y = ' + mousey);
-        });
-
     }
 
     update(t,dt) {
@@ -138,15 +124,13 @@ class MyGame extends Phaser.Scene
         this.timeUntilNextJello -= dt;
 
         if(this.timeUntilNextJello < 0 ){
-            var jello1 = new Jello({ x: -6.65, y: 8 }, this, 1);
-            var jello2 = new Jello({x: 6.65, y: 8 }, this, 2);
+            var jello1 = new Jello({ x: -6.65, y: 8 }, this, 1, this.colorArray[0]);
+            var jello2 = new Jello({x: 6.65, y: 8 }, this, 2, this.colorArray[1]);
             this.jellos.push(jello1);
             this.jellos.push(jello2);
             this.timeUntilNextJello = 2000;
         }
         this.physics.update(dt);
-       
-        // something like this:
 
         for (let jello of this.jellos){
             if(this.physics.toPhaserCoord(jello.getPosition()).y > this.sys.game.canvas.height + 100 ){
@@ -171,9 +155,7 @@ class MyGame extends Phaser.Scene
                jello.isScored = true;
             } 
         }
-
         this.jellos = this.jellos.filter((jello) => !jello.isDestroyed);
-
     }
 
 }
