@@ -40,6 +40,25 @@ class Tutorial extends Phaser.Scene {
         text3.setFontSize(20);
 
         //var spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+
+        this.input.keyboard.on('keydown-Q', (event) => {
+            q.setTint(0x0db50d);
+        });
+
+        this.input.keyboard.on('keyup-Q', (event) => {
+            q.setTint();
+        });
+
+
+        this.input.keyboard.on('keydown-P', (event) => {
+            p.setTint(0x0db50d);
+        }); 
+
+        this.input.keyboard.on('keyup-P', (event) => {
+            p.setTint();
+        });
+        
         
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.scene.pause();
