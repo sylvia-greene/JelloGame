@@ -31,7 +31,7 @@ class MyGame extends Phaser.Scene
     {
         recreateLiquidFun();
         this.timeUntilNextJello = 0;
-        this.playTime = 500000;
+        this.playTime = 5000;
         this.timerText = this.add.text(475, 16, '', {fontSize: '32px', fill:'#000'});
 
         this.players = [];
@@ -39,7 +39,6 @@ class MyGame extends Phaser.Scene
         this.player2 = new player(2,0,0,this);
         this.players.push(this.player1);
         this.players.push(this.player2);
-        this.winner = '';
 
         for(let person of this.players){
             person.displayScore();
@@ -93,24 +92,26 @@ class MyGame extends Phaser.Scene
 
         if (timer <= 0){
             this.scene.pause();
+            var winner;
+            var winningColorIndex = 9;
             // add win scene
             if (this.player2.score > this.player1.score){
-                this.winner = this.player2.playerName;
-            }
-            if (this.player1.score > this.player2.score){
-                this.winner = this.player1.playerName;
-            }
-            if (this.player1.score = this.player2.score){
+                winner = 'Player ' + this.player2.playerName + ' wins!!';
+                winningColorIndex = this.colorArray[1];
+            } else if (this.player1.score > this.player2.score){
+                winner = 'Player '+ this.player1.playerName + ' wins!!';
+                winningColorIndex = this.colorArray[0];
+            } else {
                 this.winner = "it's a tie!";
             }
-            this.scene.start('GameOver', {winningPlayer: this.winner});
+            this.scene.start('GameOver', {winningPlayer: winner, winningColor: winningColorIndex});
         }
 
         this.timeUntilNextJello -= dt;
 
         if(this.timeUntilNextJello < 0 ){
-            var jello1 = new Jello({ x: -6.65, y: 8 }, this, this.player1, this.colorArray[0]);
-            var jello2 = new Jello({x: 6.65, y: 8 }, this, this.player2, this.colorArray[1]);
+            var jello1 = new Jello({ x: -6.65, y: 8 }, this, 1, this.colorArray[0]);
+            var jello2 = new Jello({x: 6.65, y: 8 }, this, 2, this.colorArray[1]);
             this.jellos.push(jello1);
             this.jellos.push(jello2);
             this.timeUntilNextJello = 2000;
@@ -129,8 +130,15 @@ class MyGame extends Phaser.Scene
             && jello.getPosition().x <= this.hoop1.getMaxPos().x
             && jello.getPosition().y <= this.hoop1.getMaxPos().y && jello.getPosition().y  >= this.hoop1.getMaxPos().y - .3
            ){
-                jello.getPlayer().updatePlayerScore();
-                jello.isScored = true;
+            var player = jello.getPlayer();
+            if(player == 1 ){
+                this.player1.updatePlayerScore();
+            }
+            if(player == 2){
+                this.player2.updatePlayerScore();
+            }
+
+            jello.isScored = true;
             } 
         }
         this.jellos = this.jellos.filter((jello) => !jello.isDestroyed);
