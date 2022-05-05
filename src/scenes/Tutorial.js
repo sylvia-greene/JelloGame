@@ -19,7 +19,7 @@ class Tutorial extends Phaser.Scene {
         screen.setOrigin(0,0);
         screen.setScale(0.5);
 
-        var q = this.add.sprite(175, 100, 'Qkey');
+        var q = this.add.sprite(155, 100, 'Qkey');
         q.setOrigin(0,0);
         q.setScale(0.25);
         q.setTint(0x8a898c);
