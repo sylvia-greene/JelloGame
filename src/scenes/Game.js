@@ -129,9 +129,8 @@ class MyGame extends Phaser.Scene
             && jello.getPosition().x <= this.hoop1.getMaxPos().x
             && jello.getPosition().y <= this.hoop1.getMaxPos().y && jello.getPosition().y  >= this.hoop1.getMaxPos().y - .3
            ){
-             
-                    jello.getPlayer().updatePlayerScore();
-                    jello.isScored = true;
+                jello.getPlayer().updatePlayerScore();
+                jello.isScored = true;
             } 
         }
         this.jellos = this.jellos.filter((jello) => !jello.isDestroyed);
