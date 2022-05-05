@@ -13,8 +13,6 @@ import purpleImg from '../assets/sprites/purple.png';
 import blackImg from '../assets/sprites/black.png';
 import paulImg from '../assets/sprites/paul.png';
 
-
-import MyGame from '../index.js';
 class Select extends Phaser.Scene {
     constructor(){
         super('Select')
@@ -184,8 +182,7 @@ class Select extends Phaser.Scene {
         black.setOrigin(0,0);
         black.setScale(0.25);
 
-        //var paul = this.add.sprite(885, 375, 'paul');
-        var paul = this.add.sprite(885, 375, 'red');
+        var paul = this.add.sprite(885, 375, 'paul');
         paul.setOrigin(0,0);
         paul.setScale(0.25);
     }

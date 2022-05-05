@@ -110,7 +110,7 @@ class MyGame extends Phaser.Scene
 
         if (timer <= 5 && this.redCounterActive == false) {
             this.timerText.destroy();
-            this.timerText = this.add.text(475, 16, '', {fontSize: '32px', fill:'#F00'});
+            this.timerText = this.add.text(475, 8, '', {fontSize: '64px', fill:'#F00'});
             this.redCounterActive = true;
         }
 

@@ -37,8 +37,7 @@ export default class Jello
 
 
         if (colorIndex == 8){
-            //this.scene.phaserJelloParticles = scene.add.particles('paulticle'); 
-            this.scene.phaserJelloParticles = scene.add.particles('jello');
+            this.scene.phaserJelloParticles = scene.add.particles('paulticle'); 
         } else {
             var jelloColor = this.colorArray[colorIndex];
             this.scene.phaserJelloParticles = scene.add.particles('jello'); 
