@@ -30,9 +30,16 @@ class MyGame extends Phaser.Scene
     create ()
     {
         recreateLiquidFun();
+        this.afterCountdown = false;
+
         this.timeUntilNextJello = 0;
+        this.countdowntime = 3000;
         this.playTime = 5000;
+        
+
         this.timerText = this.add.text(475, 16, '', {fontSize: '32px', fill:'#000'});
+
+
 
         this.players = [];
         this.player1 = new player(1,0,0,this);
@@ -86,15 +93,26 @@ class MyGame extends Phaser.Scene
     }
 
     update(t,dt) {
-        this.playTime -=  dt;
-        var timer = Math.round((this.playTime)/1000);
-        this.timerText.setText(timer);
+        if (this.afterCountdown == false){
+            
+            this.countdowntime -= dt;
+            var countdownTimerTime = Math.round((this.countdowntime)/1000);
+            this.timerText.setText(countdownTimerTime);
+            if (countdownTimerTime <= 0){
+                this.afterCountdown = true;
+            }
+
+        } else{
+            this.playTime -=  dt;
+            var timer = Math.round((this.playTime)/1000);
+            this.timerText.setText(timer);
+        }
+        
 
         if (timer <= 0){
             this.scene.pause();
             var winner;
             var winningColorIndex = 9;
-            // add win scene
             if (this.player2.score > this.player1.score){
                 winner = 'Player ' + this.player2.playerName + ' wins!!';
                 winningColorIndex = this.colorArray[1];
@@ -102,7 +120,7 @@ class MyGame extends Phaser.Scene
                 winner = 'Player '+ this.player1.playerName + ' wins!!';
                 winningColorIndex = this.colorArray[0];
             } else {
-                this.winner = "it's a tie!";
+                winner = "it's a tie!";
             }
             this.scene.start('GameOver', {winningPlayer: winner, winningColor: winningColorIndex});
         }
