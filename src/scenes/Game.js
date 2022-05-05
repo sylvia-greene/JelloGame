@@ -31,10 +31,11 @@ class MyGame extends Phaser.Scene
     {
         recreateLiquidFun();
         this.afterCountdown = false;
+        this.redCounterActive = false;
 
         this.timeUntilNextJello = 0;
         this.countdowntime = 3000;
-        this.playTime = 5000;
+        this.playTime = 7000;
         this.timerText = this.add.text(420, 200, '', {fontSize: '256px', fill:'#000'});
         this.timerText.setDepth(2);
 
@@ -87,8 +88,6 @@ class MyGame extends Phaser.Scene
         this.input.keyboard.on('keydown-X', (event) => {
             console.log(this.player1.score);
         });
-        
-        this.physics.update();
     }
 
     update(t,dt) {
@@ -108,7 +107,12 @@ class MyGame extends Phaser.Scene
             var timer = Math.round((this.playTime)/1000);
             this.timerText.setText(timer);
         }
-        
+
+        if (timer <= 5 && this.redCounterActive == false) {
+            this.timerText.destroy();
+            this.timerText = this.add.text(475, 16, '', {fontSize: '32px', fill:'#F00'});
+            this.redCounterActive = true;
+        }
 
         if (timer <= 0){
             this.scene.pause();
@@ -126,9 +130,11 @@ class MyGame extends Phaser.Scene
             this.scene.start('GameOver', {winningPlayer: winner, winningColor: winningColorIndex});
         }
 
+        this.physics.update(dt);
+
 
         if(this.afterCountdown == true) {
-            this.physics.update(dt);
+            
 
             this.timeUntilNextJello -= dt;
 
