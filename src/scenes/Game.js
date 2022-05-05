@@ -35,11 +35,8 @@ class MyGame extends Phaser.Scene
         this.timeUntilNextJello = 0;
         this.countdowntime = 3000;
         this.playTime = 5000;
-        
-
-        this.timerText = this.add.text(475, 16, '', {fontSize: '32px', fill:'#000'});
-
-
+        this.timerText = this.add.text(420, 200, '', {fontSize: '256px', fill:'#000'});
+        this.timerText.setDepth(2);
 
         this.players = [];
         this.player1 = new player(1,0,0,this);
@@ -100,6 +97,10 @@ class MyGame extends Phaser.Scene
             this.timerText.setText(countdownTimerTime);
             if (countdownTimerTime <= 0){
                 this.afterCountdown = true;
+                this.timerText.destroy();
+                this.timerText = this.add.text(475, 16, '', {fontSize: '32px', fill:'#000'});
+
+
             }
 
         } else{
