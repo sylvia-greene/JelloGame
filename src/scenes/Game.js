@@ -31,7 +31,7 @@ class MyGame extends Phaser.Scene
     {
         recreateLiquidFun();
         this.timeUntilNextJello = 0;
-        this.playTime = 500000;
+        this.playTime = 5000;
         this.timerText = this.add.text(475, 16, '', {fontSize: '32px', fill:'#000'});
 
         this.players = [];
