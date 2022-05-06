@@ -20,7 +20,7 @@ export default class player {
             var locationY = 16;
         }
         if(this.playerName == 2){
-            locationX = 800;
+            locationX = 680;
             locationY = 16;
         }
         this.scoreText = this.scene.add.text(locationX, locationY,'Score:' , { fontSize: '32px', fill: '#000' });

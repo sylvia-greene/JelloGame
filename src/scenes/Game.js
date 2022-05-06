@@ -30,16 +30,20 @@ class MyGame extends Phaser.Scene
     create ()
     {
         recreateLiquidFun();
+        this.afterCountdown = false;
+        this.redCounterActive = false;
+
         this.timeUntilNextJello = 0;
-        this.playTime = 5000;
-        this.timerText = this.add.text(475, 16, '', {fontSize: '32px', fill:'#000'});
+        this.countdowntime = 3000;
+        this.playTime = 7000;
+        this.timerText = this.add.text(420, 200, '', {fontSize: '256px', fill:'#000'});
+        this.timerText.setDepth(2);
 
         this.players = [];
         this.player1 = new player(1,0,0,this);
         this.player2 = new player(2,0,0,this);
         this.players.push(this.player1);
         this.players.push(this.player2);
-        this.winner = '';
 
         for(let person of this.players){
             person.displayScore();
@@ -87,35 +91,62 @@ class MyGame extends Phaser.Scene
     }
 
     update(t,dt) {
-        this.playTime -=  dt;
-        var timer = Math.round((this.playTime)/1000);
-        this.timerText.setText(timer);
+        if (this.afterCountdown == false){
+            
+            this.countdowntime -= dt;
+            var countdownTimerTime = Math.round((this.countdowntime)/1000);
+            this.timerText.setText(countdownTimerTime);
+            if (countdownTimerTime <= 0){
+                this.afterCountdown = true;
+                this.timerText.destroy();
+                this.timerText = this.add.text(475, 16, '', {fontSize: '32px', fill:'#000'});
+            }
+
+        } else{
+            this.playTime -=  dt;
+            var timer = Math.round((this.playTime)/1000);
+            this.timerText.setText(timer);
+        }
+
+        if (timer <= 5 && this.redCounterActive == false) {
+            this.timerText.destroy();
+            this.timerText = this.add.text(475, 8, '', {fontSize: '64px', fill:'#F00'});
+            this.redCounterActive = true;
+        }
 
         if (timer <= 0){
             this.scene.pause();
-            // add win scene
+            var winner;
+            var winningColorIndex = 9;
             if (this.player2.score > this.player1.score){
-                this.winner = this.player2.playerName;
+                winner = 'Player ' + this.player2.playerName + ' wins!!';
+                winningColorIndex = this.colorArray[1];
+            } else if (this.player1.score > this.player2.score){
+                winner = 'Player '+ this.player1.playerName + ' wins!!';
+                winningColorIndex = this.colorArray[0];
+            } else {
+                winner = "it's a tie!";
             }
-            if (this.player1.score > this.player2.score){
-                this.winner = this.player1.playerName;
-            }
-            if (this.player1.score = this.player2.score){
-                this.winner = "it's a tie!";
-            }
-            this.scene.start('GameOver', {winningPlayer: this.winner});
+            this.scene.start('GameOver', {winningPlayer: winner, winningColor: winningColorIndex});
         }
 
-        this.timeUntilNextJello -= dt;
-
-        if(this.timeUntilNextJello < 0 ){
-            var jello1 = new Jello({ x: -6.65, y: 8 }, this, this.player1, this.colorArray[0]);
-            var jello2 = new Jello({x: 6.65, y: 8 }, this, this.player2, this.colorArray[1]);
-            this.jellos.push(jello1);
-            this.jellos.push(jello2);
-            this.timeUntilNextJello = 2000;
-        }
         this.physics.update(dt);
+
+
+        if(this.afterCountdown == true) {
+            
+
+            this.timeUntilNextJello -= dt;
+
+            if(this.timeUntilNextJello < 0 ){
+                var jello1 = new Jello({ x: -6.65, y: 8 }, this, 1, this.colorArray[0]);
+                var jello2 = new Jello({x: 6.65, y: 8 }, this, 2, this.colorArray[1]);
+                this.jellos.push(jello1);
+                this.jellos.push(jello2);
+                this.timeUntilNextJello = 2000;
+            }
+
+        }
 
         for (let jello of this.jellos){
             if(this.physics.toPhaserCoord(jello.getPosition()).y > this.sys.game.canvas.height + 100 ){
@@ -129,8 +160,15 @@ class MyGame extends Phaser.Scene
             && jello.getPosition().x <= this.hoop1.getMaxPos().x
             && jello.getPosition().y <= this.hoop1.getMaxPos().y && jello.getPosition().y  >= this.hoop1.getMaxPos().y - .3
            ){
-                jello.getPlayer().updatePlayerScore();
-                jello.isScored = true;
+            var player = jello.getPlayer();
+            if(player == 1 ){
+                this.player1.updatePlayerScore();
+            }
+            if(player == 2){
+                this.player2.updatePlayerScore();
+            }
+
+            jello.isScored = true;
             } 
         }
         this.jellos = this.jellos.filter((jello) => !jello.isDestroyed);
