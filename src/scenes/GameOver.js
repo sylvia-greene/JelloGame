@@ -22,7 +22,6 @@ class GameOver extends Phaser.Scene {
 
         var gravity = new b2Vec2(0,-15);
         window.world = this.myWorld = new b2World(gravity);
-        var ground = world.CreateBody(new b2BodyDef());
 
         this.physics = new LiquidFunPhysics(this.myWorld, { scale: 60, center: [500,500], flip: true });
 
@@ -44,7 +43,6 @@ class GameOver extends Phaser.Scene {
         text3.setOrigin(0.5);
         text3.setFontSize(20);
 
-
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.scene.start('Title');
         }, this);
@@ -56,13 +54,10 @@ class GameOver extends Phaser.Scene {
                 this.jellos.push(jello);
             }
         }
-
-
     }
 
     update(t, dt){
         this.physics.update(dt);
-
         for (let jello of this.jellos){
             if(this.physics.toPhaserCoord(jello.getPosition()).y > this.sys.game.canvas.height + 100 ){
                 jello.destroy();
@@ -70,7 +65,6 @@ class GameOver extends Phaser.Scene {
             }
         }
     }
-
 }
 
 export default GameOver;

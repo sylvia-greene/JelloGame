@@ -9,6 +9,8 @@ export default class Hoop
 
     constructor(pos, scene, ground)
     {
+        this.pos = pos;
+
         var hoop_shape = new b2PolygonShape();
         hoop_shape.position.Set(pos.x, pos.y);
         
@@ -51,8 +53,6 @@ export default class Hoop
         hoop_vertices4.push(new b2Vec2(pos.x + 1.13, pos.y - 1.62));
         
         ground.CreateFixtureFromShape(hoop_shape4, 0);
-
-        this.pos = pos;
     }
     
     getPos(){

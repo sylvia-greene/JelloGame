@@ -21,7 +21,6 @@ class MyGame extends Phaser.Scene
     preload ()
     {
         this.load.image('backboard', backboardImg);
-    
         Jello.preload(this);
         Hoop.preload(this);
         Flipper.preload(this);
@@ -49,7 +48,6 @@ class MyGame extends Phaser.Scene
             person.displayScore();
         }
 
-
         var backboard = this.add.image(500, 200, 'backboard');
         backboard.setScale(0.3);
 
@@ -76,7 +74,6 @@ class MyGame extends Phaser.Scene
             this.leftFlipper.moveFlipperBack();
         });
 
-
         this.input.keyboard.on('keydown-P', (event) => {
             this.rightFlipper.moveFlipper();
         }); 
@@ -91,8 +88,9 @@ class MyGame extends Phaser.Scene
     }
 
     update(t,dt) {
+        this.physics.update(dt);
+
         if (this.afterCountdown == false){
-            
             this.countdowntime -= dt;
             var countdownTimerTime = Math.round((this.countdowntime)/1000);
             this.timerText.setText(countdownTimerTime);
@@ -101,7 +99,6 @@ class MyGame extends Phaser.Scene
                 this.timerText.destroy();
                 this.timerText = this.add.text(475, 16, '', {fontSize: '32px', fill:'#000'});
             }
-
         } else{
             this.playTime -=  dt;
             var timer = Math.round((this.playTime)/1000);
@@ -130,14 +127,8 @@ class MyGame extends Phaser.Scene
             this.scene.start('GameOver', {winningPlayer: winner, winningColor: winningColorIndex});
         }
 
-        this.physics.update(dt);
-
-
         if(this.afterCountdown == true) {
-            
-
             this.timeUntilNextJello -= dt;
-
             if(this.timeUntilNextJello < 0 ){
                 var jello1 = new Jello({ x: -6.65, y: 8 }, this, this.player1, this.colorArray[0]);
                 var jello2 = new Jello({x: 6.65, y: 8 }, this, this.player2, this.colorArray[1]);
@@ -145,7 +136,6 @@ class MyGame extends Phaser.Scene
                 this.jellos.push(jello2);
                 this.timeUntilNextJello = 2000;
             }
-
         }
 
         for (let jello of this.jellos){
@@ -166,8 +156,6 @@ class MyGame extends Phaser.Scene
         }
         this.jellos = this.jellos.filter((jello) => !jello.isDestroyed);
     }
-
 }
-
 
 export default MyGame;

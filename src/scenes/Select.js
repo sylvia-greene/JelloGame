@@ -23,7 +23,6 @@ class Select extends Phaser.Scene {
         this.load.image('Qkey', Qkey);
         this.load.image('Pkey', Pkey);
         this.load.image('arrow', arrowImg);
-
         this.load.image('red', redImg);
         this.load.image('orange', orangeImg);
         this.load.image('yellow', yellowImg);
@@ -67,8 +66,7 @@ class Select extends Phaser.Scene {
                 if (this.arrow.x + 110 > 950){
                     this.arrow.setPosition(5, 275);
                     selected = 0;
-                }
-                else {
+                } else {
                     this.arrow.setPosition(this.arrow.x + 110, 275);
                     selected++;
                 }
@@ -85,8 +83,7 @@ class Select extends Phaser.Scene {
                 if (this.arrow.x + 110 > 950){
                     this.arrow.setPosition(5, 275);
                     selected = 0;
-                }
-                else {
+                } else {
                     this.arrow.setPosition(this.arrow.x + 110, 275);
                     selected ++;
                 }
@@ -102,39 +99,29 @@ class Select extends Phaser.Scene {
         this.input.keyboard.on('keydown-SPACE', (event) => {
             if (player1Selected) {
                 player2Choice = selected;
-
-                if (player1Choice == player2Choice){
-                    if(unadded){
+                if (player1Choice == player2Choice && unadded){
                         var changeColorText = this.add.text(500, 200, 'Please choose a different color...', 16);
                         changeColorText.setOrigin(0.5);
                         changeColorText.setFontSize(20);
                         unadded = false;
-                    }
-                }
-
-                else{
+                } else{
                     this.scene.pause();
                     this.scene.start('MyGame', {color: [player1Choice, player2Choice]});
-               
                 }
             }
 
             if (player1Selected == false){
                 player1Selected = true;
                 player1Choice = selected;
-
                 select1Text.destroy();
                 q.destroy();
-
                 if (this.arrow.x + 110 > 950){
                     this.arrow.setPosition(5, 275);
                     selected = 0;
-                }
-                else {
+                } else {
                     this.arrow.setPosition(this.arrow.x + 110, 275);
                     selected ++;
                 }
-                
                 this.p = this.add.sprite(734, 10, 'Pkey');
                 this.p.setOrigin(0,0);
                 this.p.setScale(0.25);
@@ -186,8 +173,6 @@ class Select extends Phaser.Scene {
         paul.setOrigin(0,0);
         paul.setScale(0.25);
     }
-
-
 }
 
 export default Select;

@@ -2,14 +2,12 @@ import Phaser, { Create } from 'phaser';
 import jelloImg from './assets/jello.png';
 import paulticleImg from './assets/paulticle.png'
 
-
 export default class Jello
 {
     static preload(scene)
     {
         scene.load.image('jello', jelloImg);
         scene.load.image('paulticle', paulticleImg);
-
     }
 
     static addParticleSystemToScene(scene)
@@ -26,7 +24,7 @@ export default class Jello
         this.isScored = false;
         this.colorIndex = colorIndex;
 
-        this.colorArray = [0xE41C17, 0xef603d, 0xeed307, 0x0db50d, 0x32E1B4, 0x1734E4, 0xA532E1, 0x000000, 0xeb9dd3, 0xeb9dd3]
+        this.colorArray = [0xE41C17, 0xef603d, 0xeed307, 0x0db50d, 0x32E1B4, 0x1734E4, 0xA532E1, 0x000000, 0xeb9dd3, 0xeb9dd3];
 
         var trapezoid = new b2PolygonShape();
         var trapezoid_vertices = trapezoid.vertices;
@@ -34,7 +32,6 @@ export default class Jello
         trapezoid_vertices.push(new b2Vec2(0.5, -0.3));
         trapezoid_vertices.push(new b2Vec2(0.3, 0.4));
         trapezoid_vertices.push(new b2Vec2(-0.3, 0.4));
-
 
         if (colorIndex == 8){
             this.scene.phaserJelloParticles = scene.add.particles('paulticle'); 
@@ -72,7 +69,6 @@ export default class Jello
 
     destroy()
     {   
-
         this.particleGroup.DestroyParticles(true);
         for(let emitter of this.particleGroup.phaserParticleEmitters)
         {

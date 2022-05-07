@@ -41,9 +41,6 @@ class Tutorial extends Phaser.Scene {
         text3.setOrigin(0.5);
         text3.setFontSize(20);
 
-        //var spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
-
         this.input.keyboard.on('keydown-Q', (event) => {
             q.setTint();
         });
@@ -51,7 +48,6 @@ class Tutorial extends Phaser.Scene {
         this.input.keyboard.on('keyup-Q', (event) => {
             q.setTint(0x8a898c);
         });
-
 
         this.input.keyboard.on('keydown-P', (event) => {
             p.setTint();
@@ -61,15 +57,11 @@ class Tutorial extends Phaser.Scene {
             p.setTint(0x8a898c);
         });
         
-        
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.scene.pause();
             this.scene.start('Select');
-        }, this);
-       
-        
+        }, this);  
     }
-
 }
 
 export default Tutorial;

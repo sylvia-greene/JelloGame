@@ -34,9 +34,7 @@ export default class Flipper
         if (pos.x < 0) {
             this.angle = -0.10 * Math.PI;
             this.focalPoint = new b2Vec2(this.pos.x - 1.8, this.pos.y + 0.6);
-
-        }
-        else {
+        } else {
             this.angle = -0.9 * Math.PI;
             this.focalPoint = new b2Vec2(this.pos.x + 1.8, this.pos.y + 0.6);
         }
@@ -50,44 +48,32 @@ export default class Flipper
 
         if(this.colorIndex == 0) {
             polygon_shape.phaserSprite = this.scene.add.image(0,0,'red');
-        }
-        if(this.colorIndex == 1) {
+        } else if(this.colorIndex == 1) {
             polygon_shape.phaserSprite = this.scene.add.image(0,0,'orange');
-        }
-        if(this.colorIndex == 2) {
+        } else if(this.colorIndex == 2) {
             polygon_shape.phaserSprite = this.scene.add.image(0,0,'yellow');
-        }
-        if(this.colorIndex == 3) {
+        } else if(this.colorIndex == 3) {
             polygon_shape.phaserSprite = this.scene.add.image(0,0,'green');
-        }
-        if(this.colorIndex == 4) {
+        } else if(this.colorIndex == 4) {
             polygon_shape.phaserSprite = this.scene.add.image(0,0,'seafoam');
-        }
-        if(this.colorIndex == 5) {
+        } else if(this.colorIndex == 5) {
             polygon_shape.phaserSprite = this.scene.add.image(0,0,'blue');
-        }
-        if(this.colorIndex == 6) {
+        } else if(this.colorIndex == 6) {
             polygon_shape.phaserSprite = this.scene.add.image(0,0,'purple');
-        }
-        if(this.colorIndex == 7) {
+        } else if(this.colorIndex == 7) {
             polygon_shape.phaserSprite = this.scene.add.image(0,0,'black');
-        }
-        if(this.colorIndex == 8) {
+        } else {
             polygon_shape.phaserSprite = this.scene.add.image(0,0,'paul');
         }
-
 
         if(this.pos.x > 0) {
             polygon_shape.phaserSprite.flipY = true;
         }
-
+        polygon_shape.phaserSprite.setScale(.55);
 
         var bd = new b2BodyDef;
         bd.position.Set(this.pos.x, this.pos.y);
         bd.angle = this.angle;
-
-        polygon_shape.phaserSprite.setScale(.55);
-
         bd.type = b2_dynamicBody;
         bd.bullet = true;
         bd.density = 10000;
@@ -95,31 +81,25 @@ export default class Flipper
         var body = world.CreateBody(bd);   
         body.CreateFixtureFromShape(polygon_shape, 1.0);
         
-
         let paddleMotorDef = new b2RevoluteJointDef();
         paddleMotorDef.upperAngle = 0;
         paddleMotorDef.lowerAngle = 0;
-
         if(this.pos.x < 0) {
             paddleMotorDef.upperAngle = this.motorAngle;
-        }
-        else {
+        } else {
             paddleMotorDef.lowerAngle = -this.motorAngle;
         }
-
         paddleMotorDef.enableLimit = true;
         paddleMotorDef.maxMotorTorque = 250.0;
         paddleMotorDef.enableMotor = true;
         paddleMotorDef.collideConnected = false;
-
         this.paddleMotor = paddleMotorDef.InitializeAndCreate(this.ground, body, this.focalPoint);
     }
 
     moveFlipper(){
         if (this.pos.x < 0) {
             this.paddleMotor.SetMotorSpeed(85);
-        }
-        else {
+        } else {
             this.paddleMotor.SetMotorSpeed(-85);
         }
     }
@@ -127,8 +107,7 @@ export default class Flipper
     moveFlipperBack(){
         if (this.pos.x < 0) {
             this.paddleMotor.SetMotorSpeed(-85);
-        }
-        else {
+        } else {
             this.paddleMotor.SetMotorSpeed(85);
         }
     }

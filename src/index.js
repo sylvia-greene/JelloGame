@@ -4,6 +4,7 @@ import Title from './scenes/Title.js';
 import Select from './scenes/Select.js';
 import Tutorial from './scenes/Tutorial.js';
 import GameOver from './scenes/GameOver.js';
+
 const config = {
     type: Phaser.AUTO,
     parent: 'phaser-example',

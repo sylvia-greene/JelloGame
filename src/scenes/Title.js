@@ -1,5 +1,5 @@
 import startScreen from '../assets/sprites/start_screen.png';
-import MyGame from '../index.js';
+
 class Title extends Phaser.Scene {
     constructor(){
         super('Title')
@@ -7,7 +7,6 @@ class Title extends Phaser.Scene {
 
     preload(){
         this.load.image('start-image', startScreen);
-     
     }
 
     create(){
@@ -19,17 +18,12 @@ class Title extends Phaser.Scene {
         text.setOrigin(0.5);
         text.setFontSize(20);
 
-        //var spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.scene.pause();
             this.scene.start('Tutorial');
             console.log('key press');
         }, this);
-       
-        
     }
-
 }
 
 export default Title;

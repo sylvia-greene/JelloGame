@@ -1,7 +1,3 @@
-import Phaser, { Create } from 'phaser';
-import Hoop from './hoop';
-import Jello from './jello';
-
 export default class player {
     constructor( playerName, score, scoreText,scene)
     {
@@ -10,7 +6,6 @@ export default class player {
         this.playerName = playerName;
         this.score = score;
         this.scoreText = scoreText;
-
     }
 
     // takes in the user's int as its location
