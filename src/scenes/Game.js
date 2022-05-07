@@ -7,6 +7,8 @@ import Hoop from '../hoop.js';
 import player from '../player';
 import Flipper from '../flipper.js';
 
+import Swish from '../assets/audio/swish.mp3';
+
 class MyGame extends Phaser.Scene
 {
     constructor ()
@@ -21,6 +23,7 @@ class MyGame extends Phaser.Scene
     preload ()
     {
         this.load.image('backboard', backboardImg);
+        this.load.audio('swish', Swish);
     
         Jello.preload(this);
         Hoop.preload(this);
@@ -35,7 +38,7 @@ class MyGame extends Phaser.Scene
 
         this.timeUntilNextJello = 0;
         this.countdowntime = 3000;
-        this.playTime = 7000;
+        this.playTime = 60000;
         this.timerText = this.add.text(420, 200, '', {fontSize: '256px', fill:'#000'});
         this.timerText.setDepth(2);
 
@@ -44,6 +47,8 @@ class MyGame extends Phaser.Scene
         this.player2 = new player(2,0,0,this);
         this.players.push(this.player1);
         this.players.push(this.player2);
+
+        this.swishSound = this.sound.add('swish');
 
         for(let person of this.players){
             person.displayScore();
@@ -160,6 +165,7 @@ class MyGame extends Phaser.Scene
             && jello.getPosition().x <= this.hoop1.getMaxPos().x
             && jello.getPosition().y <= this.hoop1.getMaxPos().y && jello.getPosition().y  >= this.hoop1.getMaxPos().y - .3
            ){
+            this.swishSound.play();
             jello.getPlayer().updatePlayerScore();
             jello.isScored = true;
             } 
