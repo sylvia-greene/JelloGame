@@ -115,7 +115,7 @@ class Select extends Phaser.Scene {
                 else{
                     this.scene.pause();
                     this.scene.start('MyGame', {color: [player1Choice, player2Choice]});
-                    console.log('key press tut');
+               
                 }
             }
 

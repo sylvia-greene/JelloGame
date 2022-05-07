@@ -139,8 +139,8 @@ class MyGame extends Phaser.Scene
             this.timeUntilNextJello -= dt;
 
             if(this.timeUntilNextJello < 0 ){
-                var jello1 = new Jello({ x: -6.65, y: 8 }, this, 1, this.colorArray[0]);
-                var jello2 = new Jello({x: 6.65, y: 8 }, this, 2, this.colorArray[1]);
+                var jello1 = new Jello({ x: -6.65, y: 8 }, this, this.player1, this.colorArray[0]);
+                var jello2 = new Jello({x: 6.65, y: 8 }, this, this.player2, this.colorArray[1]);
                 this.jellos.push(jello1);
                 this.jellos.push(jello2);
                 this.timeUntilNextJello = 2000;
@@ -160,14 +160,7 @@ class MyGame extends Phaser.Scene
             && jello.getPosition().x <= this.hoop1.getMaxPos().x
             && jello.getPosition().y <= this.hoop1.getMaxPos().y && jello.getPosition().y  >= this.hoop1.getMaxPos().y - .3
            ){
-            var player = jello.getPlayer();
-            if(player == 1 ){
-                this.player1.updatePlayerScore();
-            }
-            if(player == 2){
-                this.player2.updatePlayerScore();
-            }
-
+            jello.getPlayer().updatePlayerScore();
             jello.isScored = true;
             } 
         }

@@ -65,7 +65,6 @@ class Tutorial extends Phaser.Scene {
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.scene.pause();
             this.scene.start('Select');
-            console.log('key press tut');
         }, this);
        
         

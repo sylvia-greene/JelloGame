@@ -36,7 +36,6 @@ class GameOver extends Phaser.Scene {
         text1.setOrigin(0.5);
         text1.setFontSize(30);
 
-        console.log(this);
         var text2 = this.add.text(500, 200, this.winningPlayer);
         text2.setOrigin(0.5);
         text2.setFontSize(50);
@@ -45,7 +44,6 @@ class GameOver extends Phaser.Scene {
         text3.setOrigin(0.5);
         text3.setFontSize(20);
 
-        console.log(this.winningColor);
 
         this.input.keyboard.on('keydown-SPACE', (event) => {
             this.scene.start('Title');
