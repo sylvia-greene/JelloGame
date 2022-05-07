@@ -1,6 +1,6 @@
 import Phaser, { Create } from 'phaser';
-import jelloImg from './assets/jello.png';
-import paulticleImg from './assets/paulticle.png'
+import jelloImg from './assets/sprites/jello.png';
+import paulticleImg from './assets/sprites/paulticle.png'
 
 export default class Jello
 {
